@@ -1,0 +1,1457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supermarket Deals - Fresh Savings</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS Variables for consistent theming */
+        :root {
+            --primary: #3b82f6;
+            --primary-dark: #2563eb;
+            --accent: #10b981;
+            --foreground: #1f2937;
+            --muted-foreground: #6b7280;
+            --background: #f9fafb;
+            --card-background: #ffffff;
+            --border: #e5e7eb;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --radius: 0.5rem;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: var(--background);
+            color: var(--foreground);
+            line-height: 1.5;
+            padding-bottom: 80px; /* Space for the cart */
+        }
+
+        .min-h-screen {
+            min-height: 100vh;
+        }
+
+        .bg-background {
+            background-color: var(--background);
+        }
+
+        /* Utility Classes */
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        @media (min-width: 640px) {
+            .container {
+                max-width: 640px;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                max-width: 768px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .container {
+                max-width: 1024px;
+            }
+        }
+
+        @media (min-width: 1280px) {
+            .container {
+                max-width: 1280px;
+            }
+        }
+
+
+         /* Header styles */
+    header {
+      background: linear-gradient(135deg, #1a2a6c, #b21f1f);
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .logo img {
+      height: 40px;
+      transition: transform 0.3s ease;
+    }
+    
+    .logo:hover img {
+      transform: scale(1.1);
+    }
+    
+    .site-title {
+      font-size: 1.8rem;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+    
+    .highlight {
+      color: #ffcc00;
+    }
+    
+    .navbar {
+      display: flex;
+      gap: 1.5rem;
+    }
+    
+    .navbar a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.5rem 0.8rem;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    
+    .navbar a:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    .navbar a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background-color: #ffcc00;
+      transition: all 0.3s ease;
+      transform: translateX(-50%);
+    }
+    
+    .navbar a:hover::after {
+      width: 80%;
+    }
+
+        .flex {
+            display: flex;
+        }
+
+        .grid {
+            display: grid;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .relative {
+            position: relative;
+        }
+
+        .absolute {
+            position: absolute;
+        }
+
+        .fixed {
+            position: fixed;
+        }
+
+        .inset-0 {
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+        }
+
+        .bottom-6 {
+            bottom: 1.5rem;
+        }
+
+        .right-6 {
+            right: 1.5rem;
+        }
+
+        .left-6 {
+            left: 1.5rem;
+        }
+
+        .z-50 {
+            z-index: 50;
+        }
+
+        .h-full {
+            height: 100%;
+        }
+
+        .h-screen {
+            height: 100vh;
+        }
+
+        .h-\[60vh\] {
+            height: 60vh;
+        }
+
+        .w-full {
+            width: 100%;
+        }
+
+        .w-4 {
+            width: 1rem;
+        }
+
+        .w-5 {
+            width: 1.25rem;
+        }
+
+        .w-16 {
+            width: 4rem;
+        }
+
+        .max-w-2xl {
+            max-width: 42rem;
+        }
+
+        .max-w-4xl {
+            max-width: 56rem;
+        }
+
+        .max-w-7xl {
+            max-width: 80rem;
+        }
+
+        .max-w-md {
+            max-width: 28rem;
+        }
+
+        .mx-auto {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .my-4 {
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .mb-2 {
+            margin-bottom: 0.5rem;
+        }
+
+        .mb-4 {
+            margin-bottom: 1rem;
+        }
+
+        .mb-6 {
+            margin-bottom: 1.5rem;
+        }
+
+        .mb-8 {
+            margin-bottom: 2rem;
+        }
+
+        .mb-12 {
+            margin-bottom: 3rem;
+        }
+
+        .mr-2 {
+            margin-right: 0.5rem;
+        }
+
+        .mt-8 {
+            margin-top: 2rem;
+        }
+
+        .mt-16 {
+            margin-top: 4rem;
+        }
+
+        .overflow-hidden {
+            overflow: hidden;
+        }
+
+        .rounded {
+            border-radius: 0.25rem;
+        }
+
+        .rounded-2xl {
+            border-radius: 1rem;
+        }
+
+        .rounded-full {
+            border-radius: 9999px;
+        }
+
+        .border {
+            border-width: 1px;
+        }
+
+        .border-white\/30 {
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .object-cover {
+            object-fit: cover;
+        }
+
+        .p-2 {
+            padding: 0.5rem;
+        }
+
+        .p-3 {
+            padding: 0.75rem;
+        }
+
+        .p-4 {
+            padding: 1rem;
+        }
+
+        .p-8 {
+            padding: 2rem;
+        }
+
+        .px-4 {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+
+        .px-8 {
+            padding-left: 2rem;
+            padding-right: 2rem;
+        }
+
+        .py-3 {
+            padding-top: 0.75rem;
+            padding-bottom: 0.75rem;
+        }
+
+        .py-4 {
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+
+        .py-16 {
+            padding-top: 4rem;
+            padding-bottom: 4rem;
+        }
+
+        .pl-10 {
+            padding-left: 2.5rem;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .text-2xl {
+            font-size: 1.5rem;
+        }
+
+        .text-3xl {
+            font-size: 1.875rem;
+        }
+
+        .text-4xl {
+            font-size: 2.25rem;
+        }
+
+        .text-5xl {
+            font-size: 3rem;
+        }
+
+        .text-lg {
+            font-size: 1.125rem;
+        }
+
+        .text-xl {
+            font-size: 1.25rem;
+        }
+
+        .text-white {
+            color: white;
+        }
+
+        .text-white\/90 {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .text-foreground {
+            color: var(--foreground);
+        }
+
+        .text-muted-foreground {
+            color: var(--muted-foreground);
+        }
+
+        .text-primary {
+            color: var(--primary);
+        }
+
+        .text-accent {
+            color: var(--accent);
+        }
+
+        .bg-gradient-to-r {
+            background-image: linear-gradient(to right, var(--tw-gradient-stops));
+        }
+
+        .from-black\/60 {
+            --tw-gradient-from: rgba(0, 0, 0, 0.6);
+            --tw-gradient-to: rgba(0, 0, 0, 0);
+            --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+        }
+
+        .to-black\/30 {
+            --tw-gradient-to: rgba(0, 0, 0, 0.3);
+        }
+
+        .from-primary\/10 {
+            --tw-gradient-from: rgba(59, 130, 246, 0.1);
+            --tw-gradient-to: rgba(59, 130, 246, 0);
+            --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+        }
+
+        .to-success\/10 {
+            --tw-gradient-to: rgba(16, 185, 129, 0.1);
+        }
+
+        .bg-white {
+            background-color: white;
+        }
+
+        .bg-white\/10 {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .backdrop-blur-sm {
+            backdrop-filter: blur(4px);
+        }
+
+        .space-y-4 > * + * {
+            margin-top: 1rem;
+        }
+
+        .space-y-6 > * + * {
+            margin-top: 1.5rem;
+        }
+
+        .gap-4 {
+            gap: 1rem;
+        }
+
+        .gap-6 {
+            gap: 1.5rem;
+        }
+
+        .grid-cols-1 {
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+
+        .leading-tight {
+            line-height: 1.25;
+        }
+
+        .shadow-md {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .shadow-lg {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Component Styles */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius);
+            font-weight: 500;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            outline: none;
+            border: none;
+        }
+
+        .btn:focus {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+        }
+
+        .btn-lg {
+            padding: 0.875rem 2rem;
+            font-size: 1.125rem;
+        }
+
+        .btn-hero {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-hero:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-default {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-default:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid currentColor;
+        }
+
+        .btn-outline:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background-color: var(--success);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background-color: #0d9669;
+            transform: translateY(-2px);
+        }
+
+        .btn-add-to-cart {
+            background-color: var(--primary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius);
+            transition: all 0.3s ease;
+        }
+
+        .btn-add-to-cart:hover {
+            background-color: var(--primary-dark);
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(59, 130, 246, 0.4);
+        }
+
+        .btn-add-to-cart.added {
+            background-color: var(--success);
+            animation: pulse 0.5s;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .input {
+            width: 100%;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            padding: 0.625rem 1rem;
+            font-size: 1rem;
+            transition: border-color 0.2s ease;
+        }
+
+        .input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+
+        .deal-card {
+            background-color: var(--card-background);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .deal-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .deal-card-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .deal-card-content {
+            padding: 1.25rem;
+        }
+
+        .deal-card-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--foreground);
+        }
+
+        .deal-card-pricing {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .deal-card-original {
+            text-decoration: line-through;
+            color: var(--muted-foreground);
+        }
+
+        .deal-card-discounted {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--error);
+        }
+
+        .deal-card-discount-badge {
+            background-color: var(--error);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .deal-card-meta {
+            display: flex;
+            justify-content: space-between;
+            color: var(--muted-foreground);
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+
+        .deal-card-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .deal-card-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .filter-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            background-color: var(--card-background);
+            border: 1px solid var(--border);
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .filter-btn:hover {
+            background-color: #f3f4f6;
+            transform: translateY(-2px);
+        }
+
+        .filter-btn.active {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Cart Styles */
+        .cart-container {
+            position: fixed;
+            bottom: 6rem;
+            right: 1.5rem;
+            z-index: 50;
+            width: 90%;
+            max-width: 400px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            transform: translateY(100vh);
+            transition: transform 0.4s ease;
+            max-height: 70vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-container.open {
+            transform: translateY(0);
+        }
+
+        .cart-header {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--primary);
+            color: white;
+            border-radius: 12px 12px 0 0;
+        }
+
+        .cart-items {
+            padding: 1rem;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        .cart-item {
+            display: flex;
+            gap: 0.75rem;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .cart-item-image {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .cart-item-details {
+            flex-grow: 1;
+        }
+
+        .cart-item-title {
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+
+        .cart-item-price {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .cart-item-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .cart-item-quantity {
+            font-weight: 600;
+        }
+
+        .cart-item-remove {
+            color: var(--error);
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 0.25rem;
+        }
+
+        .cart-footer {
+            padding: 1rem;
+            border-top: 1px solid var(--border);
+            background: #f9fafb;
+            border-radius: 0 0 12px 12px;
+        }
+
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .cart-checkout {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--success);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .cart-checkout:hover {
+            background: #0d9669;
+        }
+
+        .cart-btn {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            z-index: 40;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .cart-btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: var(--error);
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 2rem;
+            color: var(--muted-foreground);
+        }
+
+        /* Responsive adjustments */
+        @media (min-width: 768px) {
+            .md\:grid-cols-2 {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+            
+            .md\:text-4xl {
+                font-size: 2.25rem;
+            }
+            
+            .md\:text-6xl {
+                font-size: 3.75rem;
+            }
+            
+            .md\:text-2xl {
+                font-size: 1.5rem;
+            }
+            
+            .cart-container {
+                right: 1.5rem;
+                left: auto;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .lg\:grid-cols-3 {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .flex-col {
+                flex-direction: column;
+            }
+            
+            .text-5xl {
+                font-size: 2.25rem;
+            }
+            
+            .h-\[60vh\] {
+                height: 50vh;
+            }
+            
+            .cart-container {
+                width: 90%;
+                left: 5%;
+                right: 5%;
+            }
+        }
+    </style>
+    </head>
+<body>
+
+  <header>
+    <div class="logo-container">
+      <div class="logo">
+        <img src="images/logo.png" alt="Dili-Zone Logo" height="40" />
+      </div>
+      <div class="logo">
+        <span class="site-title">Dili<span class="highlight">-Zone</span></span>
+      </div>
+    </div>
+
+    <nav class="navbar">
+      <a href="index.html">Home</a>
+      <a href="restaurants.html">Restaurants</a>
+      <a href="Accomodation.html">Hotels</a>
+      <a href="supermarket.html">Supermarkets</a>
+      <a href="services.html">Services</a>
+      <a href="industries.html">Industries</a>
+      <a href="shops.html">Shops</a>
+    </nav>
+  </header>
+</head>
+<body>
+    <div class="min-h-screen bg-background">
+        <!-- Fixed Cart Button -->
+        <div class="cart-btn" id="cartButton">
+            <i class="fas fa-shopping-cart fa-lg"></i>
+            <span class="cart-badge" id="cartCount">0</span>
+        </div>
+
+        <!-- Cart Container -->
+        <div class="cart-container" id="cartContainer">
+            <div class="cart-header">
+                <h3>Your Cart</h3>
+                <button id="closeCart"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="cart-items" id="cartItems">
+                <!-- Cart items will be added here -->
+                <div class="empty-cart" id="emptyCart">
+                    <i class="fas fa-shopping-cart fa-2x mb-4"></i>
+                    <p>Your cart is empty</p>
+                </div>
+            </div>
+            <div class="cart-footer">
+                <div class="cart-total">
+                    <span>Total:</span>
+                    <span id="cartTotal">$0.00</span>
+                </div>
+                <button class="cart-checkout" id="checkoutButton">Checkout</button>
+            </div>
+        </div>
+
+        <!-- Hero Section -->
+        <section class="relative h-[60vh] overflow-hidden">
+            <img 
+                src="https://images.unsplash.com/photo-1542838132-92c53300491e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1600&q=80" 
+                alt="Supermarket deals and discounts"
+                class="w-full h-full object-cover"
+            />
+            <div class="absolute inset-0 bg-gradient-to-r from-black/60 to-black/30"></div>
+            <div class="absolute inset-0 flex items-center justify-center">
+                <div class="text-center text-white space-y-6 max-w-4xl mx-auto px-4">
+                    <h1 class="text-5xl md:text-6xl font-bold leading-tight">
+                        Fresh Deals, <span class="text-accent">Fresh Savings</span>
+                    </h1>
+                    <p class="text-xl md:text-2xl text-white/90 max-w-2xl mx-auto">
+                        Discover the best supermarket deals and discounts in your area. Save more on your grocery shopping!
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center mt-8">
+                        <button class="btn btn-hero btn-lg">
+                            <i class="fas fa-shopping-cart mr-2"></i>
+                            Browse Deals
+                        </button>
+                        <button class="btn btn-outline btn-lg text-white">
+                            <i class="fas fa-arrow-trend-down mr-2"></i>
+                            View All Stores
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Content -->
+        <section class="py-16 px-4">
+            <div class="max-w-7xl mx-auto">
+                <!-- Search and Filter Section -->
+                <div class="mb-12 space-y-6">
+                    <div class="text-center space-y-4">
+                        <h2 class="text-3xl md:text-4xl font-bold text-foreground">
+                            Today's Best Supermarket Deals
+                        </h2>
+                        <p class="text-lg text-muted-foreground max-w-2xl mx-auto">
+                            Find incredible discounts from top supermarket chains near you
+                        </p>
+                    </div>
+                    
+                    <!-- Search Bar -->
+                    <div class="max-w-md mx-auto relative">
+                        <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground"></i>
+                        <input
+                            type="text"
+                            placeholder="Search for products..."
+                            id="searchInput"
+                            class="input pl-10"
+                        />
+                    </div>
+
+                    <!-- Supermarket Filter -->
+                    <div class="text-center">
+                        <div class="filter-container">
+                            <button class="filter-btn active" data-store="All Stores">
+                                All Stores <span class="deal-count">(6)</span>
+                            </button>
+                            <button class="filter-btn" data-store="FreshMart">
+                                FreshMart <span class="deal-count">(2)</span>
+                            </button>
+                            <button class="filter-btn" data-store="GreenGrocer">
+                                GreenGrocer <span class="deal-count">(1)</span>
+                            </button>
+                            <button class="filter-btn" data-store="SuperSaver">
+                                SuperSaver <span class="deal-count">(1)</span>
+                            </button>
+                            <button class="filter-btn" data-store="PrimeMart">
+                                PrimeMart <span class="deal-count">(1)</span>
+                            </button>
+                            <button class="filter-btn" data-store="ValuePlus">
+                                ValuePlus <span class="deal-count">(1)</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Results Summary -->
+                <div class="mb-8 text-center">
+                    <p class="text-muted-foreground" id="resultsSummary">
+                        Showing <span class="font-semibold text-foreground">6</span> deals
+                    </p>
+                </div>
+
+                <!-- Deals Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="dealsGrid">
+                    <!-- Deal cards will be generated here -->
+                </div>
+
+                <!-- No Results (hidden by default) -->
+                <div class="text-center py-16 hidden" id="noResults">
+                    <div class="max-w-md mx-auto">
+                        <i class="fas fa-shopping-cart w-16 h-16 text-muted-foreground mx-auto mb-4"></i>
+                        <h3 class="text-xl font-semibold text-foreground mb-2">No deals found</h3>
+                        <p class="text-muted-foreground mb-6">
+                            Try adjusting your search or select a different supermarket
+                        </p>
+                        <button class="btn btn-outline" id="clearFilters">
+                            Clear Filters
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Call to Action -->
+                <div class="mt-16 text-center bg-gradient-to-r from-primary/10 to-success/10 rounded-2xl p-8">
+                    <h3 class="text-2xl font-bold text-foreground mb-4">
+                        Want to be notified of new deals?
+                    </h3>
+                    <p class="text-muted-foreground mb-6 max-w-2xl mx-auto">
+                        Subscribe to our newsletter and never miss a great supermarket deal again. Get weekly updates on the best discounts in your area.
+                    </p>
+                    <button class="btn btn-default btn-lg">
+                        Subscribe for Deal Alerts
+                    </button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Mock data for demonstration
+        const mockDeals = [
+            {
+                id: "1",
+                title: "Fresh Organic Bananas - 2lb Bundle",
+                originalPrice: 4.99,
+                discountedPrice: 2.99,
+                discount: 40,
+                supermarket: "FreshMart",
+                location: "Downtown",
+                validUntil: "Dec 25, 2024",
+                rating: 4.8,
+                image: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+                category: "Fruits"
+            },
+            {
+                id: "2", 
+                title: "Premium Ground Beef - Family Pack",
+                originalPrice: 12.99,
+                discountedPrice: 8.99,
+                discount: 31,
+                supermarket: "GreenGrocer",
+                location: "Westside",
+                validUntil: "Dec 23, 2024",
+                rating: 4.6,
+                image: "https://images.pexels.com/photos/7284305/pexels-photo-7284305.jpeg",
+                category: "Meat"
+            },
+            {
+                id: "3",
+                title: "Whole Wheat Bread + Peanut Butter Combo",
+                originalPrice: 7.98,
+                discountedPrice: 4.99,
+                discount: 37,
+                supermarket: "SuperSaver",
+                location: "Mall Plaza",
+                validUntil: "Dec 28, 2024", 
+                rating: 4.4,
+                image: "https://images.pexels.com/photos/20605006/pexels-photo-20605006.jpeg",
+                category: "Pantry"
+            },
+            {
+                id: "4",
+                title: "Fresh Salmon Fillets - Wild Caught",
+                originalPrice: 18.99,
+                discountedPrice: 13.99,
+                discount: 26,
+                supermarket: "PrimeMart",
+                location: "Harbor District",
+                validUntil: "Dec 24, 2024",
+                rating: 4.9,
+                image: "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+                category: "Seafood"
+            },
+            {
+                id: "5",
+                title: "Seasonal Vegetable Mix - 5lb Bag",
+                originalPrice: 8.99,
+                discountedPrice: 5.99,
+                discount: 33,
+                supermarket: "ValuePlus",
+                location: "Suburb Center",
+                validUntil: "Dec 30, 2024",
+                rating: 4.3,
+                image: "https://images.pexels.com/photos/1660027/pexels-photo-1660027.jpeg",
+                category: "Vegetables"
+            },
+            {
+                id: "6",
+                title: "Artisan Cheese Selection",
+                originalPrice: 15.99,
+                discountedPrice: 9.99,
+                discount: 38,
+                supermarket: "FreshMart",
+                location: "Downtown",
+                validUntil: "Dec 26, 2024",
+                rating: 4.7,
+                image: "https://images.unsplash.com/photo-1552767059-ce182ead6c1b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+                category: "Dairy"
+            }
+        ];
+
+        // State management
+        let selectedSupermarket = "All Stores";
+        let searchQuery = "";
+        let cart = [];
+
+        // DOM Elements
+        const dealsGrid = document.getElementById('dealsGrid');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const searchInput = document.getElementById('searchInput');
+        const noResults = document.getElementById('noResults');
+        const clearFiltersBtn = document.getElementById('clearFilters');
+        const resultsSummary = document.getElementById('resultsSummary');
+        const cartButton = document.getElementById('cartButton');
+        const cartContainer = document.getElementById('cartContainer');
+        const closeCart = document.getElementById('closeCart');
+        const cartItems = document.getElementById('cartItems');
+        const emptyCart = document.getElementById('emptyCart');
+        const cartCount = document.getElementById('cartCount');
+        const cartTotal = document.getElementById('cartTotal');
+        const checkoutButton = document.getElementById('checkoutButton');
+
+        // Initialize the page
+        function init() {
+            renderDeals(mockDeals);
+            setupEventListeners();
+            updateCartUI();
+        }
+
+        // Set up event listeners
+        function setupEventListeners() {
+            // Filter buttons
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Update active state
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    
+                    // Update selected supermarket
+                    selectedSupermarket = button.dataset.store;
+                    
+                    // Filter deals
+                    filterDeals();
+                });
+            });
+            
+            // Search input
+            searchInput.addEventListener('input', (e) => {
+                searchQuery = e.target.value;
+                filterDeals();
+            });
+            
+            // Clear filters button
+            clearFiltersBtn.addEventListener('click', () => {
+                searchInput.value = "";
+                searchQuery = "";
+                
+                filterButtons.forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.dataset.store === "All Stores") {
+                        btn.classList.add('active');
+                    }
+                });
+                
+                selectedSupermarket = "All Stores";
+                filterDeals();
+            });
+            
+            // Cart button
+            cartButton.addEventListener('click', () => {
+                cartContainer.classList.add('open');
+            });
+            
+            // Close cart
+            closeCart.addEventListener('click', () => {
+                cartContainer.classList.remove('open');
+            });
+            
+            // Checkout button
+            checkoutButton.addEventListener('click', () => {
+                if (cart.length > 0) {
+                    alert('Thank you for your order! Your items will be ready for pickup soon.');
+                    cart = [];
+                    updateCartUI();
+                    cartContainer.classList.remove('open');
+                }
+            });
+        }
+
+        // Filter deals based on selected supermarket and search query
+        function filterDeals() {
+            const filteredDeals = mockDeals.filter(deal => {
+                const matchesSupermarket = selectedSupermarket === "All Stores" || deal.supermarket === selectedSupermarket;
+                const matchesSearch = deal.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                                     deal.category.toLowerCase().includes(searchQuery.toLowerCase());
+                return matchesSupermarket && matchesSearch;
+            });
+            
+            // Update results summary
+            updateResultsSummary(filteredDeals.length);
+            
+            // Render filtered deals
+            renderDeals(filteredDeals);
+            
+            // Show/hide no results message
+            if (filteredDeals.length === 0) {
+                noResults.classList.remove('hidden');
+                dealsGrid.classList.add('hidden');
+            } else {
+                noResults.classList.add('hidden');
+                dealsGrid.classList.remove('hidden');
+            }
+        }
+
+        // Update results summary text
+        function updateResultsSummary(count) {
+            let summaryText = `Showing <span class="font-semibold text-foreground">${count}</span> deals`;
+            
+            if (selectedSupermarket !== "All Stores") {
+                summaryText += ` from <span class="font-semibold text-primary">${selectedSupermarket}</span>`;
+            }
+            
+            resultsSummary.innerHTML = summaryText;
+        }
+
+        // Render deals to the grid
+        function renderDeals(deals) {
+            dealsGrid.innerHTML = '';
+            
+            deals.forEach(deal => {
+                const dealCard = document.createElement('div');
+                dealCard.className = 'deal-card';
+                dealCard.innerHTML = `
+                    <img src="${deal.image}" alt="${deal.title}" class="deal-card-image">
+                    <div class="deal-card-content">
+                        <h3 class="deal-card-title">${deal.title}</h3>
+                        <div class="deal-card-pricing">
+                            <span class="deal-card-original">$${deal.originalPrice.toFixed(2)}</span>
+                            <span class="deal-card-discounted">$${deal.discountedPrice.toFixed(2)}</span>
+                            <span class="deal-card-discount-badge">-${deal.discount}%</span>
+                        </div>
+                        <div class="deal-card-meta">
+                            <span>${deal.supermarket} • ${deal.location}</span>
+                            <span class="deal-card-rating">
+                                <i class="fas fa-star" style="color: #f59e0b;"></i>
+                                ${deal.rating}
+                            </span>
+                        </div>
+                        <div class="deal-card-meta">
+                            <span>Valid until: ${deal.validUntil}</span>
+                            <span>${deal.category}</span>
+                        </div>
+                        <div class="deal-card-actions">
+                            <button class="btn btn-outline">Add to List</button>
+                            <button class="btn-add-to-cart" data-id="${deal.id}">
+                                <i class="fas fa-cart-plus"></i> Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                dealsGrid.appendChild(dealCard);
+            });
+            
+            // Add event listeners to Add to Cart buttons
+            document.querySelectorAll('.btn-add-to-cart').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const dealId = e.currentTarget.dataset.id;
+                    addToCart(dealId);
+                    
+                    // Visual feedback
+                    e.currentTarget.classList.add('added');
+                    setTimeout(() => {
+                        e.currentTarget.classList.remove('added');
+                    }, 500);
+                });
+            });
+        }
+
+        // Add item to cart
+        function addToCart(dealId) {
+            const deal = mockDeals.find(item => item.id === dealId);
+            if (!deal) return;
+            
+            // Check if item already in cart
+            const existingItem = cart.find(item => item.id === dealId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    ...deal,
+                    quantity: 1
+                });
+            }
+            
+            updateCartUI();
+            
+            // Show cart if it's not already open
+            cartContainer.classList.add('open');
+        }
+
+        // Remove item from cart
+        function removeFromCart(dealId) {
+            cart = cart.filter(item => item.id !== dealId);
+            updateCartUI();
+        }
+
+        // Update item quantity in cart
+        function updateQuantity(dealId, change) {
+            const item = cart.find(item => item.id === dealId);
+            if (!item) return;
+            
+            item.quantity += change;
+            
+            if (item.quantity <= 0) {
+                removeFromCart(dealId);
+            } else {
+                updateCartUI();
+            }
+        }
+
+        // Update cart UI
+        function updateCartUI() {
+            // Update cart count
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            cartCount.textContent = totalItems;
+            
+            // Show/hide empty cart message
+            if (cart.length === 0) {
+                emptyCart.classList.remove('hidden');
+                checkoutButton.disabled = true;
+                checkoutButton.style.opacity = '0.6';
+            } else {
+                emptyCart.classList.add('hidden');
+                checkoutButton.disabled = false;
+                checkoutButton.style.opacity = '1';
+            }
+            
+            // Clear cart items
+            cartItems.querySelectorAll('.cart-item').forEach(item => item.remove());
+            
+            // Add items to cart
+            cart.forEach(item => {
+                const cartItem = document.createElement('div');
+                cartItem.className = 'cart-item';
+                cartItem.innerHTML = `
+                    <img src="${item.image}" alt="${item.title}" class="cart-item-image">
+                    <div class="cart-item-details">
+                        <div class="cart-item-title">${item.title}</div>
+                        <div class="cart-item-price">$${item.discountedPrice.toFixed(2)}</div>
+                    </div>
+                    <div class="cart-item-actions">
+                        <button class="quantity-btn" data-id="${item.id}" data-change="-1">-</button>
+                        <span class="cart-item-quantity">${item.quantity}</span>
+                        <button class="quantity-btn" data-id="${item.id}" data-change="1">+</button>
+                        <button class="cart-item-remove" data-id="${item.id}">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+                
+                cartItems.appendChild(cartItem);
+            });
+            
+            // Add event listeners to quantity buttons and remove buttons
+            document.querySelectorAll('.quantity-btn').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const dealId = e.currentTarget.dataset.id;
+                    const change = parseInt(e.currentTarget.dataset.change);
+                    updateQuantity(dealId, change);
+                });
+            });
+            
+            document.querySelectorAll('.cart-item-remove').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const dealId = e.currentTarget.dataset.id;
+                    removeFromCart(dealId);
+                });
+            });
+            
+            // Update total
+            const total = cart.reduce((sum, item) => sum + (item.discountedPrice * item.quantity), 0);
+            cartTotal.textContent = `$${total.toFixed(2)}`;
+        }
+
+        // Initialize the application when DOM is loaded
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

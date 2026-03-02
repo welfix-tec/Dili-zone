@@ -1,0 +1,1655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Accommodation Deals | Dili-Zone</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f8f9fa;
+      color: #333;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Header Styles */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo img {
+      height: 40px;
+    }
+
+    .site-title {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .highlight {
+      color: #764ba2;
+    }
+
+    .navbar {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .navbar a {
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      transition: color 0.3s ease;
+      position: relative;
+    }
+
+    .navbar a:hover {
+      color: #764ba2;
+    }
+
+    .navbar a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #764ba2;
+      transition: width 0.3s ease;
+    }
+
+    .navbar a:hover::after {
+      width: 100%;
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #333;
+    }
+
+    /* Hero Section */
+    .hero-section {
+      position: relative;
+      overflow: hidden;
+      height: 500px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+      flex-direction: column;
+    }
+
+    .hero-video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      min-width: 100%;
+      min-height: 100%;
+      object-fit: cover;
+      z-index: -2;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(118, 75, 162, 0.8) 0%, rgba(102, 126, 234, 0.8) 100%);
+      z-index: -1;
+    }
+
+    .hero-content {
+      padding: 25px 15px 40px;
+      border-top: 10px solid rgba(255, 255, 255, 0.7);
+      border-bottom: 10px solid rgba(255, 255, 255, 0.7);
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .hero-title {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+      font-weight: 700;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .hero-description {
+      max-width: 700px;
+      margin: 0 auto;
+      font-size: 1.1rem;
+      line-height: 1.6;
+      opacity: 0.9;
+    }
+
+    /* Main Container */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    /* Section Header */
+    .section-header {
+      text-align: center;
+      margin-bottom: 40px;
+      padding: 20px;
+    }
+
+    .section-header h1 {
+      font-size: 2.8rem;
+      margin-bottom: 10px;
+      background: linear-gradient(45deg, #764ba2, #667eea);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .section-header p {
+      font-size: 1.2rem;
+      color: #303030;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Accommodation Sections */
+    .accommodation-section {
+      background: rgb(61, 69, 48);
+      border-radius: 20px;
+      padding: 30px;
+      margin-bottom: 40px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .accommodation-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(90deg, #764ba2, #667eea);
+    }
+
+    .section-title {
+      color: #fffbfb;
+      font-size: 2rem;
+      margin-bottom: 30px;
+      text-align: center;
+      font-weight: 700;
+    }
+
+    .accommodation-container {
+      position: relative;
+    }
+
+    .accommodation-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .accommodation-card {
+      background: white;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .accommodation-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    }
+
+    .card-image {
+      height: 180px;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+
+    .discount-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+      color: white;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 0.8rem;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .card-content {
+      padding: 15px;
+    }
+
+    .card-name {
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-bottom: 8px;
+      color: #333;
+    }
+
+    .card-location {
+      color: #7f8c8d;
+      font-size: 0.9rem;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .card-location i {
+      color: #764ba2;
+    }
+
+    .price-section {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .price-info {
+      cursor: pointer;
+    }
+
+    .original-price {
+      text-decoration: line-through;
+      color: #bdc3c7;
+      font-size: 0.9rem;
+    }
+
+    .discounted-price {
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: #27ae60;
+    }
+
+    .rating {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.9rem;
+      color: #f39c12;
+    }
+
+    .view-details-btn {
+      width: 100%;
+      background: linear-gradient(45deg, #764ba2, #667eea);
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 10px;
+    }
+
+    .view-details-btn:hover {
+      background: linear-gradient(45deg, #667eea, #764ba2);
+      transform: translateY(-2px);
+    }
+
+    .nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.9);
+      border: none;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.5rem;
+      color: #333;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .nav-btn:hover {
+      background: white;
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    .nav-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .prev-btn {
+      left: -25px;
+    }
+
+    .next-btn {
+      right: -25px;
+    }
+
+    .page-indicator {
+      text-align: center;
+      margin-top: 20px;
+      color: #666;
+      font-weight: 500;
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(5px);
+    }
+
+    .modal-content {
+      background: white;
+      margin: 2% auto;
+      padding: 0;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 800px;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+
+    .modal-close {
+      position: absolute;
+      right: 20px;
+      top: 20px;
+      font-size: 2rem;
+      font-weight: bold;
+      cursor: pointer;
+      z-index: 2001;
+      color: white;
+      background: rgba(0, 0, 0, 0.5);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .modal-close:hover {
+      background: rgba(0, 0, 0, 0.8);
+      transform: scale(1.1);
+    }
+
+    .carousel-container {
+      position: relative;
+      height: 300px;
+      overflow: hidden;
+      border-radius: 20px 20px 0 0;
+    }
+
+    .carousel-slide {
+      display: none;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .carousel-slide.active {
+      display: block;
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0.7; }
+      to { opacity: 1; }
+    }
+
+    .carousel-nav {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 10px;
+    }
+
+    .carousel-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.5);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .carousel-dot.active {
+      background: white;
+      transform: scale(1.2);
+    }
+
+    .booking-form {
+      padding: 30px;
+    }
+
+    .form-title {
+      font-size: 1.8rem;
+      color: #2c3e50;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #555;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .book-btn {
+      width: 100%;
+      background: linear-gradient(45deg, #764ba2, #667eea);
+      color: white;
+      border: none;
+      padding: 15px;
+      border-radius: 10px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 10px;
+    }
+
+    .book-btn:hover {
+      background: linear-gradient(45deg, #667eea, #764ba2);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    /* Footer Styles */
+    footer {
+      background: linear-gradient(135deg, #2c3e50, #1a2530);
+      color: white;
+      padding: 3rem 0 1rem;
+      margin-top: 4rem;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+
+    .footer-section h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+      position: relative;
+      padding-bottom: 0.5rem;
+    }
+
+    .footer-section h3::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 50px;
+      height: 2px;
+      background: linear-gradient(45deg, #ff6b35, #f7931e);
+    }
+
+    .footer-links {
+      list-style: none;
+    }
+
+    .footer-links li {
+      margin-bottom: 0.8rem;
+    }
+
+    .footer-links a {
+      color: #bdc3c7;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      display: inline-block;
+      position: relative;
+    }
+
+    .footer-links a::before {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(45deg, #ff6b35, #f7931e);
+      transition: width 0.3s ease;
+    }
+
+    .footer-links a:hover {
+      color: white;
+      transform: translateX(5px);
+    }
+
+    .footer-links a:hover::before {
+      width: 100%;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .social-links a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      color: white;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .social-links a:hover {
+      background: linear-gradient(45deg, #ff6b35, #f7931e);
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(255, 107, 53, 0.4);
+    }
+
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1.5rem 2rem 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      text-align: center;
+      color: #bdc3c7;
+      font-size: 0.9rem;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+      .accommodation-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      }
+      
+      .hero-title {
+        font-size: 2.2rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      header {
+        padding: 1rem;
+        flex-wrap: wrap;
+      }
+      
+      .navbar {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        margin-top: 1rem;
+        gap: 0.5rem;
+        background: white;
+        padding: 1rem;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+      
+      .navbar.active {
+        display: flex;
+      }
+      
+      .mobile-menu-btn {
+        display: block;
+      }
+      
+      .hero-title {
+        font-size: 1.8rem;
+      }
+      
+      .section-header h1 {
+        font-size: 2.2rem;
+      }
+      
+      .section-title {
+        font-size: 1.7rem;
+      }
+      
+      .container {
+        padding: 15px;
+      }
+
+      .accommodation-section {
+        padding: 20px;
+      }
+      
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+      
+      .modal-content {
+        width: 95%;
+        margin: 5% auto;
+      }
+      
+      .nav-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+      }
+      
+      .prev-btn {
+        left: -15px;
+      }
+      
+      .next-btn {
+        right: -15px;
+      }
+      
+      .footer-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      
+      .footer-section h3::after {
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-title {
+        font-size: 1.5rem;
+      }
+
+      .hero-content {
+        padding: 20px 10px 30px;
+      }
+      
+      .section-header h1 {
+        font-size: 1.8rem;
+      }
+      
+      .section-title {
+        font-size: 1.5rem;
+      }
+      
+      .accommodation-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .card-image {
+        height: 160px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="logo">
+      <img src="images/logo.png" alt="Dili-Zone Logo" height="40" />
+      <span class="site-title">Dili<span class="highlight">-Zone</span></span>
+    </div>
+    <button class="mobile-menu-btn">
+      <i class="fas fa-bars"></i>
+    </button>
+    <nav class="navbar">
+      <a href="index.html">Home</a>
+      <a href="restaurants.html">Restaurants</a>
+      <a href="Accomodation.html">Hotels</a>
+      <a href="supermarket.html">Supermarkets</a>
+      <a href="services.html">Services</a>
+      <a href="industries.html">Industries</a>
+      <a href="shops.html">Shops</a>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <video autoplay muted loop playsinline class="hero-video">
+      <source src="images/video 2.mp4" type="video/webm">
+      Your browser does not support the video tag.
+    </video>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1 class="hero-title">Accommodation Deals</h1>
+      <p class="hero-description">
+        Discover exclusive promotions from leading Hotels and Apartments across Rwanda. Book smarter and save more on your next stay.
+      </p>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <div class="container">
+    <div class="section-header">
+      <h1>Hotel Deals & Discounts</h1>
+      <p>Discover amazing hotel deals and save on your next getaway!</p>
+    </div>
+
+    <!-- Hotels Section -->
+    <div class="accommodation-section">
+      <h2 class="section-title">Hotels</h2>
+      
+      <div class="accommodation-container">
+        <button class="nav-btn prev-btn" id="prevBtn" onclick="changeHotelGroup(-1)">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="nav-btn next-btn" id="nextBtn" onclick="changeHotelGroup(1)">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+        
+        <div class="accommodation-grid" id="hotelsGrid">
+          <!-- Hotels will be populated by JavaScript -->
+        </div>
+      </div>
+      
+      <div class="page-indicator" id="pageIndicator">
+        Page 1 of 1
+      </div>
+    </div>
+
+    <!-- Apartments Section -->
+    <div class="accommodation-section">
+      <h2 class="section-title">Apartments</h2>
+      
+      <div class="accommodation-container">
+        <button class="nav-btn prev-btn" id="prevBtnApt" onclick="changeApartmentGroup(-1)">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="nav-btn next-btn" id="nextBtnApt" onclick="changeApartmentGroup(1)">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+        
+        <div class="accommodation-grid" id="apartmentsGrid">
+          <!-- Apartments will be populated by JavaScript -->
+        </div>
+      </div>
+      
+      <div class="page-indicator" id="pageIndicatorApt">
+        Page 1 of 1
+      </div>
+    </div>
+
+    <!-- Rooms Section -->
+    <div class="accommodation-section">
+      <h2 class="section-title">Rooms</h2>
+      
+      <div class="accommodation-container">
+        <button class="nav-btn prev-btn" id="prevBtnRoom" onclick="changeRoomGroup(-1)">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="nav-btn next-btn" id="nextBtnRoom" onclick="changeRoomGroup(1)">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+        
+        <div class="accommodation-grid" id="roomsGrid">
+          <!-- Rooms will be populated by JavaScript -->
+        </div>
+      </div>
+      
+      <div class="page-indicator" id="pageIndicatorRoom">
+        Page 1 of 1
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>About Dili-Zone</h3>
+        <p>Your ultimate guide to the best accommodation and travel experiences in Rwanda. Discover hidden gems and popular spots with exclusive deals.</p>
+        <div class="social-links">
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+          <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+      </div>
+      
+      <div class="footer-section">
+        <h3>Quick Links</h3>
+        <ul class="footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="restaurants.html">Restaurants</a></li>
+          <li><a href="Accomodation.html">Hotels</a></li>
+          <li><a href="supermarket.html">Supermarkets</a></li>
+          <li><a href="services.html">Services</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-section">
+        <h3>Accommodation</h3>
+        <ul class="footer-links">
+          <li><a href="#">Luxury Hotels</a></li>
+          <li><a href="#">Budget Stays</a></li>
+          <li><a href="#">Apartments</a></li>
+          <li><a href="#">Vacation Rentals</a></li>
+          <li><a href="#">Business Hotels</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-section">
+        <h3>Contact Us</h3>
+        <ul class="footer-links">
+          <li><i class="fas fa-envelope"></i> info@dili-zone.com</li>
+          <li><i class="fas fa-phone"></i> +250 780 491 405</li>
+          <li><i class="fas fa-map-marker-alt"></i> Kigali, Rwanda</li>
+          <li><a href="#"><i class="fas fa-headset"></i> Customer Support</a></li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <p>&copy; 2026 Dili-Zone. All rights reserved. | Designed with <i class="fas fa-heart" style="color: #e74c3c;"></i> for travelers</p>
+    </div>
+  </footer>
+
+  <!-- Booking Modal -->
+  <div id="bookingModal" class="modal">
+    <div class="modal-content">
+      <span class="modal-close" onclick="closeModal()">&times;</span>
+      
+      <div class="carousel-container">
+        <div class="carousel-slide active" id="slide1"></div>
+        <div class="carousel-slide" id="slide2"></div>
+        <div class="carousel-slide" id="slide3"></div>
+        
+        <div class="carousel-nav">
+          <div class="carousel-dot active" onclick="currentSlide(1)"></div>
+          <div class="carousel-dot" onclick="currentSlide(2)"></div>
+          <div class="carousel-dot" onclick="currentSlide(3)"></div>
+        </div>
+      </div>
+      
+      <div class="booking-form">
+        <h3 class="form-title" id="modalHotelName">Book Your Stay</h3>
+        
+        <form id="bookingForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="firstName">First Name *</label>
+              <input type="text" id="firstName" name="firstName" required>
+            </div>
+            <div class="form-group">
+              <label for="lastName">Last Name *</label>
+              <input type="text" id="lastName" name="lastName" required>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="email">Email Address *</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="phone">Phone Number *</label>
+            <input type="tel" id="phone" name="phone" required>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="checkIn">Check-in Date *</label>
+              <input type="date" id="checkIn" name="checkIn" required>
+            </div>
+            <div class="form-group">
+              <label for="checkOut">Check-out Date *</label>
+              <input type="date" id="checkOut" name="checkOut" required>
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="guests">Number of Guests</label>
+              <select id="guests" name="guests">
+                <option value="1">1 Guest</option>
+                <option value="2" selected>2 Guests</option>
+                <option value="3">3 Guests</option>
+                <option value="4">4 Guests</option>
+                <option value="5+">5+ Guests</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="roomType">Room Type</label>
+              <select id="roomType" name="roomType">
+                <option value="standard">Standard Room</option>
+                <option value="deluxe">Deluxe Room</option>
+                <option value="suite">Suite</option>
+                <option value="presidential">Presidential Suite</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="specialRequests">Special Requests</label>
+            <textarea id="specialRequests" name="specialRequests" rows="3" placeholder="Any special requests or preferences..."></textarea>
+          </div>
+          
+          <button type="submit" class="book-btn">Complete Booking</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Hotel data with multiple images for carousel
+    const hotelData = [
+      {
+        id: 1,
+        name: "Grand Palace Hotel",
+        location: "Kigali, Rwanda",
+        images: [
+          "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800&h=300&fit=crop",
+          "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&h=300&fit=crop",
+          "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800&h=300&fit=crop"
+        ],
+        originalPrice: 299,
+        discountedPrice: 199,
+        discount: 33,
+        rating: 4.8
+      },
+      {
+        id: 2,
+        name: "Kigali Heights Suites",
+        location: "Kigali, Rwanda",
+        images: [
+          "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&h=300&fit=crop",
+          "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&h=300&fit=crop",
+          "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800&h=300&fit=crop"
+        ],
+        originalPrice: 179,
+        discountedPrice: 129,
+        discount: 28,
+        rating: 4.5
+      },
+      {
+        id: 3,
+        name: "Lake View Resort",
+        location: "Rubavu, Rwanda",
+        images: [
+          "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&h=300&fit=crop",
+          "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800&h=300&fit=crop",
+          "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&h=300&fit=crop"
+        ],
+        originalPrice: 249,
+        discountedPrice: 149,
+        discount: 40,
+        rating: 4.7
+      },
+      {
+        id: 4,
+        name: "Mountain Retreat",
+        location: "Musanze, Rwanda",
+        images: [
+          "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800&h=300&fit=crop",
+          "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&h=300&fit=crop",
+          "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800&h=300&fit=crop"
+        ],
+        originalPrice: 399,
+        discountedPrice: 249,
+        discount: 38,
+        rating: 4.6
+      },
+      {
+        id: 5,
+        name: "City Center Hotel",
+        location: "Kigali, Rwanda",
+        images: [
+          "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&h=300&fit=crop",
+          "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800&h=300&fit=crop",
+          "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&h=300&fit=crop"
+        ],
+        originalPrice: 349,
+        discountedPrice: 199,
+        discount: 43,
+        rating: 4.9
+      },
+      {
+        id: 6,
+        name: "Nyungwe Forest Lodge",
+        location: "Nyungwe, Rwanda",
+        images: [
+          "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800&h=300&fit=crop",
+          "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&h=300&fit=crop",
+          "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800&h=300&fit=crop"
+        ],
+        originalPrice: 229,
+        discountedPrice: 159,
+        discount: 31,
+        rating: 4.4
+      },
+      {
+        id: 7,
+        name: "Akagera Safari Lodge",
+        location: "Akagera, Rwanda",
+        images: [
+          "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&h=300&fit=crop",
+          "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&h=300&fit=crop",
+          "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800&h=300&fit=crop"
+        ],
+        originalPrice: 279,
+        discountedPrice: 199,
+        discount: 29,
+        rating: 4.8
+      },
+      {
+        id: 8,
+        name: "Business Hotel",
+        location: "Kigali, Rwanda",
+        images: [
+          "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&h=300&fit=crop",
+          "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800&h=300&fit=crop",
+          "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&h=300&fit=crop"
+        ],
+        originalPrice: 189,
+        discountedPrice: 129,
+        discount: 32,
+        rating: 4.6
+      }
+    ];
+
+    // Apartment data
+    const apartmentData = [
+      {
+        id: 101,
+        name: "Luxury Downtown Apartment",
+        location: "Kigali, Rwanda",
+        images: [
+          "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&h=300&fit=crop",
+          "https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800&h=300&fit=crop",
+          "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&h=300&fit=crop"
+        ],
+        originalPrice: 180,
+        discountedPrice: 120,
+        discount: 33,
+        rating: 4.6
+      },
+      {
+        id: 102,
+        name: "Cozy Studio Apartment",
+        location: "Kigali, Rwanda",
+        images: [
+          "https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800&h=300&fit=crop",
+          "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&h=300&fit=crop",
+          "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&h=300&fit=crop"
+        ],
+        originalPrice: 150,
+        discountedPrice: 99,
+        discount: 34,
+        rating: 4.4
+      },
+      {
+        id: 103,
+        name: "Modern City Apartment",
+        location: "Kigali, Rwanda",
+        images: [
+          "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&h=300&fit=crop",
+          "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&h=300&fit=crop",
+          "https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800&h=300&fit=crop"
+        ],
+        originalPrice: 200,
+        discountedPrice: 140,
+        discount: 30,
+        rating: 4.7
+      },
+      {
+        id: 104,
+        name: "Seaside Apartment",
+        location: "Rubavu, Rwanda",
+        images: [
+          "https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800&h=300&fit=crop",
+          "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&h=300&fit=crop",
+          "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&h=300&fit=crop"
+        ],
+        originalPrice: 160,
+        discountedPrice: 110,
+        discount: 31,
+        rating: 4.5
+      },
+      {
+        id: 105,
+        name: "Mountain View Apartment",
+        location: "Musanze, Rwanda",
+        images: [
+          "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&h=300&fit=crop",
+          "https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800&h=300&fit=crop",
+          "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&h=300&fit=crop"
+        ],
+        originalPrice: 220,
+        discountedPrice: 150,
+        discount: 32,
+        rating: 4.8
+      },
+      {
+        id: 106,
+        name: "Historic District Apartment",
+        location: "Nyanza, Rwanda",
+        images: [
+          "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&h=300&fit=crop",
+          "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&h=300&fit=crop",
+          "https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800&h=300&fit=crop"
+        ],
+        originalPrice: 140,
+        discountedPrice: 95,
+        discount: 32,
+        rating: 4.3
+      },
+      {
+        id: 107,
+        name: "Business District Apartment",
+        location: "Kigali, Rwanda",
+        images: [
+          "https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800&h=300&fit=crop",
+          "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&h=300&fit=crop",
+          "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&h=300&fit=crop"
+        ],
+        originalPrice: 190,
+        discountedPrice: 130,
+        discount: 32,
+        rating: 4.6
+      },
+      {
+        id: 108,
+        name: "Beachfront Apartment",
+        location: "Rubavu, Rwanda",
+        images: [
+          "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&h=300&fit=crop",
+          "https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800&h=300&fit=crop",
+          "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&h=300&fit=crop"
+        ],
+        originalPrice: 250,
+        discountedPrice: 175,
+        discount: 30,
+        rating: 4.9
+      }
+    ];
+
+    // Room data
+    const roomData = [
+      {
+        id: 201,
+        name: "Deluxe Single Room",
+        location: "Kigali Heights Hotel",
+        images: [
+          "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&h=300&fit=crop",
+          "https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=800&h=300&fit=crop",
+          "https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=800&h=300&fit=crop"
+        ],
+        originalPrice: 120,
+        discountedPrice: 85,
+        discount: 29,
+        rating: 4.5
+      },
+      {
+        id: 202,
+        name: "Executive Double Room",
+        location: "Grand Palace Hotel",
+        images: [
+          "https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=800&h=300&fit=crop",
+          "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&h=300&fit=crop",
+          "https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=800&h=300&fit=crop"
+        ],
+        originalPrice: 180,
+        discountedPrice: 125,
+        discount: 31,
+        rating: 4.7
+      },
+      {
+        id: 203,
+        name: "Premium Suite",
+        location: "Lake View Resort",
+        images: [
+          "https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=800&h=300&fit=crop",
+          "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&h=300&fit=crop",
+          "https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=800&h=300&fit=crop"
+        ],
+        originalPrice: 350,
+        discountedPrice: 245,
+        discount: 30,
+        rating: 4.9
+      },
+      {
+        id: 204,
+        name: "Family Room",
+        location: "Mountain Retreat",
+        images: [
+          "https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=800&h=300&fit=crop",
+          "https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=800&h=300&fit=crop",
+          "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&h=300&fit=crop"
+        ],
+        originalPrice: 200,
+        discountedPrice: 140,
+        discount: 30,
+        rating: 4.6
+      },
+      {
+        id: 205,
+        name: "Lake View Room",
+        location: "Lake View Resort",
+        images: [
+          "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&h=300&fit=crop",
+          "https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=800&h=300&fit=crop",
+          "https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=800&h=300&fit=crop"
+        ],
+        originalPrice: 280,
+        discountedPrice: 195,
+        discount: 30,
+        rating: 4.8
+      },
+      {
+        id: 206,
+        name: "Standard Room",
+        location: "City Center Hotel",
+        images: [
+          "https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=800&h=300&fit=crop",
+          "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&h=300&fit=crop",
+          "https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=800&h=300&fit=crop"
+        ],
+        originalPrice: 150,
+        discountedPrice: 105,
+        discount: 30,
+        rating: 4.4
+      },
+      {
+        id: 207,
+        name: "Penthouse Suite",
+        location: "Grand Palace Hotel",
+        images: [
+          "https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=800&h=300&fit=crop",
+          "https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=800&h=300&fit=crop",
+          "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&h=300&fit=crop"
+        ],
+        originalPrice: 400,
+        discountedPrice: 280,
+        discount: 30,
+        rating: 4.9
+      },
+      {
+        id: 208,
+        name: "Garden View Room",
+        location: "Nyungwe Forest Lodge",
+        images: [
+          "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&h=300&fit=crop",
+          "https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=800&h=300&fit=crop",
+          "https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=800&h=300&fit=crop"
+        ],
+        originalPrice: 160,
+        discountedPrice: 110,
+        discount: 31,
+        rating: 4.5
+      }
+    ];
+
+    let currentGroup = 0;
+    let currentApartmentGroup = 0;
+    let currentRoomGroup = 0;
+    const itemsPerGroup = 8;
+    const totalGroups = Math.ceil(hotelData.length / itemsPerGroup);
+    const totalApartmentGroups = Math.ceil(apartmentData.length / itemsPerGroup);
+    const totalRoomGroups = Math.ceil(roomData.length / itemsPerGroup);
+    let currentHotel = null;
+    let currentSlideIndex = 1;
+
+    // Google Sheets configuration
+    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx0cxkcUAiRNhCDyhJXKNuMmYUZNiFDCTHWlxL6Tig-Ra4tlUQASmDJY1Jn60BaUAUj/exec';
+
+    function renderHotels() {
+      const grid = document.getElementById('hotelsGrid');
+      const startIndex = currentGroup * itemsPerGroup;
+      const endIndex = Math.min(startIndex + itemsPerGroup, hotelData.length);
+      const hotelsToShow = hotelData.slice(startIndex, endIndex);
+
+      grid.innerHTML = hotelsToShow.map(hotel => `
+        <div class="accommodation-card">
+          <div class="card-image" style="background-image: url('${hotel.images[0]}')">
+            <div class="discount-badge">${hotel.discount}% OFF</div>
+          </div>
+          <div class="card-content">
+            <h3 class="card-name">${hotel.name}</h3>
+            <p class="card-location"><i class="fas fa-map-marker-alt"></i> ${hotel.location}</p>
+            <div class="price-section">
+              <div class="price-info">
+                <div class="original-price">$${hotel.originalPrice}/night</div>
+                <div class="discounted-price">$${hotel.discountedPrice}/night</div>
+              </div>
+              <div class="rating">
+                <span>⭐</span>
+                <span>${hotel.rating}</span>
+              </div>
+            </div>
+            <button class="view-details-btn" onclick="openModal(${hotel.id})">View Details & Book</button>
+          </div>
+        </div>
+      `).join('');
+
+      // Update navigation buttons
+      document.getElementById('prevBtn').disabled = currentGroup === 0;
+      document.getElementById('nextBtn').disabled = currentGroup === totalGroups - 1;
+
+      // Update page indicator
+      document.getElementById('pageIndicator').textContent = `Page ${currentGroup + 1} of ${totalGroups}`;
+    }
+
+    function changeHotelGroup(direction) {
+      const newGroup = currentGroup + direction;
+      if (newGroup >= 0 && newGroup < totalGroups) {
+        currentGroup = newGroup;
+        renderHotels();
+      }
+    }
+
+    // Apartment functions
+    function renderApartments() {
+      const grid = document.getElementById('apartmentsGrid');
+      const startIndex = currentApartmentGroup * itemsPerGroup;
+      const endIndex = Math.min(startIndex + itemsPerGroup, apartmentData.length);
+      const apartmentsToShow = apartmentData.slice(startIndex, endIndex);
+
+      grid.innerHTML = apartmentsToShow.map(apartment => `
+        <div class="accommodation-card">
+          <div class="card-image" style="background-image: url('${apartment.images[0]}')">
+            <div class="discount-badge">${apartment.discount}% OFF</div>
+          </div>
+          <div class="card-content">
+            <h3 class="card-name">${apartment.name}</h3>
+            <p class="card-location"><i class="fas fa-map-marker-alt"></i> ${apartment.location}</p>
+            <div class="price-section">
+              <div class="price-info">
+                <div class="original-price">$${apartment.originalPrice}/night</div>
+                <div class="discounted-price">$${apartment.discountedPrice}/night</div>
+              </div>
+              <div class="rating">
+                <span>⭐</span>
+                <span>${apartment.rating}</span>
+              </div>
+            </div>
+            <button class="view-details-btn" onclick="openModal(${apartment.id}, 'apartment')">View Details & Book</button>
+          </div>
+        </div>
+      `).join('');
+
+      document.getElementById('prevBtnApt').disabled = currentApartmentGroup === 0;
+      document.getElementById('nextBtnApt').disabled = currentApartmentGroup === totalApartmentGroups - 1;
+      document.getElementById('pageIndicatorApt').textContent = `Page ${currentApartmentGroup + 1} of ${totalApartmentGroups}`;
+    }
+
+    function changeApartmentGroup(direction) {
+      const newGroup = currentApartmentGroup + direction;
+      if (newGroup >= 0 && newGroup < totalApartmentGroups) {
+        currentApartmentGroup = newGroup;
+        renderApartments();
+      }
+    }
+
+    // Room functions
+    function renderRooms() {
+      const grid = document.getElementById('roomsGrid');
+      const startIndex = currentRoomGroup * itemsPerGroup;
+      const endIndex = Math.min(startIndex + itemsPerGroup, roomData.length);
+      const roomsToShow = roomData.slice(startIndex, endIndex);
+
+      grid.innerHTML = roomsToShow.map(room => `
+        <div class="accommodation-card">
+          <div class="card-image" style="background-image: url('${room.images[0]}')">
+            <div class="discount-badge">${room.discount}% OFF</div>
+          </div>
+          <div class="card-content">
+            <h3 class="card-name">${room.name}</h3>
+            <p class="card-location"><i class="fas fa-map-marker-alt"></i> ${room.location}</p>
+            <div class="price-section">
+              <div class="price-info">
+                <div class="original-price">$${room.originalPrice}/night</div>
+                <div class="discounted-price">$${room.discountedPrice}/night</div>
+              </div>
+              <div class="rating">
+                <span>⭐</span>
+                <span>${room.rating}</span>
+              </div>
+            </div>
+            <button class="view-details-btn" onclick="openModal(${room.id}, 'room')">View Details & Book</button>
+          </div>
+        </div>
+      `).join('');
+
+      document.getElementById('prevBtnRoom').disabled = currentRoomGroup === 0;
+      document.getElementById('nextBtnRoom').disabled = currentRoomGroup === totalRoomGroups - 1;
+      document.getElementById('pageIndicatorRoom').textContent = `Page ${currentRoomGroup + 1} of ${totalRoomGroups}`;
+    }
+
+    function changeRoomGroup(direction) {
+      const newGroup = currentRoomGroup + direction;
+      if (newGroup >= 0 && newGroup < totalRoomGroups) {
+        currentRoomGroup = newGroup;
+        renderRooms();
+      }
+    }
+
+    function openModal(id, type = 'hotel') {
+      let currentItem;
+      
+      if (type === 'apartment') {
+        currentItem = apartmentData.find(apartment => apartment.id === id);
+      } else if (type === 'room') {
+        currentItem = roomData.find(room => room.id === id);
+      } else {
+        currentItem = hotelData.find(hotel => hotel.id === id);
+      }
+      
+      if (!currentItem) return;
+      
+      currentHotel = currentItem;
+
+      // Set modal title
+      document.getElementById('modalHotelName').textContent = `Book ${currentItem.name}`;
+
+      // Set carousel images
+      document.getElementById('slide1').style.backgroundImage = `url('${currentItem.images[0]}')`;
+      document.getElementById('slide2').style.backgroundImage = `url('${currentItem.images[1]}')`;
+      document.getElementById('slide3').style.backgroundImage = `url('${currentItem.images[2]}')`;
+
+      // Reset carousel to first image
+      currentSlideIndex = 1;
+      showSlide(currentSlideIndex);
+
+      // Show modal
+      document.getElementById('bookingModal').style.display = 'block';
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      document.getElementById('bookingModal').style.display = 'none';
+      document.body.style.overflow = 'auto';
+      document.getElementById('bookingForm').reset();
+    }
+
+    function currentSlide(n) {
+      showSlide(currentSlideIndex = n);
+    }
+
+    function showSlide(n) {
+      const slides = document.querySelectorAll('.carousel-slide');
+      const dots = document.querySelectorAll('.carousel-dot');
+      
+      if (n > slides.length) { currentSlideIndex = 1; }
+      if (n < 1) { currentSlideIndex = slides.length; }
+      
+      slides.forEach(slide => slide.classList.remove('active'));
+      dots.forEach(dot => dot.classList.remove('active'));
+      
+      slides[currentSlideIndex - 1].classList.add('active');
+      dots[currentSlideIndex - 1].classList.add('active');
+    }
+
+    // Auto-advance carousel
+    setInterval(() => {
+      if (document.getElementById('bookingModal').style.display === 'block') {
+        currentSlideIndex++;
+        if (currentSlideIndex > 3) currentSlideIndex = 1;
+        showSlide(currentSlideIndex);
+      }
+    }, 4000);
+
+    // Form submission
+    document.getElementById('bookingForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const formData = new FormData(this);
+      const bookingData = {
+        hotelName: currentHotel.name,
+        hotelLocation: currentHotel.location,
+        originalPrice: currentHotel.originalPrice,
+        discountedPrice: currentHotel.discountedPrice,
+        firstName: formData.get('firstName'),
+        lastName: formData.get('lastName'),
+        email: formData.get('email'),
+        phone: "'" + formData.get('phone'),
+        checkIn: formData.get('checkIn'),
+        checkOut: formData.get('checkOut'),
+        guests: formData.get('guests'),
+        roomType: formData.get('roomType'),
+        specialRequests: formData.get('specialRequests'),
+        bookingDate: new Date().toISOString()
+      };
+
+      try {
+        // Send to Google Sheets
+        const response = await fetch(GOOGLE_SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(bookingData)
+        });
+
+        alert('Booking submitted successfully! We will contact you shortly to confirm your reservation.');
+        closeModal();
+      } catch (error) {
+        console.error('Error submitting booking:', error);
+        alert('There was an error submitting your booking. Please try again or contact us directly.');
+      }
+    });
+
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+      const modal = document.getElementById('bookingModal');
+      if (event.target === modal) {
+        closeModal();
+      }
+    }
+
+    // Set minimum date to today
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('checkIn').min = today;
+    document.getElementById('checkOut').min = today;
+
+    // Update checkout minimum when checkin changes
+    document.getElementById('checkIn').addEventListener('change', function() {
+      const checkInDate = new Date(this.value);
+      checkInDate.setDate(checkInDate.getDate() + 1);
+      document.getElementById('checkOut').min = checkInDate.toISOString().split('T')[0];
+    });
+
+    // Mobile menu toggle
+    document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+      document.querySelector('.navbar').classList.toggle('active');
+    });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', function(e) {
+      const navbar = document.querySelector('.navbar');
+      const menuBtn = document.querySelector('.mobile-menu-btn');
+      
+      if (navbar.classList.contains('active') && 
+          !navbar.contains(e.target) && 
+          !menuBtn.contains(e.target)) {
+        navbar.classList.remove('active');
+      }
+    });
+
+    // Initialize
+    renderHotels();
+    renderApartments();
+    renderRooms();
+  </script>
+</body>
+</html>
