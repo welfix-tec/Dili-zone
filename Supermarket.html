@@ -1,1457 +1,3907 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Supermarket Deals - Fresh Savings</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        /* CSS Variables for consistent theming */
-        :root {
-            --primary: #3b82f6;
-            --primary-dark: #2563eb;
-            --accent: #10b981;
-            --foreground: #1f2937;
-            --muted-foreground: #6b7280;
-            --background: #f9fafb;
-            --card-background: #ffffff;
-            --border: #e5e7eb;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --error: #ef4444;
-            --radius: 0.5rem;
-            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-        }
-
-        /* Base Styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background-color: var(--background);
-            color: var(--foreground);
-            line-height: 1.5;
-            padding-bottom: 80px; /* Space for the cart */
-        }
-
-        .min-h-screen {
-            min-height: 100vh;
-        }
-
-        .bg-background {
-            background-color: var(--background);
-        }
-
-        /* Utility Classes */
-        .container {
-            width: 100%;
-            margin: 0 auto;
-            padding: 0 1rem;
-        }
-
-        @media (min-width: 640px) {
-            .container {
-                max-width: 640px;
-            }
-        }
-
-        @media (min-width: 768px) {
-            .container {
-                max-width: 768px;
-            }
-        }
-
-        @media (min-width: 1024px) {
-            .container {
-                max-width: 1024px;
-            }
-        }
-
-        @media (min-width: 1280px) {
-            .container {
-                max-width: 1280px;
-            }
-        }
-
-
-         /* Header styles */
-    header {
-      background: linear-gradient(135deg, #1a2a6c, #b21f1f);
-      color: white;
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      position: sticky;
-      top: 0;
-      z-index: 100;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Supermarkets – Dili-Zone | Fresh Groceries & Deals</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root {
+      --navy: #1a2a6c;
+      --navy-dk: #0f1a4a;
+      --navy-lt: #2d3f8a;
+      --red: #b21f1f;
+      --red-lt: #cc3333;
+      --gold: #ffcc00;
+      --gold-dk: #e6b800;
+      --white: #fff;
+      --gray-100: #f5f7fa;
+      --gray-200: #e8eaf0;
+      --gray-300: #d0d4e2;
+      --gray-400: #9ba3b8;
+      --gray-500: #7a829a;
+      --gray-600: #5a6282;
+      --text: #1e2240;
+      --green: #10b981;
+      --green-dk: #059669;
+      --green-lt: #d1fae5;
+      --orange: #f59e0b;
+      --shadow-sm: 0 2px 12px rgba(26, 42, 108, .08);
+      --shadow-md: 0 6px 28px rgba(26, 42, 108, .13);
+      --shadow-lg: 0 16px 52px rgba(26, 42, 108, .18);
+      --radius: 10px;
+      --radius-lg: 16px;
+      --radius-xl: 24px;
+      --ease: cubic-bezier(.25, .46, .45, .94);
+      --spring: cubic-bezier(.34, 1.56, .64, 1);
+      --font-d: 'Playfair Display', serif;
+      --font-b: 'Plus Jakarta Sans', sans-serif;
     }
-    
-    .logo-container {
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    body {
+      font-family: var(--font-b);
+      color: var(--text);
+      background: var(--white);
+      overflow-x: hidden;
+      line-height: 1.6
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+      object-fit: cover
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer
+    }
+
+    ul {
+      list-style: none
+    }
+
+    ::selection {
+      background: rgba(255, 204, 0, .3)
+    }
+
+    ::-webkit-scrollbar {
+      width: 5px
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--gray-100)
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--navy);
+      border-radius: 3px
+    }
+
+    /* HEADER */
+    #header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 900
+    }
+
+    .header-top {
+      background: linear-gradient(135deg, var(--navy-dk), var(--navy) 60%, #1a3a8c);
+      padding: 9px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, .07)
+    }
+
+    .ht-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      color: rgba(255, 255, 255, .65)
+    }
+
+    .ht-inner .left {
+      display: flex;
+      align-items: center;
+      gap: 20px
+    }
+
+    .ht-inner .left span {
+      display: flex;
+      align-items: center;
+      gap: 6px
+    }
+
+    .ht-inner .left i {
+      color: var(--gold);
+      font-size: 11px
+    }
+
+    .ht-inner .right {
+      display: flex;
+      gap: 14px
+    }
+
+    .ht-inner .right a {
+      color: rgba(255, 255, 255, .55);
+      transition: color .2s
+    }
+
+    .ht-inner .right a:hover,
+    .ht-inner .right a.active {
+      color: var(--gold)
+    }
+
+    .header-main {
+      background: rgba(15, 26, 74, .97);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, .07)
+    }
+
+    .hm-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 20px;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px
+    }
+
+    .logo {
       display: flex;
       align-items: center;
       gap: 10px;
+      flex-shrink: 0
     }
-    
-    .logo img {
-      height: 40px;
-      transition: transform 0.3s ease;
-    }
-    
-    .logo:hover img {
-      transform: scale(1.1);
-    }
-    
-    .site-title {
-      font-size: 1.8rem;
-      font-weight: bold;
-      letter-spacing: 1px;
-    }
-    
-    .highlight {
-      color: #ffcc00;
-    }
-    
-    .navbar {
+
+    .logo-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--red), #e83030);
       display: flex;
-      gap: 1.5rem;
-    }
-    
-    .navbar a {
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 900;
       color: white;
-      text-decoration: none;
+      font-family: var(--font-d);
+      box-shadow: 0 4px 14px rgba(178, 31, 31, .4);
+      letter-spacing: -1px
+    }
+
+    .logo-text .main {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: white;
+      letter-spacing: -.3px
+    }
+
+    .logo-text .sub {
+      font-size: 9px;
       font-weight: 500;
-      padding: 0.5rem 0.8rem;
-      border-radius: 4px;
-      transition: all 0.3s ease;
+      color: var(--gold);
+      letter-spacing: 3px;
+      text-transform: uppercase
+    }
+
+    nav.main-nav {
+      display: flex;
+      align-items: center;
+      gap: 2px
+    }
+
+    nav.main-nav a {
+      padding: 8px 13px;
+      border-radius: 7px;
+      font-size: 13px;
+      font-weight: 500;
+      color: rgba(255, 255, 255, .7);
+      transition: all .25s var(--ease);
+      white-space: nowrap
+    }
+
+    nav.main-nav a:hover {
+      color: white;
+      background: rgba(255, 255, 255, .08)
+    }
+
+    nav.main-nav a.active {
+      color: white;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--red), var(--red-lt));
+      box-shadow: 0 4px 14px rgba(178, 31, 31, .4)
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0
+    }
+
+    .btn-hdr-cta {
+      background: var(--gold);
+      color: var(--navy-dk);
+      padding: 9px 18px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      border: none;
+      transition: all .3s var(--ease)
+    }
+
+    .btn-hdr-cta:hover {
+      background: var(--gold-dk);
+      transform: translateY(-1px)
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      padding: 5px
+    }
+
+    .hamburger span {
+      width: 22px;
+      height: 2px;
+      background: white;
+      border-radius: 1px;
+      transition: all .3s;
+      display: block
+    }
+
+    .hamburger.open span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px)
+    }
+
+    .hamburger.open span:nth-child(2) {
+      opacity: 0
+    }
+
+    .hamburger.open span:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -5px)
+    }
+
+    .mob-menu {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: min(320px, 85vw);
+      height: 100vh;
+      background: var(--navy-dk);
+      z-index: 800;
+      padding: 90px 24px 40px;
+      transition: right .4s var(--ease);
+      overflow-y: auto;
+      border-left: 1px solid rgba(255, 255, 255, .07)
+    }
+
+    .mob-menu.open {
+      right: 0
+    }
+
+    .mob-menu a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 13px 14px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 500;
+      color: rgba(255, 255, 255, .75);
+      transition: all .2s;
+      margin-bottom: 3px
+    }
+
+    .mob-menu a:hover,
+    .mob-menu a.active {
+      background: rgba(255, 255, 255, .08);
+      color: white
+    }
+
+    .mob-menu a.active {
+      background: var(--red)
+    }
+
+    .mob-ov {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .5);
+      z-index: 799;
+      backdrop-filter: blur(2px)
+    }
+
+    .mob-ov.open {
+      display: block
+    }
+
+    /* BREADCRUMB */
+    .breadcrumb-bar {
+      background: var(--gray-100);
+      padding: 11px 20px;
+      border-bottom: 1px solid var(--gray-200);
+      margin-top: 108px
+    }
+
+    .breadcrumb {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--gray-400)
+    }
+
+    .breadcrumb a {
+      color: var(--gray-600);
+      transition: color .2s
+    }
+
+    .breadcrumb a:hover {
+      color: var(--navy)
+    }
+
+    .breadcrumb i {
+      font-size: 10px
+    }
+
+    .breadcrumb .current {
+      color: var(--navy);
+      font-weight: 600
+    }
+
+    /* HERO */
+    .hero {
+      min-height: 560px;
+      padding: 80px 20px;
       position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden
     }
-    
-    .navbar a:hover {
-      background-color: rgba(255, 255, 255, 0.1);
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1578916171728-46686eac8d58?w=1800&q=85');
+      background-size: cover;
+      background-position: center
     }
-    
-    .navbar a::after {
+
+    .hero-bg::after {
       content: '';
       position: absolute;
-      bottom: 0;
-      left: 50%;
-      width: 0;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(15, 26, 74, .85), rgba(39, 174, 96, .75) 45%, rgba(15, 26, 74, .95))
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      max-width: 760px
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(16, 185, 129, .15);
+      border: 1px solid rgba(16, 185, 129, .3);
+      color: #10b981;
+      padding: 6px 18px;
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .5px;
+      margin-bottom: 22px;
+      animation: fup .7s var(--ease) both
+    }
+
+    .hero h1 {
+      font-family: var(--font-d);
+      font-size: clamp(2.2rem, 5.5vw, 3.8rem);
+      font-weight: 800;
+      color: white;
+      line-height: 1.1;
+      letter-spacing: -.5px;
+      margin-bottom: 16px;
+      animation: fup .7s .1s var(--ease) both
+    }
+
+    .hero h1 span {
+      color: var(--gold)
+    }
+
+    .hero p {
+      font-size: clamp(1rem, 2.5vw, 1.15rem);
+      color: rgba(255, 255, 255, .76);
+      font-weight: 300;
+      margin-bottom: 36px;
+      animation: fup .7s .2s var(--ease) both
+    }
+
+    .hero-search {
+      display: flex;
+      background: white;
+      border-radius: 14px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, .35);
+      overflow: hidden;
+      animation: fup .7s .3s var(--ease) both;
+      max-width: 680px;
+      margin: 0 auto 28px
+    }
+
+    .hs-cat {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 0 16px;
+      border-right: 1px solid var(--gray-200);
+      flex-shrink: 0;
+      min-width: 155px
+    }
+
+    .hs-cat i {
+      color: var(--gray-400);
+      font-size: 12px
+    }
+
+    .hs-cat select {
+      border: none;
+      outline: none;
+      font-family: var(--font-b);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text);
+      background: transparent;
+      cursor: pointer;
+      padding: 18px 6px 18px 0;
+      width: 100%
+    }
+
+    .hs-input {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      padding: 0 14px;
+      gap: 8px;
+      min-width: 0
+    }
+
+    .hs-input i {
+      color: var(--gray-400);
+      flex-shrink: 0
+    }
+
+    .hs-input input {
+      flex: 1;
+      border: none;
+      outline: none;
+      font-family: var(--font-b);
+      font-size: 14px;
+      color: var(--text);
+      background: transparent;
+      padding: 18px 0;
+      min-width: 0
+    }
+
+    .hs-input input::placeholder {
+      color: var(--gray-400)
+    }
+
+    .hs-btn {
+      background: linear-gradient(135deg, var(--green), var(--green-dk));
+      color: white;
+      border: none;
+      padding: 0 28px;
+      font-size: 14px;
+      font-weight: 700;
+      transition: all .3s var(--ease);
+      flex-shrink: 0
+    }
+
+    .hs-btn:hover {
+      background: linear-gradient(135deg, var(--green-dk), #047857)
+    }
+
+    .hero-stats {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 28px;
+      animation: fup .7s .4s var(--ease) both;
+      flex-wrap: wrap
+    }
+
+    .hs-stat {
+      text-align: center
+    }
+
+    .hs-stat strong {
+      display: block;
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--gold)
+    }
+
+    .hs-stat span {
+      font-size: 11px;
+      color: rgba(255, 255, 255, .55);
+      text-transform: uppercase;
+      letter-spacing: .8px
+    }
+
+    .hdiv {
+      width: 1px;
+      height: 34px;
+      background: rgba(255, 255, 255, .15)
+    }
+
+    @keyframes fup {
+      from {
+        opacity: 0;
+        transform: translateY(24px)
+      }
+
+      to {
+        opacity: 1;
+        transform: none
+      }
+    }
+
+    /* COMMON SECTIONS */
+    .sec {
+      padding: 72px 20px
+    }
+
+    .sec-alt {
+      background: var(--gray-100)
+    }
+
+    .con {
+      max-width: 1200px;
+      margin: 0 auto
+    }
+
+    .con-wide {
+      max-width: 1360px;
+      margin: 0 auto
+    }
+
+    .sec-hd {
+      text-align: center;
+      margin-bottom: 48px
+    }
+
+    .sec-lbl {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 12px
+    }
+
+    .sec-lbl::before,
+    .sec-lbl::after {
+      content: '';
+      width: 26px;
       height: 2px;
-      background-color: #ffcc00;
-      transition: all 0.3s ease;
-      transform: translateX(-50%);
-    }
-    
-    .navbar a:hover::after {
-      width: 80%;
+      background: currentColor;
+      border-radius: 1px;
+      display: block
     }
 
-        .flex {
-            display: flex;
-        }
-
-        .grid {
-            display: grid;
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        .relative {
-            position: relative;
-        }
-
-        .absolute {
-            position: absolute;
-        }
-
-        .fixed {
-            position: fixed;
-        }
-
-        .inset-0 {
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-        }
-
-        .bottom-6 {
-            bottom: 1.5rem;
-        }
-
-        .right-6 {
-            right: 1.5rem;
-        }
-
-        .left-6 {
-            left: 1.5rem;
-        }
-
-        .z-50 {
-            z-index: 50;
-        }
-
-        .h-full {
-            height: 100%;
-        }
-
-        .h-screen {
-            height: 100vh;
-        }
-
-        .h-\[60vh\] {
-            height: 60vh;
-        }
-
-        .w-full {
-            width: 100%;
-        }
-
-        .w-4 {
-            width: 1rem;
-        }
-
-        .w-5 {
-            width: 1.25rem;
-        }
-
-        .w-16 {
-            width: 4rem;
-        }
-
-        .max-w-2xl {
-            max-width: 42rem;
-        }
-
-        .max-w-4xl {
-            max-width: 56rem;
-        }
-
-        .max-w-7xl {
-            max-width: 80rem;
-        }
-
-        .max-w-md {
-            max-width: 28rem;
-        }
-
-        .mx-auto {
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .my-4 {
-            margin-top: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .mb-2 {
-            margin-bottom: 0.5rem;
-        }
-
-        .mb-4 {
-            margin-bottom: 1rem;
-        }
-
-        .mb-6 {
-            margin-bottom: 1.5rem;
-        }
-
-        .mb-8 {
-            margin-bottom: 2rem;
-        }
-
-        .mb-12 {
-            margin-bottom: 3rem;
-        }
-
-        .mr-2 {
-            margin-right: 0.5rem;
-        }
-
-        .mt-8 {
-            margin-top: 2rem;
-        }
-
-        .mt-16 {
-            margin-top: 4rem;
-        }
-
-        .overflow-hidden {
-            overflow: hidden;
-        }
-
-        .rounded {
-            border-radius: 0.25rem;
-        }
-
-        .rounded-2xl {
-            border-radius: 1rem;
-        }
-
-        .rounded-full {
-            border-radius: 9999px;
-        }
-
-        .border {
-            border-width: 1px;
-        }
-
-        .border-white\/30 {
-            border-color: rgba(255, 255, 255, 0.3);
-        }
-
-        .object-cover {
-            object-fit: cover;
-        }
-
-        .p-2 {
-            padding: 0.5rem;
-        }
-
-        .p-3 {
-            padding: 0.75rem;
-        }
-
-        .p-4 {
-            padding: 1rem;
-        }
-
-        .p-8 {
-            padding: 2rem;
-        }
-
-        .px-4 {
-            padding-left: 1rem;
-            padding-right: 1rem;
-        }
-
-        .px-8 {
-            padding-left: 2rem;
-            padding-right: 2rem;
-        }
-
-        .py-3 {
-            padding-top: 0.75rem;
-            padding-bottom: 0.75rem;
-        }
-
-        .py-4 {
-            padding-top: 1rem;
-            padding-bottom: 1rem;
-        }
-
-        .py-16 {
-            padding-top: 4rem;
-            padding-bottom: 4rem;
-        }
-
-        .pl-10 {
-            padding-left: 2.5rem;
-        }
-
-        .text-center {
-            text-align: center;
-        }
-
-        .text-2xl {
-            font-size: 1.5rem;
-        }
-
-        .text-3xl {
-            font-size: 1.875rem;
-        }
-
-        .text-4xl {
-            font-size: 2.25rem;
-        }
-
-        .text-5xl {
-            font-size: 3rem;
-        }
-
-        .text-lg {
-            font-size: 1.125rem;
-        }
-
-        .text-xl {
-            font-size: 1.25rem;
-        }
-
-        .text-white {
-            color: white;
-        }
-
-        .text-white\/90 {
-            color: rgba(255, 255, 255, 0.9);
-        }
-
-        .text-foreground {
-            color: var(--foreground);
-        }
-
-        .text-muted-foreground {
-            color: var(--muted-foreground);
-        }
-
-        .text-primary {
-            color: var(--primary);
-        }
-
-        .text-accent {
-            color: var(--accent);
-        }
-
-        .bg-gradient-to-r {
-            background-image: linear-gradient(to right, var(--tw-gradient-stops));
-        }
-
-        .from-black\/60 {
-            --tw-gradient-from: rgba(0, 0, 0, 0.6);
-            --tw-gradient-to: rgba(0, 0, 0, 0);
-            --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
-        }
-
-        .to-black\/30 {
-            --tw-gradient-to: rgba(0, 0, 0, 0.3);
-        }
-
-        .from-primary\/10 {
-            --tw-gradient-from: rgba(59, 130, 246, 0.1);
-            --tw-gradient-to: rgba(59, 130, 246, 0);
-            --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
-        }
-
-        .to-success\/10 {
-            --tw-gradient-to: rgba(16, 185, 129, 0.1);
-        }
-
-        .bg-white {
-            background-color: white;
-        }
-
-        .bg-white\/10 {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-
-        .backdrop-blur-sm {
-            backdrop-filter: blur(4px);
-        }
-
-        .space-y-4 > * + * {
-            margin-top: 1rem;
-        }
-
-        .space-y-6 > * + * {
-            margin-top: 1.5rem;
-        }
-
-        .gap-4 {
-            gap: 1rem;
-        }
-
-        .gap-6 {
-            gap: 1.5rem;
-        }
-
-        .grid-cols-1 {
-            grid-template-columns: repeat(1, minmax(0, 1fr));
-        }
-
-        .leading-tight {
-            line-height: 1.25;
-        }
-
-        .shadow-md {
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-        }
-
-        .shadow-lg {
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        }
-
-        /* Component Styles */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: var(--radius);
-            font-weight: 500;
-            transition: all 0.2s ease;
-            cursor: pointer;
-            outline: none;
-            border: none;
-        }
-
-        .btn:focus {
-            outline: 2px solid var(--primary);
-            outline-offset: 2px;
-        }
-
-        .btn-lg {
-            padding: 0.875rem 2rem;
-            font-size: 1.125rem;
-        }
-
-        .btn-hero {
-            background-color: var(--primary);
-            color: white;
-        }
-
-        .btn-hero:hover {
-            background-color: var(--primary-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
-        }
-
-        .btn-default {
-            background-color: var(--primary);
-            color: white;
-        }
-
-        .btn-default:hover {
-            background-color: var(--primary-dark);
-            transform: translateY(-2px);
-        }
-
-        .btn-outline {
-            background-color: transparent;
-            border: 1px solid currentColor;
-        }
-
-        .btn-outline:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-            transform: translateY(-2px);
-        }
-
-        .btn-success {
-            background-color: var(--success);
-            color: white;
-        }
-
-        .btn-success:hover {
-            background-color: #0d9669;
-            transform: translateY(-2px);
-        }
-
-        .btn-add-to-cart {
-            background-color: var(--primary);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: var(--radius);
-            transition: all 0.3s ease;
-        }
-
-        .btn-add-to-cart:hover {
-            background-color: var(--primary-dark);
-            transform: scale(1.05);
-            box-shadow: 0 4px 8px rgba(59, 130, 246, 0.4);
-        }
-
-        .btn-add-to-cart.added {
-            background-color: var(--success);
-            animation: pulse 0.5s;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
-
-        .input {
-            width: 100%;
-            border-radius: var(--radius);
-            border: 1px solid var(--border);
-            padding: 0.625rem 1rem;
-            font-size: 1rem;
-            transition: border-color 0.2s ease;
-        }
-
-        .input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
-        }
-
-        .deal-card {
-            background-color: var(--card-background);
-            border-radius: var(--radius);
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .deal-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
-
-        .deal-card-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
-
-        .deal-card-content {
-            padding: 1.25rem;
-        }
-
-        .deal-card-title {
-            font-size: 1.125rem;
-            font-weight: 600;
-            margin-bottom: 0.75rem;
-            color: var(--foreground);
-        }
-
-        .deal-card-pricing {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 0.75rem;
-        }
-
-        .deal-card-original {
-            text-decoration: line-through;
-            color: var(--muted-foreground);
-        }
-
-        .deal-card-discounted {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--error);
-        }
-
-        .deal-card-discount-badge {
-            background-color: var(--error);
-            color: white;
-            padding: 0.25rem 0.5rem;
-            border-radius: 9999px;
-            font-size: 0.875rem;
-            font-weight: 600;
-        }
-
-        .deal-card-meta {
-            display: flex;
-            justify-content: space-between;
-            color: var(--muted-foreground);
-            font-size: 0.875rem;
-            margin-bottom: 1rem;
-        }
-
-        .deal-card-rating {
-            display: flex;
-            align-items: center;
-            gap: 0.25rem;
-        }
-
-        .deal-card-actions {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .filter-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 0.75rem;
-            margin-top: 1.5rem;
-        }
-
-        .filter-btn {
-            padding: 0.5rem 1rem;
-            border-radius: 9999px;
-            background-color: var(--card-background);
-            border: 1px solid var(--border);
-            font-size: 0.875rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .filter-btn:hover {
-            background-color: #f3f4f6;
-            transform: translateY(-2px);
-        }
-
-        .filter-btn.active {
-            background-color: var(--primary);
-            color: white;
-            border-color: var(--primary);
-        }
-
-        /* Cart Styles */
-        .cart-container {
-            position: fixed;
-            bottom: 6rem;
-            right: 1.5rem;
-            z-index: 50;
-            width: 90%;
-            max-width: 400px;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-            transform: translateY(100vh);
-            transition: transform 0.4s ease;
-            max-height: 70vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .cart-container.open {
-            transform: translateY(0);
-        }
-
-        .cart-header {
-            padding: 1rem;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: var(--primary);
-            color: white;
-            border-radius: 12px 12px 0 0;
-        }
-
-        .cart-items {
-            padding: 1rem;
-            overflow-y: auto;
-            flex-grow: 1;
-        }
-
-        .cart-item {
-            display: flex;
-            gap: 0.75rem;
-            padding: 0.75rem 0;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .cart-item:last-child {
-            border-bottom: none;
-        }
-
-        .cart-item-image {
-            width: 60px;
-            height: 60px;
-            object-fit: cover;
-            border-radius: 8px;
-        }
-
-        .cart-item-details {
-            flex-grow: 1;
-        }
-
-        .cart-item-title {
-            font-weight: 500;
-            margin-bottom: 0.25rem;
-        }
-
-        .cart-item-price {
-            color: var(--primary);
-            font-weight: 600;
-        }
-
-        .cart-item-actions {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .cart-item-quantity {
-            font-weight: 600;
-        }
-
-        .cart-item-remove {
-            color: var(--error);
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 1.2rem;
-            padding: 0.25rem;
-        }
-
-        .cart-footer {
-            padding: 1rem;
-            border-top: 1px solid var(--border);
-            background: #f9fafb;
-            border-radius: 0 0 12px 12px;
-        }
-
-        .cart-total {
-            display: flex;
-            justify-content: space-between;
-            font-weight: 600;
-            font-size: 1.1rem;
-            margin-bottom: 1rem;
-        }
-
-        .cart-checkout {
-            width: 100%;
-            padding: 0.75rem;
-            background: var(--success);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .cart-checkout:hover {
-            background: #0d9669;
-        }
-
-        .cart-btn {
-            position: fixed;
-            bottom: 1.5rem;
-            right: 1.5rem;
-            z-index: 40;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background-color: var(--primary);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s ease;
-        }
-
-        .cart-btn:hover {
-            background-color: var(--primary-dark);
-            transform: translateY(-3px);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
-        }
-
-        .cart-badge {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            background-color: var(--error);
-            color: white;
-            border-radius: 50%;
-            width: 24px;
-            height: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        .empty-cart {
-            text-align: center;
-            padding: 2rem;
-            color: var(--muted-foreground);
-        }
-
-        /* Responsive adjustments */
-        @media (min-width: 768px) {
-            .md\:grid-cols-2 {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-            }
-            
-            .md\:text-4xl {
-                font-size: 2.25rem;
-            }
-            
-            .md\:text-6xl {
-                font-size: 3.75rem;
-            }
-            
-            .md\:text-2xl {
-                font-size: 1.5rem;
-            }
-            
-            .cart-container {
-                right: 1.5rem;
-                left: auto;
-            }
-        }
-
-        @media (min-width: 1024px) {
-            .lg\:grid-cols-3 {
-                grid-template-columns: repeat(3, minmax(0, 1fr));
-            }
-        }
-
-        @media (max-width: 768px) {
-            .flex-col {
-                flex-direction: column;
-            }
-            
-            .text-5xl {
-                font-size: 2.25rem;
-            }
-            
-            .h-\[60vh\] {
-                height: 50vh;
-            }
-            
-            .cart-container {
-                width: 90%;
-                left: 5%;
-                right: 5%;
-            }
-        }
-    </style>
-    </head>
-<body>
-
-  <header>
-    <div class="logo-container">
-      <div class="logo">
-        <img src="images/logo.png" alt="Dili-Zone Logo" height="40" />
-      </div>
-      <div class="logo">
-        <span class="site-title">Dili<span class="highlight">-Zone</span></span>
-      </div>
-    </div>
-
-    <nav class="navbar">
-      <a href="index.html">Home</a>
-      <a href="restaurants.html">Restaurants</a>
-      <a href="Accomodation.html">Hotels</a>
-      <a href="supermarket.html">Supermarkets</a>
-      <a href="services.html">Services</a>
-      <a href="industries.html">Industries</a>
-      <a href="shops.html">Shops</a>
-    </nav>
-  </header>
+    .sec-ttl {
+      font-family: var(--font-d);
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1.2;
+      letter-spacing: -.3px;
+      margin-bottom: 12px
+    }
+
+    .sec-ttl span {
+      color: var(--green)
+    }
+
+    .sec-sub {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--gray-600);
+      max-width: 520px;
+      margin: 0 auto
+    }
+
+    .fu {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .7s var(--ease), transform .7s var(--ease)
+    }
+
+    .fu.on {
+      opacity: 1;
+      transform: none
+    }
+
+    .fu.d1 {
+      transition-delay: .1s
+    }
+
+    .fu.d2 {
+      transition-delay: .2s
+    }
+
+    .fu.d3 {
+      transition-delay: .3s
+    }
+
+    /* CATEGORY GRID */
+    .grocery-cat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 18px
+    }
+
+    .grocery-cat {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 28px 20px;
+      text-align: center;
+      border: 1.5px solid var(--gray-200);
+      box-shadow: var(--shadow-sm);
+      transition: all .35s var(--spring);
+      cursor: pointer
+    }
+
+    .grocery-cat:hover {
+      transform: translateY(-7px);
+      box-shadow: var(--shadow-lg);
+      border-color: rgba(16, 185, 129, .3)
+    }
+
+    .grocery-cat.active {
+      background: linear-gradient(135deg, var(--green), var(--green-dk));
+      border-color: var(--green);
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-md)
+    }
+
+    .g-cat-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: rgba(16, 185, 129, .1);
+      color: var(--green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      margin: 0 auto 16px;
+      transition: all .3s var(--ease)
+    }
+
+    .grocery-cat:hover .g-cat-icon {
+      background: var(--green);
+      color: white;
+      transform: scale(1.1)
+    }
+
+    .grocery-cat.active .g-cat-icon {
+      background: rgba(255, 255, 255, .2);
+      color: white
+    }
+
+    .g-cat-name {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--text);
+      transition: color .3s
+    }
+
+    .grocery-cat.active .g-cat-name {
+      color: white
+    }
+
+    .g-cat-count {
+      font-size: 12px;
+      color: var(--gray-400);
+      margin-top: 5px;
+      transition: color .3s
+    }
+
+    .grocery-cat.active .g-cat-count {
+      color: rgba(255, 255, 255, .8)
+    }
+
+    /* DEALS CAROUSEL */
+    .deals-hdr {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+      gap: 12px
+    }
+
+    .deals-hdr h2 {
+      font-family: var(--font-d);
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--text)
+    }
+
+    .carousel-outer {
+      overflow: hidden
+    }
+
+    .carousel-track {
+      display: flex;
+      gap: 20px;
+      transition: transform .5s var(--ease)
+    }
+
+    .deal-card {
+      flex: 0 0 calc(25% - 15px);
+      background: white;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--gray-200);
+      transition: all .35s var(--spring)
+    }
+
+    .deal-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg)
+    }
+
+    .deal-img {
+      position: relative;
+      height: 190px;
+      overflow: hidden
+    }
+
+    .deal-img img {
+      width: 100%;
+      height: 100%;
+      transition: transform .6s var(--ease)
+    }
+
+    .deal-card:hover .deal-img img {
+      transform: scale(1.06)
+    }
+
+    .disc-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: var(--red);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-weight: 800;
+      font-size: 11px;
+      color: white;
+      z-index: 2;
+      letter-spacing: .3px
+    }
+
+    .deal-timer {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      background: rgba(0, 0, 0, .65);
+      backdrop-filter: blur(6px);
+      color: white;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 10px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 5px
+    }
+
+    .deal-timer i {
+      color: var(--gold);
+      font-size: 9px
+    }
+
+    .deal-body {
+      padding: 16px
+    }
+
+    .deal-store {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--green);
+      letter-spacing: .8px;
+      text-transform: uppercase;
+      margin-bottom: 4px
+    }
+
+    .deal-name {
+      font-size: .95rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      min-height: 2.8em
+    }
+
+    .deal-price {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      margin-bottom: 12px
+    }
+
+    .price-new {
+      font-size: 1.2rem;
+      font-weight: 900;
+      color: var(--green);
+      font-family: var(--font-d)
+    }
+
+    .price-old {
+      font-size: .85rem;
+      color: var(--gray-400);
+      text-decoration: line-through
+    }
+
+    .btn-deal {
+      width: 100%;
+      background: linear-gradient(135deg, var(--green), var(--green-dk));
+      color: white;
+      border: none;
+      padding: 11px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      transition: all .3s var(--ease);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px
+    }
+
+    .btn-deal:hover {
+      background: linear-gradient(135deg, var(--green-dk), #047857);
+      transform: translateY(-1px)
+    }
+
+    .car-nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      margin-top: 28px
+    }
+
+    .car-arrow {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: white;
+      border: 1.5px solid var(--gray-200);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      color: var(--text);
+      cursor: pointer;
+      transition: all .3s var(--ease);
+      box-shadow: var(--shadow-sm)
+    }
+
+    .car-arrow:hover {
+      background: var(--green);
+      border-color: var(--green);
+      color: white
+    }
+
+    .car-dots {
+      display: flex;
+      gap: 7px
+    }
+
+    .cdot {
+      width: 8px;
+      height: 8px;
+      border-radius: 4px;
+      background: var(--gray-200);
+      cursor: pointer;
+      transition: all .3s
+    }
+
+    .cdot.on {
+      width: 22px;
+      background: var(--green)
+    }
+
+    .btn-view-all {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--green);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: gap .2s;
+      background: none;
+      border: none;
+      cursor: pointer
+    }
+
+    .btn-view-all:hover {
+      gap: 9px
+    }
+
+    /* ALL DEALS PANEL */
+    .all-deals-panel {
+      display: none;
+      margin-top: 40px;
+      background: var(--gray-100);
+      border-radius: var(--radius-xl);
+      padding: 32px 28px;
+      border: 1.5px solid var(--gray-200)
+    }
+
+    .all-deals-panel.show {
+      display: block;
+      animation: fup .5s var(--ease) both
+    }
+
+    .adp-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 12px
+    }
+
+    .adp-header h3 {
+      font-family: var(--font-d);
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--text)
+    }
+
+    .adp-close {
+      background: var(--gray-200);
+      border: none;
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--gray-600);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all .2s
+    }
+
+    .adp-close:hover {
+      background: var(--red);
+      color: white
+    }
+
+    .all-deals-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 20px
+    }
+
+    .all-deals-grid .deal-card {
+      flex: none
+    }
+
+    /* TOP STORES */
+    .pop-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px
+    }
+
+    .pop-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      border: 1.5px solid var(--gray-200);
+      transition: all .35s var(--spring)
+    }
+
+    .pop-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
+      border-color: rgba(16, 185, 129, .2)
+    }
+
+    .pop-banner {
+      height: 160px;
+      position: relative;
+      overflow: hidden
+    }
+
+    .pop-banner img {
+      width: 100%;
+      height: 100%;
+      transition: transform .6s var(--ease)
+    }
+
+    .pop-card:hover .pop-banner img {
+      transform: scale(1.05)
+    }
+
+    .pop-logo-wrap {
+      position: absolute;
+      bottom: -18px;
+      left: 16px
+    }
+
+    .pop-logo {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: white;
+      border: 2.5px solid white;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      color: var(--green)
+    }
+
+    .verified-ico {
+      display: inline-flex;
+      width: 16px;
+      height: 16px;
+      background: var(--green);
+      border-radius: 50%;
+      align-items: center;
+      justify-content: center;
+      margin-left: 5px
+    }
+
+    .verified-ico i {
+      font-size: 7px;
+      color: white
+    }
+
+    .pop-body {
+      padding: 28px 16px 18px
+    }
+
+    .pop-name {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 5px;
+      display: flex;
+      align-items: center
+    }
+
+    .pop-desc {
+      font-size: 12px;
+      color: var(--gray-600);
+      line-height: 1.6;
+      margin-bottom: 12px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden
+    }
+
+    .pop-meta {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 14px;
+      flex-wrap: wrap
+    }
+
+    .pop-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      color: var(--gray-600)
+    }
+
+    .pop-meta-item i {
+      font-size: 10px;
+      color: var(--green)
+    }
+
+    .open-tag {
+      color: var(--green);
+      font-weight: 700
+    }
+
+    .pop-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 12px;
+      border-top: 1px solid var(--gray-200)
+    }
+
+    .delivery-tag {
+      font-size: 11px;
+      color: var(--gray-400);
+      display: flex;
+      align-items: center;
+      gap: 5px
+    }
+
+    .delivery-tag i {
+      color: var(--green);
+      font-size: 10px
+    }
+
+    .btn-browse {
+      background: linear-gradient(135deg, var(--green), var(--green-dk));
+      color: white;
+      border: none;
+      padding: 9px 18px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      transition: all .3s var(--ease)
+    }
+
+    .btn-browse:hover {
+      transform: scale(1.04);
+      box-shadow: 0 4px 14px rgba(16, 185, 129, .4)
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--navy-dk);
+      padding: 60px 20px 0;
+      color: rgba(255, 255, 255, .65)
+    }
+
+    .ft-inner {
+      max-width: 1200px;
+      margin: 0 auto
+    }
+
+    .ft-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 44px;
+      margin-bottom: 48px
+    }
+
+    .ft-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px
+    }
+
+    .ft-desc {
+      font-size: 14px;
+      line-height: 1.72;
+      margin-bottom: 20px;
+      max-width: 255px
+    }
+
+    .soc-links {
+      display: flex;
+      gap: 8px
+    }
+
+    .soc-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 9px;
+      background: rgba(255, 255, 255, .08);
+      border: 1px solid rgba(255, 255, 255, .1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255, 255, 255, .55);
+      font-size: 13px;
+      transition: all .3s var(--ease)
+    }
+
+    .soc-btn:hover {
+      background: var(--red);
+      border-color: var(--red);
+      color: white;
+      transform: translateY(-2px)
+    }
+
+    .ft-col h4 {
+      font-size: 13px;
+      font-weight: 800;
+      color: white;
+      letter-spacing: .8px;
+      text-transform: uppercase;
+      margin-bottom: 16px
+    }
+
+    .ft-col ul li {
+      margin-bottom: 10px
+    }
+
+    .ft-col a {
+      font-size: 14px;
+      color: rgba(255, 255, 255, .5);
+      transition: color .2s
+    }
+
+    .ft-col a:hover {
+      color: var(--gold)
+    }
+
+    .ft-contact {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      margin-bottom: 12px;
+      font-size: 13px
+    }
+
+    .ft-contact i {
+      color: var(--gold);
+      font-size: 12px;
+      margin-top: 2px;
+      flex-shrink: 0
+    }
+
+    .ft-bot {
+      border-top: 1px solid rgba(255, 255, 255, .07);
+      padding: 20px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 13px
+    }
+
+    .ft-bot a {
+      color: rgba(255, 255, 255, .35);
+      transition: color .2s
+    }
+
+    .ft-bot a:hover {
+      color: var(--gold)
+    }
+
+    #btt {
+      position: fixed;
+      bottom: 26px;
+      right: 22px;
+      z-index: 600;
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: var(--navy);
+      color: white;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      box-shadow: var(--shadow-lg);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition: all .35s var(--ease);
+      cursor: pointer
+    }
+
+    #btt.on {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0)
+    }
+
+    #btt:hover {
+      background: var(--red);
+      transform: translateY(-3px)
+    }
+
+    /* ════ SHARED MODAL OVERLAY ════ */
+    .mov {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 20, 60, .92);
+      backdrop-filter: blur(12px);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity .35s var(--ease), visibility .35s
+    }
+
+    .mov.open {
+      opacity: 1;
+      visibility: visible
+    }
+
+    .mbox {
+      background: white;
+      border-radius: var(--radius-xl);
+      width: 100%;
+      position: relative;
+      transform: translateY(32px) scale(.96);
+      transition: transform .45s var(--spring);
+      box-shadow: 0 30px 90px rgba(0, 0, 0, .45);
+      overflow: hidden;
+      max-height: 94vh;
+      display: flex;
+      flex-direction: column
+    }
+
+    .mov.open .mbox {
+      transform: none
+    }
+
+    .mclose {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 36px;
+      height: 36px;
+      background: rgba(255, 255, 255, .9);
+      border: none;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--text);
+      z-index: 10;
+      transition: all .2s;
+      box-shadow: var(--shadow-sm)
+    }
+
+    .mclose:hover {
+      background: var(--red);
+      color: white;
+      transform: scale(1.1)
+    }
+
+    /* SHARED FORM */
+    .fg {
+      margin-bottom: 14px
+    }
+
+    .fg label {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--gray-600);
+      margin-bottom: 5px;
+      letter-spacing: .5px;
+      text-transform: uppercase
+    }
+
+    .fg input,
+    .fg select,
+    .fg textarea {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1.5px solid var(--gray-200);
+      border-radius: 10px;
+      font-family: var(--font-b);
+      font-size: 13px;
+      color: var(--text);
+      background: var(--gray-100);
+      transition: all .25s
+    }
+
+    .fg input:focus,
+    .fg select:focus,
+    .fg textarea:focus {
+      outline: none;
+      border-color: var(--green);
+      background: white;
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, .1)
+    }
+
+    .fg input[readonly] {
+      background: #f0fdf4;
+      color: var(--green-dk);
+      font-weight: 700;
+      cursor: default
+    }
+
+    .fg textarea {
+      resize: vertical;
+      min-height: 72px
+    }
+
+    .frow {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px
+    }
+
+    .btn-main {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(135deg, var(--green), var(--green-dk));
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all .3s var(--ease);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 6px
+    }
+
+    .btn-main:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(16, 185, 129, .35)
+    }
+
+    .btn-main:disabled {
+      opacity: .65;
+      cursor: not-allowed;
+      transform: none
+    }
+
+    .ss {
+      display: none;
+      text-align: center;
+      padding: 48px 32px
+    }
+
+    .ss.show {
+      display: block
+    }
+
+    .ss-icon {
+      width: 80px;
+      height: 80px;
+      background: rgba(16, 185, 129, .1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 2.2rem;
+      color: var(--green)
+    }
+
+    .ss h3 {
+      font-family: var(--font-d);
+      font-size: 1.9rem;
+      color: var(--text);
+      margin-bottom: 8px
+    }
+
+    .ss p {
+      color: var(--gray-600);
+      font-size: .95rem;
+      line-height: 1.7;
+      margin-bottom: 22px
+    }
+
+    .ss-checks {
+      background: var(--green-lt);
+      border-radius: 12px;
+      padding: 16px;
+      text-align: left;
+      margin-bottom: 24px
+    }
+
+    .ss-checks div {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      font-size: .85rem;
+      color: var(--gray-600);
+      margin-bottom: 8px
+    }
+
+    .ss-checks div:last-child {
+      margin-bottom: 0
+    }
+
+    .ss-checks i {
+      color: var(--green);
+      font-size: 14px
+    }
+
+    /* ════ DEAL MODAL ════ */
+    #dealModal .mbox {
+      max-width: 600px
+    }
+
+    .ddm-hero {
+      position: relative;
+      height: 270px;
+      flex-shrink: 0
+    }
+
+    .ddm-hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover
+    }
+
+    .ddm-hero-grad {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 35%, rgba(0, 0, 0, .72))
+    }
+
+    .ddm-hero-badge {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      background: var(--red);
+      color: white;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-weight: 900;
+      font-size: 13px
+    }
+
+    .ddm-hero-store {
+      position: absolute;
+      bottom: 16px;
+      left: 16px;
+      background: rgba(16, 185, 129, .9);
+      color: white;
+      padding: 5px 14px;
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 6px
+    }
+
+    .ddm-body {
+      padding: 24px;
+      overflow-y: auto;
+      flex: 1
+    }
+
+    .ddm-title {
+      font-family: var(--font-d);
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 8px
+    }
+
+    .ddm-prices {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 8px
+    }
+
+    .ddm-pnew {
+      font-size: 1.55rem;
+      font-weight: 900;
+      color: var(--green);
+      font-family: var(--font-d)
+    }
+
+    .ddm-pold {
+      font-size: .95rem;
+      color: var(--gray-400);
+      text-decoration: line-through
+    }
+
+    .ddm-save {
+      background: rgba(16, 185, 129, .1);
+      color: var(--green);
+      padding: 4px 10px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 700
+    }
+
+    .ddm-desc {
+      font-size: .88rem;
+      color: var(--gray-600);
+      line-height: 1.72;
+      margin-bottom: 18px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--gray-200)
+    }
+
+    .flabel {
+      font-size: .78rem;
+      font-weight: 800;
+      color: var(--navy);
+      letter-spacing: .8px;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 7px
+    }
+
+    .flabel i {
+      color: var(--green)
+    }
+
+    /* ════ STORE MODAL ════ */
+    #storeModal .mbox {
+      max-width: 900px
+    }
+
+    .sm-banner {
+      height: 220px;
+      position: relative;
+      flex-shrink: 0
+    }
+
+    .sm-banner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover
+    }
+
+    .sm-banner-grad {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 20%, rgba(10, 20, 60, .87))
+    }
+
+    .sm-banner-info {
+      position: absolute;
+      bottom: 20px;
+      left: 24px;
+      right: 180px;
+      color: white
+    }
+
+    .sm-banner-info h2 {
+      font-family: var(--font-d);
+      font-size: 1.8rem;
+      font-weight: 800;
+      margin-bottom: 5px
+    }
+
+    .sm-meta {
+      display: flex;
+      gap: 14px;
+      font-size: 13px;
+      opacity: .85;
+      flex-wrap: wrap
+    }
+
+    .sm-meta span {
+      display: flex;
+      align-items: center;
+      gap: 5px
+    }
+
+    .sm-rating-chip {
+      position: absolute;
+      top: 14px;
+      right: 58px;
+      background: rgba(0, 0, 0, .55);
+      backdrop-filter: blur(8px);
+      color: var(--gold);
+      padding: 6px 14px;
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 5px
+    }
+
+    .sm-tabs-wrap {
+      display: flex;
+      gap: 6px;
+      padding: 14px 20px 0;
+      border-bottom: 2px solid var(--gray-200);
+      flex-shrink: 0;
+      overflow-x: auto;
+      scrollbar-width: none
+    }
+
+    .sm-tabs-wrap::-webkit-scrollbar {
+      display: none
+    }
+
+    .sm-tab {
+      padding: 9px 18px;
+      border-radius: 10px 10px 0 0;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--gray-600);
+      background: var(--gray-100);
+      border: 1.5px solid transparent;
+      border-bottom: none;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all .25s var(--ease);
+      flex-shrink: 0;
+      margin-bottom: -2px
+    }
+
+    .sm-tab:hover {
+      background: var(--gray-200);
+      color: var(--text)
+    }
+
+    .sm-tab.active {
+      background: white;
+      color: var(--green);
+      border-color: var(--gray-200);
+      font-weight: 800
+    }
+
+    .prod-card {
+      background: white;
+      border: 1.5px solid var(--gray-200);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: all .3s var(--spring)
+    }
+
+    .prod-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: rgba(16, 185, 129, .35)
+    }
+
+    .prod-img-wrap {
+      height: 140px;
+      position: relative;
+      overflow: hidden
+    }
+
+    .prod-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .5s var(--ease)
+    }
+
+    .prod-card:hover .prod-img-wrap img {
+      transform: scale(1.07)
+    }
+
+    .prod-badge {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      padding: 3px 9px;
+      border-radius: 6px;
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+      color: white
+    }
+
+    .bt-new {
+      background: var(--navy)
+    }
+
+    .bt-liked {
+      background: var(--orange)
+    }
+
+    .bt-ordered {
+      background: var(--red)
+    }
+
+    .bt-discount {
+      background: var(--green)
+    }
+
+    .prod-body {
+      padding: 12px
+    }
+
+    .prod-name {
+      font-weight: 700;
+      font-size: .875rem;
+      color: var(--text);
+      margin-bottom: 5px;
+      line-height: 1.3
+    }
+
+    .prod-prices {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      margin-bottom: 10px
+    }
+
+    .pp-new {
+      font-weight: 900;
+      color: var(--green);
+      font-size: 1rem;
+      font-family: var(--font-d)
+    }
+
+    .pp-old {
+      font-size: .75rem;
+      color: var(--gray-400);
+      text-decoration: line-through
+    }
+
+    .prod-add-wrap {
+      display: flex;
+      align-items: center;
+      gap: 6px
+    }
+
+    .btn-atc {
+      flex: 1;
+      padding: 9px 6px;
+      border: none;
+      background: var(--green);
+      color: white;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: .8rem;
+      transition: all .25s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px
+    }
+
+    .btn-atc:hover {
+      background: var(--green-dk)
+    }
+
+    .pqc {
+      display: none;
+      align-items: center;
+      gap: 6px;
+      background: var(--green-lt);
+      border-radius: 8px;
+      padding: 4px 8px
+    }
+
+    .pqc.show {
+      display: flex
+    }
+
+    .pqb {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      border: 1.5px solid var(--green);
+      background: white;
+      color: var(--green);
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all .2s;
+      line-height: 1
+    }
+
+    .pqb:hover {
+      background: var(--green);
+      color: white
+    }
+
+    .pqn {
+      font-size: .875rem;
+      font-weight: 800;
+      color: var(--green-dk);
+      min-width: 18px;
+      text-align: center
+    }
+
+    /* Cart sidebar */
+    .sm-cart-col {
+      border-left: 2px solid var(--gray-200);
+      background: #fafbfc;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden
+    }
+
+    .cart-hdr {
+      padding: 16px 18px 12px;
+      border-bottom: 1px solid var(--gray-200);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between
+    }
+
+    .cart-hdr-title {
+      font-weight: 800;
+      font-size: .95rem;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    .cart-badge {
+      background: var(--green);
+      color: white;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 900
+    }
+
+    .cart-empty {
+      padding: 40px 16px;
+      text-align: center;
+      color: var(--gray-400);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center
+    }
+
+    .cart-empty i {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      opacity: .3
+    }
+
+    .cart-empty p {
+      font-size: .82rem;
+      line-height: 1.5
+    }
+
+    .cart-scroll {
+      flex: 1;
+      overflow-y: auto;
+      padding: 0 16px
+    }
+
+    .cir {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--gray-200)
+    }
+
+    .cir:last-child {
+      border-bottom: none
+    }
+
+    .cir-name {
+      flex: 1;
+      font-size: .8rem;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.3
+    }
+
+    .cir-qty {
+      display: flex;
+      align-items: center;
+      gap: 5px
+    }
+
+    .cibtn {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 1.5px solid var(--gray-300);
+      background: white;
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all .2s;
+      line-height: 1
+    }
+
+    .cibtn:hover {
+      border-color: var(--green);
+      color: var(--green)
+    }
+
+    .ciq {
+      font-size: .8rem;
+      font-weight: 700;
+      min-width: 18px;
+      text-align: center
+    }
+
+    .cip {
+      font-size: .8rem;
+      font-weight: 800;
+      color: var(--green);
+      min-width: 68px;
+      text-align: right
+    }
+
+    .cidel {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: none;
+      background: none;
+      color: var(--gray-400);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      transition: all .2s;
+      flex-shrink: 0
+    }
+
+    .cidel:hover {
+      background: rgba(220, 38, 38, .1);
+      color: #dc2626
+    }
+
+    .cart-foot {
+      padding: 16px 18px;
+      border-top: 2px solid var(--gray-200);
+      flex-shrink: 0;
+      background: white
+    }
+
+    .cart-total {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 800;
+      font-size: 1rem;
+      margin-bottom: 12px
+    }
+
+    .cart-total-val {
+      color: var(--green);
+      font-family: var(--font-d);
+      font-size: 1.15rem
+    }
+
+    .btn-checkout {
+      width: 100%;
+      padding: 13px;
+      background: linear-gradient(135deg, var(--green), var(--green-dk));
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all .3s var(--ease);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px
+    }
+
+    .btn-checkout:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(16, 185, 129, .4)
+    }
+
+    .btn-checkout:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+      transform: none
+    }
+
+    .btn-clear {
+      width: 100%;
+      padding: 8px;
+      background: none;
+      border: 1.5px solid var(--gray-300);
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--gray-500);
+      cursor: pointer;
+      margin-top: 8px;
+      transition: all .2s
+    }
+
+    .btn-clear:hover {
+      border-color: var(--red);
+      color: var(--red)
+    }
+
+    /* ════ STORE MODAL — single-column scroll ════ */
+    #storeModal .mbox {
+      max-width: 900px
+    }
+
+    .sm-scroll {
+      overflow-y: auto;
+      flex: 1;
+      padding: 24px
+    }
+
+    /* Product grid — full width inside scroll */
+    .prod-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 16px;
+      margin-bottom: 0
+    }
+
+    .prod-card {
+      background: white;
+      border: 1.5px solid var(--gray-200);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: all .3s var(--spring)
+    }
+
+    .prod-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: rgba(16, 185, 129, .35)
+    }
+
+    .prod-img-wrap {
+      height: 145px;
+      position: relative;
+      overflow: hidden
+    }
+
+    .prod-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .5s var(--ease)
+    }
+
+    .prod-card:hover .prod-img-wrap img {
+      transform: scale(1.07)
+    }
+
+    .prod-badge {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      padding: 3px 9px;
+      border-radius: 6px;
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+      color: white
+    }
+
+    .bt-new {
+      background: var(--navy)
+    }
+
+    .bt-liked {
+      background: var(--orange)
+    }
+
+    .bt-ordered {
+      background: var(--red)
+    }
+
+    .bt-discount {
+      background: var(--green)
+    }
+
+    .prod-body {
+      padding: 12px
+    }
+
+    .prod-name {
+      font-weight: 700;
+      font-size: .875rem;
+      color: var(--text);
+      margin-bottom: 5px;
+      line-height: 1.3
+    }
+
+    .prod-prices {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      margin-bottom: 10px
+    }
+
+    .pp-new {
+      font-weight: 900;
+      color: var(--green);
+      font-size: 1rem;
+      font-family: var(--font-d)
+    }
+
+    .pp-old {
+      font-size: .75rem;
+      color: var(--gray-400);
+      text-decoration: line-through
+    }
+
+    /* Add-to-cart button + inline qty control */
+    .btn-atc {
+      width: 100%;
+      padding: 9px 6px;
+      border: none;
+      background: var(--green);
+      color: white;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: .82rem;
+      transition: all .25s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px
+    }
+
+    .btn-atc:hover {
+      background: var(--green-dk);
+      transform: translateY(-1px)
+    }
+
+    .pqc {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--green-lt);
+      border-radius: 8px;
+      padding: 5px 8px;
+      width: 100%
+    }
+
+    .pqc.show {
+      display: flex
+    }
+
+    .pqb {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 1.5px solid var(--green);
+      background: white;
+      color: var(--green);
+      font-size: 15px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all .2s;
+      line-height: 1;
+      flex-shrink: 0
+    }
+
+    .pqb:hover {
+      background: var(--green);
+      color: white
+    }
+
+    .pqn {
+      font-size: .9rem;
+      font-weight: 800;
+      color: var(--green-dk);
+      min-width: 22px;
+      text-align: center
+    }
+
+    /* Cart section — appears below product grid */
+    .cart-section {
+      margin-top: 28px;
+      border-top: 2px solid var(--gray-200);
+      padding-top: 22px;
+      display: none
+    }
+
+    .cart-section.show {
+      display: block;
+      animation: fup .4s var(--ease) both
+    }
+
+    .cart-sec-hdr {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px
+    }
+
+    .cart-sec-title {
+      font-family: var(--font-d);
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 10px
+    }
+
+    .cart-count-pill {
+      background: var(--green);
+      color: white;
+      padding: 2px 10px;
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 900;
+      font-family: var(--font-b)
+    }
+
+    .btn-cart-clear {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--gray-400);
+      background: none;
+      border: 1.5px solid var(--gray-300);
+      border-radius: 8px;
+      padding: 6px 12px;
+      cursor: pointer;
+      transition: all .2s
+    }
+
+    .btn-cart-clear:hover {
+      border-color: var(--red);
+      color: var(--red)
+    }
+
+    /* Cart rows */
+    .cart-rows {
+      border: 1.5px solid var(--gray-200);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-bottom: 18px
+    }
+
+    .cir {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--gray-200);
+      background: white;
+      transition: background .2s
+    }
+
+    .cir:last-child {
+      border-bottom: none
+    }
+
+    .cir:hover {
+      background: var(--gray-100)
+    }
+
+    .cir-img {
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      object-fit: cover;
+      flex-shrink: 0
+    }
+
+    .cir-info {
+      flex: 1;
+      min-width: 0
+    }
+
+    .cir-name {
+      font-size: .85rem;
+      font-weight: 700;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis
+    }
+
+    .cir-unit {
+      font-size: .75rem;
+      color: var(--gray-400)
+    }
+
+    .cir-qty {
+      display: flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    .cibtn {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 1.5px solid var(--gray-300);
+      background: white;
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all .2s;
+      line-height: 1;
+      flex-shrink: 0
+    }
+
+    .cibtn:hover {
+      border-color: var(--green);
+      color: var(--green);
+      background: var(--green-lt)
+    }
+
+    .ciq {
+      font-size: .9rem;
+      font-weight: 800;
+      min-width: 22px;
+      text-align: center;
+      color: var(--text)
+    }
+
+    .cip {
+      font-size: .9rem;
+      font-weight: 800;
+      color: var(--green);
+      min-width: 85px;
+      text-align: right;
+      flex-shrink: 0
+    }
+
+    .cidel {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: none;
+      background: none;
+      color: var(--gray-300);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      transition: all .2s;
+      flex-shrink: 0
+    }
+
+    .cidel:hover {
+      background: rgba(220, 38, 38, .1);
+      color: #dc2626
+    }
+
+    /* Cart total bar + checkout */
+    .cart-total-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--gray-100);
+      border-radius: var(--radius-lg);
+      padding: 16px 20px;
+      border: 1.5px solid var(--gray-200)
+    }
+
+    .ctb-left span:first-child {
+      font-size: .75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .8px;
+      color: var(--gray-500);
+      display: block;
+      margin-bottom: 3px
+    }
+
+    .ctb-total {
+      font-family: var(--font-d);
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--green)
+    }
+
+    .ctb-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px
+    }
+
+    .btn-checkout {
+      background: linear-gradient(135deg, var(--green), var(--green-dk));
+      color: white;
+      border: none;
+      padding: 14px 32px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all .3s var(--ease);
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      white-space: nowrap
+    }
+
+    .btn-checkout:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(16, 185, 129, .4)
+    }
+
+    .btn-checkout:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+      transform: none
+    }
+
+    /* ════ CHECKOUT MODAL ════ */
+    #checkoutModal .mbox {
+      max-width: 680px
+    }
+
+    .co-hero {
+      height: 190px;
+      position: relative;
+      flex-shrink: 0
+    }
+
+    .co-hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover
+    }
+
+    .co-hero-grad {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 20%, rgba(10, 20, 60, .9))
+    }
+
+    .co-hero-info {
+      position: absolute;
+      bottom: 18px;
+      left: 22px;
+      right: 60px;
+      color: white
+    }
+
+    .co-hero-info h3 {
+      font-family: var(--font-d);
+      font-size: 1.45rem;
+      font-weight: 800;
+      margin-bottom: 4px
+    }
+
+    .co-hero-info p {
+      font-size: .82rem;
+      opacity: .8;
+      display: flex;
+      align-items: center;
+      gap: 6px
+    }
+
+    .co-body {
+      padding: 22px;
+      overflow-y: auto;
+      flex: 1
+    }
+
+    /* Checkout cart summary */
+    .co-summary {
+      background: var(--gray-100);
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-bottom: 20px;
+      border: 1.5px solid var(--gray-200)
+    }
+
+    .co-sum-title {
+      font-size: .75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .8px;
+      color: var(--gray-600);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px
+    }
+
+    .co-sum-title i {
+      color: var(--green)
+    }
+
+    .co-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--gray-200);
+      font-size: .875rem
+    }
+
+    .co-row:last-of-type {
+      border-bottom: none
+    }
+
+    .co-rimg {
+      width: 36px;
+      height: 36px;
+      border-radius: 7px;
+      object-fit: cover;
+      flex-shrink: 0
+    }
+
+    .co-rname {
+      flex: 1;
+      color: var(--text);
+      font-weight: 600;
+      font-size: .82rem
+    }
+
+    .co-rqty {
+      display: flex;
+      align-items: center;
+      gap: 5px
+    }
+
+    .cqbtn {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 1.5px solid var(--gray-300);
+      background: white;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all .2s;
+      line-height: 1
+    }
+
+    .cqbtn:hover {
+      border-color: var(--green);
+      color: var(--green)
+    }
+
+    .cqnum {
+      font-size: .875rem;
+      font-weight: 700;
+      min-width: 18px;
+      text-align: center
+    }
+
+    .co-rdel {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: none;
+      background: none;
+      color: var(--gray-400);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      transition: all .2s
+    }
+
+    .co-rdel:hover {
+      background: rgba(220, 38, 38, .1);
+      color: #dc2626
+    }
+
+    .co-rprice {
+      font-size: .875rem;
+      font-weight: 800;
+      color: var(--green);
+      min-width: 78px;
+      text-align: right
+    }
+
+    .co-total-row {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 800;
+      font-size: 1.05rem;
+      padding-top: 12px;
+      margin-top: 4px;
+      border-top: 2px solid var(--gray-300)
+    }
+
+    .co-total-val {
+      color: var(--green);
+      font-family: var(--font-d);
+      font-size: 1.15rem
+    }
+
+    /* RESPONSIVE */
+    @media(max-width:1100px) {
+      nav.main-nav {
+        display: none
+      }
+
+      .hamburger {
+        display: flex
+      }
+
+      .deal-card {
+        flex: 0 0 calc(33.333% - 14px)
+      }
+
+      .pop-grid {
+        grid-template-columns: repeat(2, 1fr)
+      }
+    }
+
+    @media(max-width:860px) {
+      .pop-grid {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+      .ft-grid {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .deal-card {
+        flex: 0 0 calc(50% - 10px)
+      }
+    }
+
+    @media(max-width:600px) {
+      .sec {
+        padding: 44px 14px
+      }
+
+      .breadcrumb-bar {
+        margin-top: 90px
+      }
+
+      .header-top {
+        display: none
+      }
+
+      .hero-search {
+        flex-direction: column
+      }
+
+      .hs-cat {
+        border-right: none;
+        border-bottom: 1px solid var(--gray-200);
+        min-width: unset
+      }
+
+      .hs-btn {
+        padding: 14px;
+        width: 100%
+      }
+
+      .hdiv {
+        display: none
+      }
+
+      .pop-grid {
+        grid-template-columns: 1fr
+      }
+
+      .ft-grid {
+        grid-template-columns: 1fr;
+        gap: 28px
+      }
+
+      .deal-card {
+        flex: 0 0 85%
+      }
+
+      .frow {
+        grid-template-columns: 1fr
+      }
+
+      .prod-grid {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+      .cart-total-bar {
+        flex-direction: column;
+        gap: 14px;
+        align-items: stretch
+      }
+
+      .ctb-right {
+        align-items: stretch
+      }
+
+      .btn-checkout {
+        justify-content: center
+      }
+    }
+
+    @media(max-width:400px) {
+      .prod-grid {
+        grid-template-columns: 1fr
+      }
+    }
+  </style>
 </head>
+
 <body>
-    <div class="min-h-screen bg-background">
-        <!-- Fixed Cart Button -->
-        <div class="cart-btn" id="cartButton">
-            <i class="fas fa-shopping-cart fa-lg"></i>
-            <span class="cart-badge" id="cartCount">0</span>
+
+  <!-- HEADER -->
+  <div id="header">
+    <div class="header-top">
+      <div class="ht-inner">
+        <div class="left">
+          <span><i class="fas fa-phone"></i>+250780491406</span>
+          <span><i class="fas fa-envelope"></i>info&#64;dilizone.com</span>
+          <span><i class="fas fa-truck"></i>Free delivery over Rwf 50,000</span>
         </div>
-
-        <!-- Cart Container -->
-        <div class="cart-container" id="cartContainer">
-            <div class="cart-header">
-                <h3>Your Cart</h3>
-                <button id="closeCart"><i class="fas fa-times"></i></button>
-            </div>
-            <div class="cart-items" id="cartItems">
-                <!-- Cart items will be added here -->
-                <div class="empty-cart" id="emptyCart">
-                    <i class="fas fa-shopping-cart fa-2x mb-4"></i>
-                    <p>Your cart is empty</p>
-                </div>
-            </div>
-            <div class="cart-footer">
-                <div class="cart-total">
-                    <span>Total:</span>
-                    <span id="cartTotal">$0.00</span>
-                </div>
-                <button class="cart-checkout" id="checkoutButton">Checkout</button>
-            </div>
-        </div>
-
-        <!-- Hero Section -->
-        <section class="relative h-[60vh] overflow-hidden">
-            <img 
-                src="https://images.unsplash.com/photo-1542838132-92c53300491e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1600&q=80" 
-                alt="Supermarket deals and discounts"
-                class="w-full h-full object-cover"
-            />
-            <div class="absolute inset-0 bg-gradient-to-r from-black/60 to-black/30"></div>
-            <div class="absolute inset-0 flex items-center justify-center">
-                <div class="text-center text-white space-y-6 max-w-4xl mx-auto px-4">
-                    <h1 class="text-5xl md:text-6xl font-bold leading-tight">
-                        Fresh Deals, <span class="text-accent">Fresh Savings</span>
-                    </h1>
-                    <p class="text-xl md:text-2xl text-white/90 max-w-2xl mx-auto">
-                        Discover the best supermarket deals and discounts in your area. Save more on your grocery shopping!
-                    </p>
-                    <div class="flex flex-col sm:flex-row gap-4 justify-center mt-8">
-                        <button class="btn btn-hero btn-lg">
-                            <i class="fas fa-shopping-cart mr-2"></i>
-                            Browse Deals
-                        </button>
-                        <button class="btn btn-outline btn-lg text-white">
-                            <i class="fas fa-arrow-trend-down mr-2"></i>
-                            View All Stores
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Main Content -->
-        <section class="py-16 px-4">
-            <div class="max-w-7xl mx-auto">
-                <!-- Search and Filter Section -->
-                <div class="mb-12 space-y-6">
-                    <div class="text-center space-y-4">
-                        <h2 class="text-3xl md:text-4xl font-bold text-foreground">
-                            Today's Best Supermarket Deals
-                        </h2>
-                        <p class="text-lg text-muted-foreground max-w-2xl mx-auto">
-                            Find incredible discounts from top supermarket chains near you
-                        </p>
-                    </div>
-                    
-                    <!-- Search Bar -->
-                    <div class="max-w-md mx-auto relative">
-                        <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground"></i>
-                        <input
-                            type="text"
-                            placeholder="Search for products..."
-                            id="searchInput"
-                            class="input pl-10"
-                        />
-                    </div>
-
-                    <!-- Supermarket Filter -->
-                    <div class="text-center">
-                        <div class="filter-container">
-                            <button class="filter-btn active" data-store="All Stores">
-                                All Stores <span class="deal-count">(6)</span>
-                            </button>
-                            <button class="filter-btn" data-store="FreshMart">
-                                FreshMart <span class="deal-count">(2)</span>
-                            </button>
-                            <button class="filter-btn" data-store="GreenGrocer">
-                                GreenGrocer <span class="deal-count">(1)</span>
-                            </button>
-                            <button class="filter-btn" data-store="SuperSaver">
-                                SuperSaver <span class="deal-count">(1)</span>
-                            </button>
-                            <button class="filter-btn" data-store="PrimeMart">
-                                PrimeMart <span class="deal-count">(1)</span>
-                            </button>
-                            <button class="filter-btn" data-store="ValuePlus">
-                                ValuePlus <span class="deal-count">(1)</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Results Summary -->
-                <div class="mb-8 text-center">
-                    <p class="text-muted-foreground" id="resultsSummary">
-                        Showing <span class="font-semibold text-foreground">6</span> deals
-                    </p>
-                </div>
-
-                <!-- Deals Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="dealsGrid">
-                    <!-- Deal cards will be generated here -->
-                </div>
-
-                <!-- No Results (hidden by default) -->
-                <div class="text-center py-16 hidden" id="noResults">
-                    <div class="max-w-md mx-auto">
-                        <i class="fas fa-shopping-cart w-16 h-16 text-muted-foreground mx-auto mb-4"></i>
-                        <h3 class="text-xl font-semibold text-foreground mb-2">No deals found</h3>
-                        <p class="text-muted-foreground mb-6">
-                            Try adjusting your search or select a different supermarket
-                        </p>
-                        <button class="btn btn-outline" id="clearFilters">
-                            Clear Filters
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Call to Action -->
-                <div class="mt-16 text-center bg-gradient-to-r from-primary/10 to-success/10 rounded-2xl p-8">
-                    <h3 class="text-2xl font-bold text-foreground mb-4">
-                        Want to be notified of new deals?
-                    </h3>
-                    <p class="text-muted-foreground mb-6 max-w-2xl mx-auto">
-                        Subscribe to our newsletter and never miss a great supermarket deal again. Get weekly updates on the best discounts in your area.
-                    </p>
-                    <button class="btn btn-default btn-lg">
-                        Subscribe for Deal Alerts
-                    </button>
-                </div>
-            </div>
-        </section>
+        <div class="right"><a href="#" class="active">EN</a><a href="#">KIN</a><a href="#">FR</a></div>
+      </div>
     </div>
+    <div class="header-main">
+      <div class="hm-inner">
+        <a href="/" class="logo">
+          <div class="logo-mark">D</div>
+          <div class="logo-text">
+            <div class="main">Dili-Zone</div>
+            <div class="sub">Your City Guide</div>
+          </div>
+        </a>
+        <nav class="main-nav">
+          <a href="index.html">Home</a><a href="restaurants.html">Restaurants</a><a href="Accomodation.html">Hotels</a>
+          <a href="supermarkets.html" class="active">Supermarkets</a><a href="services.html">Services</a>
+          <a href="industries.html">Industries</a><a href="Shops.html">Shops</a>
+        </nav>
+        <div class="header-right">
+          <button class="btn-hdr-cta" onclick="openVendorModal()"><i class="fas fa-store"
+              style="margin-right:7px;font-size:11px"></i>List Store</button>
+          <button class="hamburger" id="hbg"><span></span><span></span><span></span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <nav class="mob-menu" id="mobMenu">
+    <a href="index.html"><i class="fas fa-home"></i>Home</a><a href="restaurants.html"><i
+        class="fas fa-utensils"></i>Restaurants</a>
+    <a href="Accomodation.html"><i class="fas fa-bed"></i>Hotels</a><a href="supermarkets.html" class="active"><i
+        class="fas fa-shopping-basket"></i>Supermarkets</a>
+    <a href="services.html"><i class="fas fa-concierge-bell"></i>Services</a><a href="industries.html"><i
+        class="fas fa-industry"></i>Industries</a><a href="Shops.html"><i class="fas fa-store"></i>Shops</a>
+  </nav>
+  <div class="mob-ov" id="mobOv"></div>
+  <div class="breadcrumb-bar">
+    <div class="breadcrumb"><a href="index.html">Home</a><i class="fas fa-chevron-right"></i><span
+        class="current">Supermarkets</span></div>
+  </div>
 
-    <script>
-        // Mock data for demonstration
-        const mockDeals = [
-            {
-                id: "1",
-                title: "Fresh Organic Bananas - 2lb Bundle",
-                originalPrice: 4.99,
-                discountedPrice: 2.99,
-                discount: 40,
-                supermarket: "FreshMart",
-                location: "Downtown",
-                validUntil: "Dec 25, 2024",
-                rating: 4.8,
-                image: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
-                category: "Fruits"
-            },
-            {
-                id: "2", 
-                title: "Premium Ground Beef - Family Pack",
-                originalPrice: 12.99,
-                discountedPrice: 8.99,
-                discount: 31,
-                supermarket: "GreenGrocer",
-                location: "Westside",
-                validUntil: "Dec 23, 2024",
-                rating: 4.6,
-                image: "https://images.pexels.com/photos/7284305/pexels-photo-7284305.jpeg",
-                category: "Meat"
-            },
-            {
-                id: "3",
-                title: "Whole Wheat Bread + Peanut Butter Combo",
-                originalPrice: 7.98,
-                discountedPrice: 4.99,
-                discount: 37,
-                supermarket: "SuperSaver",
-                location: "Mall Plaza",
-                validUntil: "Dec 28, 2024", 
-                rating: 4.4,
-                image: "https://images.pexels.com/photos/20605006/pexels-photo-20605006.jpeg",
-                category: "Pantry"
-            },
-            {
-                id: "4",
-                title: "Fresh Salmon Fillets - Wild Caught",
-                originalPrice: 18.99,
-                discountedPrice: 13.99,
-                discount: 26,
-                supermarket: "PrimeMart",
-                location: "Harbor District",
-                validUntil: "Dec 24, 2024",
-                rating: 4.9,
-                image: "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
-                category: "Seafood"
-            },
-            {
-                id: "5",
-                title: "Seasonal Vegetable Mix - 5lb Bag",
-                originalPrice: 8.99,
-                discountedPrice: 5.99,
-                discount: 33,
-                supermarket: "ValuePlus",
-                location: "Suburb Center",
-                validUntil: "Dec 30, 2024",
-                rating: 4.3,
-                image: "https://images.pexels.com/photos/1660027/pexels-photo-1660027.jpeg",
-                category: "Vegetables"
-            },
-            {
-                id: "6",
-                title: "Artisan Cheese Selection",
-                originalPrice: 15.99,
-                discountedPrice: 9.99,
-                discount: 38,
-                supermarket: "FreshMart",
-                location: "Downtown",
-                validUntil: "Dec 26, 2024",
-                rating: 4.7,
-                image: "https://images.unsplash.com/photo-1552767059-ce182ead6c1b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
-                category: "Dairy"
-            }
-        ];
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <div class="hero-badge"><i class="fas fa-leaf"></i> Fresh &amp; Daily Groceries</div>
+      <h1>Citywide <span>Supermarket</span> Deals</h1>
+      <p>Discover fresh produce, household essentials, and daily discounts at top supermarkets near you</p>
+      <div class="hero-search">
+        <div class="hs-cat"><i class="fas fa-tags"></i><select id="catSel">
+            <option>All Aisles</option>
+            <option>Fresh Produce</option>
+            <option>Meat &amp; Seafood</option>
+            <option>Dairy &amp; Eggs</option>
+            <option>Bakery</option>
+            <option>Household</option>
+            <option>Beverages</option>
+          </select></div>
+        <div class="hs-input"><i class="fas fa-search"></i><input type="text"
+            placeholder="Search groceries, brands, deals…" id="heroSrc" autocomplete="off"></div>
+        <button class="hs-btn" onclick="doSearch()">Search</button>
+      </div>
+      <div class="hero-stats">
+        <div class="hs-stat"><strong>15+</strong><span>Supermarkets</span></div>
+        <div class="hdiv"></div>
+        <div class="hs-stat"><strong>Daily</strong><span>Fresh Deals</span></div>
+        <div class="hdiv"></div>
+        <div class="hs-stat"><strong style="color:var(--green)">Up to 40%</strong><span>Discounts</span></div>
+      </div>
+    </div>
+  </section>
 
-        // State management
-        let selectedSupermarket = "All Stores";
-        let searchQuery = "";
-        let cart = [];
+  <!-- CATEGORIES -->
+  <section class="sec sec-alt">
+    <div class="con">
+      <div class="sec-hd fu">
+        <div class="sec-lbl">Aisles</div>
+        <h2 class="sec-ttl">Shop by <span>Category</span></h2>
+        <p class="sec-sub">Find the freshest products organized by supermarket aisles.</p>
+      </div>
+      <div class="grocery-cat-grid fu d2" id="categoryGrid">
+        <div class="grocery-cat active" data-category="all">
+          <div class="g-cat-icon"><i class="fas fa-th-large"></i></div>
+          <div class="g-cat-name">View All</div>
+          <div class="g-cat-count">All Vendors</div>
+        </div>
+        <div class="grocery-cat" data-category="Fresh Produce">
+          <div class="g-cat-icon"><i class="fas fa-apple-alt"></i></div>
+          <div class="g-cat-name">Fresh Produce</div>
+          <div class="g-cat-count">120+ Deals</div>
+        </div>
+        <div class="grocery-cat" data-category="Meat & Seafood">
+          <div class="g-cat-icon"><i class="fas fa-drumstick-bite"></i></div>
+          <div class="g-cat-name">Meat &amp; Seafood</div>
+          <div class="g-cat-count">45+ Deals</div>
+        </div>
+        <div class="grocery-cat" data-category="Dairy & Eggs">
+          <div class="g-cat-icon"><i class="fas fa-cheese"></i></div>
+          <div class="g-cat-name">Dairy &amp; Eggs</div>
+          <div class="g-cat-count">80+ Deals</div>
+        </div>
+        <div class="grocery-cat" data-category="Bakery">
+          <div class="g-cat-icon"><i class="fas fa-bread-slice"></i></div>
+          <div class="g-cat-name">Bakery</div>
+          <div class="g-cat-count">30+ Deals</div>
+        </div>
+        <div class="grocery-cat" data-category="Beverages">
+          <div class="g-cat-icon"><i class="fas fa-wine-bottle"></i></div>
+          <div class="g-cat-name">Beverages</div>
+          <div class="g-cat-count">150+ Deals</div>
+        </div>
+        <div class="grocery-cat" data-category="Household">
+          <div class="g-cat-icon"><i class="fas fa-soap"></i></div>
+          <div class="g-cat-name">Household</div>
+          <div class="g-cat-count">90+ Deals</div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-        // DOM Elements
-        const dealsGrid = document.getElementById('dealsGrid');
-        const filterButtons = document.querySelectorAll('.filter-btn');
-        const searchInput = document.getElementById('searchInput');
-        const noResults = document.getElementById('noResults');
-        const clearFiltersBtn = document.getElementById('clearFilters');
-        const resultsSummary = document.getElementById('resultsSummary');
-        const cartButton = document.getElementById('cartButton');
-        const cartContainer = document.getElementById('cartContainer');
-        const closeCart = document.getElementById('closeCart');
-        const cartItems = document.getElementById('cartItems');
-        const emptyCart = document.getElementById('emptyCart');
-        const cartCount = document.getElementById('cartCount');
-        const cartTotal = document.getElementById('cartTotal');
-        const checkoutButton = document.getElementById('checkoutButton');
+  <!-- HOT DEALS -->
+  <section class="sec" style="background:white" id="dealsSection">
+    <div class="con-wide">
+      <div class="deals-hdr fu">
+        <h2>🔥 Hot Grocery Deals Today</h2>
+        <button class="btn-view-all" id="viewAllBtn" onclick="toggleAllDeals()">View all deals <i
+            class="fas fa-arrow-right"></i></button>
+      </div>
+      <div class="fu d1">
+        <div class="carousel-outer">
+          <div class="carousel-track" id="dealsTrack"></div>
+        </div>
+        <div class="car-nav">
+          <button class="car-arrow" id="carPrev"><i class="fas fa-chevron-left"></i></button>
+          <div class="car-dots" id="carDots"></div>
+          <button class="car-arrow" id="carNext"><i class="fas fa-chevron-right"></i></button>
+        </div>
+      </div>
+      <!-- Expanded all deals -->
+      <div class="all-deals-panel" id="allDealsPanel">
+        <div class="adp-header">
+          <h3>All Grocery Deals</h3>
+          <button class="adp-close" onclick="toggleAllDeals()"><i class="fas fa-times"></i> Close</button>
+        </div>
+        <div class="all-deals-grid" id="allDealsGrid"></div>
+      </div>
+    </div>
+  </section>
 
-        // Initialize the page
-        function init() {
-            renderDeals(mockDeals);
-            setupEventListeners();
-            updateCartUI();
+  <!-- TOP STORES -->
+  <section class="sec sec-alt" id="storeDirectory">
+    <div class="con">
+      <div class="sec-hd fu">
+        <div class="sec-lbl">Directory</div>
+        <h2 class="sec-ttl">Top Local <span>Supermarkets</span></h2>
+        <p class="sec-sub">The most trusted and highly rated supermarkets operating near you.</p>
+      </div>
+      <div class="pop-grid fu d2" id="vendorGrid">
+        <div class="pop-card smarket-card" data-categories="Fresh Produce,Meat & Seafood,Beverages,Household">
+          <div class="pop-banner"><img src="https://images.unsplash.com/photo-1534723452862-4c874018d66d?w=800&q=80"
+              alt="Simba">
+            <div class="pop-logo-wrap">
+              <div class="pop-logo"><i class="fas fa-shopping-basket"></i></div>
+            </div>
+          </div>
+          <div class="pop-body">
+            <div class="pop-name">Simba Supermarket<span class="verified-ico"><i class="fas fa-check"></i></span></div>
+            <p class="pop-desc">Kigali's leading supermarket chain — wide variety of local and imported groceries,
+              electronics, and household items.</p>
+            <div class="pop-meta"><span class="pop-meta-item"><i class="fas fa-map-marker-alt"></i>Gishushu,
+                Kigali</span><span class="pop-meta-item"><span class="open-tag">Open</span> until 10 PM</span><span
+                class="pop-meta-item"><i class="fas fa-star" style="color:var(--gold)"></i>4.8</span></div>
+            <div class="pop-foot"><span class="delivery-tag"><i class="fas fa-motorcycle"></i>Delivery
+                Available</span><button class="btn-browse" onclick="openStoreModal('Simba Supermarket')">View
+                Store</button></div>
+          </div>
+        </div>
+        <div class="pop-card smarket-card" data-categories="Fresh Produce,Dairy & Eggs,Bakery,Beverages">
+          <div class="pop-banner"><img src="https://images.unsplash.com/photo-1541334969287-202a0b16f2cc?w=800&q=80"
+              alt="Sawa Citi">
+            <div class="pop-logo-wrap">
+              <div class="pop-logo"><i class="fas fa-cart-arrow-down"></i></div>
+            </div>
+          </div>
+          <div class="pop-body">
+            <div class="pop-name">Sawa Citi Supermarket<span class="verified-ico"><i class="fas fa-check"></i></span>
+            </div>
+            <p class="pop-desc">Renowned for excellent fresh produce, bakery, and premium quality imported goods.
+              Perfect for everyday shopping.</p>
+            <div class="pop-meta"><span class="pop-meta-item"><i class="fas fa-map-marker-alt"></i>Remera,
+                Kigali</span><span class="pop-meta-item"><span class="open-tag">Open</span> 24 Hours</span><span
+                class="pop-meta-item"><i class="fas fa-star" style="color:var(--gold)"></i>4.7</span></div>
+            <div class="pop-foot"><span class="delivery-tag"><i class="fas fa-motorcycle"></i>Delivery
+                Available</span><button class="btn-browse" onclick="openStoreModal('Sawa Citi Supermarket')">View
+                Store</button></div>
+          </div>
+        </div>
+        <div class="pop-card smarket-card" data-categories="Fresh Produce,Bakery,Household">
+          <div class="pop-banner"><img src="https://images.unsplash.com/photo-1533900298318-6b8da08a523e?w=800&q=80"
+              alt="Woodlands">
+            <div class="pop-logo-wrap">
+              <div class="pop-logo"><i class="fas fa-carrot"></i></div>
+            </div>
+          </div>
+          <div class="pop-body">
+            <div class="pop-name">Woodlands Supermarket</div>
+            <p class="pop-desc">Extensive selection of groceries and fresh deli items with excellent customer service
+              and fair prices.</p>
+            <div class="pop-meta"><span class="pop-meta-item"><i class="fas fa-map-marker-alt"></i>Nyarutarama,
+                Kigali</span><span class="pop-meta-item"><span class="open-tag">Open</span> until 9 PM</span><span
+                class="pop-meta-item"><i class="fas fa-star" style="color:var(--gold)"></i>4.5</span></div>
+            <div class="pop-foot"><span class="delivery-tag"><i class="fas fa-motorcycle"></i>In-Store
+                Pickup</span><button class="btn-browse" onclick="openStoreModal('Woodlands Supermarket')">View
+                Store</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="ft-inner">
+      <div class="ft-grid">
+        <div>
+          <div class="ft-logo">
+            <div class="logo-mark">D</div>
+            <div class="logo-text">
+              <div class="main">Dili-Zone</div>
+              <div class="sub">Your City Guide</div>
+            </div>
+          </div>
+          <p class="ft-desc">Dili's premier business directory. Connecting locals with the best stores since 2025.</p>
+          <div class="soc-links"><a href="#" class="soc-btn"><i class="fab fa-facebook-f"></i></a><a href="#"
+              class="soc-btn"><i class="fab fa-instagram"></i></a><a href="#" class="soc-btn"><i
+                class="fab fa-twitter"></i></a><a href="#" class="soc-btn"><i class="fab fa-whatsapp"></i></a></div>
+        </div>
+        <div class="ft-col">
+          <h4>Discover</h4>
+          <ul>
+            <li><a href="supermarkets.html">Supermarkets</a></li>
+            <li><a href="restaurants.html">Restaurants</a></li>
+            <li><a href="Accomodation.html">Hotels</a></li>
+            <li><a href="industries.html">Industries</a></li>
+            <li><a href="Shops.html">Shops</a></li>
+          </ul>
+        </div>
+        <div class="ft-col">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="#" onclick="openVendorModal();return false">List Your Store</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">About</a></li>
+          </ul>
+        </div>
+        <div class="ft-col">
+          <h4>Contact</h4>
+          <div class="ft-contact"><i class="fas fa-map-marker-alt"></i><span>Kigali-Gasabo-Rwanda</span></div>
+          <div class="ft-contact"><i class="fas fa-phone"></i><span>+250780491405</span></div>
+          <div class="ft-contact"><i class="fas fa-envelope"></i><span>info&#64;dilizone.com</span></div>
+          <div class="ft-contact"><i class="fas fa-clock"></i><span>Mon–Fri: 8am–6pm</span></div>
+        </div>
+      </div>
+      <div class="ft-bot">
+        <p>© <span id="yr"></span> Dili-Zone. All rights reserved.</p>
+        <div style="display:flex;gap:18px"><a href="#">Privacy</a><a href="#">Terms</a></div>
+      </div>
+    </div>
+  </footer>
+  <button id="btt"><i class="fas fa-chevron-up"></i></button>
+
+  <!-- ════ DEAL REQUEST MODAL ════ -->
+  <div class="mov" id="dealModal">
+    <div class="mbox">
+      <button class="mclose" onclick="closeModal('dealModal')"><i class="fas fa-times"></i></button>
+      <div class="ddm-hero"><img id="ddm-img" src="" alt="">
+        <div class="ddm-hero-grad"></div>
+        <div class="ddm-hero-badge" id="ddm-disc"></div>
+        <div class="ddm-hero-store"><i class="fas fa-store"></i><span id="ddm-store-chip"></span></div>
+      </div>
+      <div class="ss" id="dealSS">
+        <div class="ss-icon"><i class="fas fa-check"></i></div>
+        <h3>Request Sent!</h3>
+        <p>The supermarket will contact you shortly to confirm.</p>
+        <div class="ss-checks">
+          <div><i class="fas fa-check-circle"></i>Confirmation sent to your email</div>
+          <div><i class="fas fa-check-circle"></i>Response within 1–2 hours</div>
+        </div><button class="btn-main" onclick="closeModal('dealModal')"><i class="fas fa-check"></i>Done</button>
+      </div>
+      <div class="ddm-body" id="dealFW">
+        <div class="ddm-title" id="ddm-title"></div>
+        <div class="ddm-prices">
+          <div class="ddm-pnew" id="ddm-pnew"></div>
+          <div class="ddm-pold" id="ddm-pold"></div>
+          <div class="ddm-save" id="ddm-save"></div>
+        </div>
+        <p class="ddm-desc" id="ddm-desc"></p>
+        <div class="flabel"><i class="fas fa-clipboard-list"></i>Your Request Details</div>
+        <form id="dealForm" onsubmit="submitDeal(event)">
+          <div class="frow">
+            <div class="fg"><label>Full Name *</label><input type="text" name="customerName" required
+                placeholder="Jean Claude"></div>
+            <div class="fg"><label>Phone *</label><input type="tel" name="customerPhone" required placeholder="078...">
+            </div>
+          </div>
+          <div class="fg"><label>Email *</label><input type="email" name="customerEmail" required
+              placeholder="you&#64;example.com"></div>
+          <div class="fg"><label>Supermarket</label><input type="text" id="ddm-store-input" name="supermarketName"
+              readonly></div>
+          <div class="fg"><label>Delivery Address *</label><input type="text" name="deliveryAddress" required
+              placeholder="e.g. Remera, KN 5 Rd"></div>
+          <div class="frow">
+            <div class="fg"><label>Delivery Option *</label><select name="deliveryOption" required>
+                <option value="">Select…</option>
+                <option>🏠 Home Delivery</option>
+                <option>🏪 In-Store Pickup</option>
+              </select></div>
+            <div class="fg"><label>Payment Method *</label><select name="paymentMethod" required>
+                <option value="">Select…</option>
+                <option>📱 Mobile Money (MoMo)</option>
+                <option>💵 Cash on Delivery</option>
+                <option>🏦 Bank Transfer</option>
+              </select></div>
+          </div>
+          <div class="fg"><label>Notes</label><textarea name="specialNotes"
+              placeholder="Quantity, preferred time…"></textarea></div>
+          <input type="hidden" name="dealItem" id="ddm-item-h">
+          <input type="hidden" name="dealDiscount" id="ddm-disc-h">
+          <input type="hidden" name="page" value="Supermarkets-DealRequest">
+          <button type="submit" class="btn-main" id="dealBtn"><i class="fas fa-paper-plane"></i>Send Request</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════ STORE MODAL ════ -->
+  <div class="mov" id="storeModal">
+    <div class="mbox">
+      <button class="mclose" onclick="closeStoreModal()"><i class="fas fa-times"></i></button>
+
+      <!-- Store banner -->
+      <div class="sm-banner"><img id="sm-img" src="" alt="">
+        <div class="sm-banner-grad"></div>
+        <div class="sm-rating-chip" id="sm-rating"><i class="fas fa-star"></i>4.8</div>
+        <div class="sm-banner-info">
+          <h2 id="sm-name"></h2>
+          <div class="sm-meta">
+            <span><i class="fas fa-map-marker-alt" style="color:var(--gold)"></i><span id="sm-loc"></span></span>
+            <span><i class="fas fa-motorcycle" style="color:var(--green)"></i>Delivery available</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="sm-tabs-wrap" id="smTabs">
+        <button class="sm-tab active" data-tab="all">🛒 All Items</button>
+        <button class="sm-tab" data-tab="new">🆕 New Arrivals</button>
+        <button class="sm-tab" data-tab="liked">❤️ Most Liked</button>
+        <button class="sm-tab" data-tab="ordered">🔥 Most Ordered</button>
+        <button class="sm-tab" data-tab="discount">🏷️ Discounts</button>
+      </div>
+
+      <!-- Single scroll column: products + cart below -->
+      <div class="sm-scroll" id="smScroll">
+        <!-- Product grid -->
+        <div class="prod-grid" id="prodGrid"></div>
+
+        <!-- Cart section — shown when items added -->
+        <div class="cart-section" id="cartSection">
+          <div class="cart-sec-hdr">
+            <div class="cart-sec-title">
+              <i class="fas fa-shopping-basket" style="color:var(--green)"></i>
+              Your Cart
+              <span class="cart-count-pill" id="cartBadge">0</span>
+            </div>
+            <button class="btn-cart-clear" onclick="clearCart()"><i class="fas fa-trash-alt"
+                style="margin-right:5px"></i>Clear all</button>
+          </div>
+          <div class="cart-rows" id="cartList"></div>
+          <div class="cart-total-bar">
+            <div class="ctb-left">
+              <span>Order Total</span>
+              <span class="ctb-total" id="cartTotal">Rwf 0</span>
+            </div>
+            <div class="ctb-right">
+              <button class="btn-checkout" id="checkoutBtn" onclick="openCheckout()">
+                <i class="fas fa-credit-card"></i>Proceed to Checkout
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════ CHECKOUT MODAL ════ -->
+  <div class="mov" id="checkoutModal">
+    <div class="mbox">
+      <button class="mclose" onclick="closeModal('checkoutModal')"><i class="fas fa-times"></i></button>
+
+      <!-- Store hero image -->
+      <div class="co-hero">
+        <img id="co-img" src="" alt="">
+        <div class="co-hero-grad"></div>
+        <div class="co-hero-info">
+          <h3 id="co-sname"></h3>
+          <p><i class="fas fa-map-marker-alt" style="color:var(--gold)"></i><span id="co-loc"></span></p>
+        </div>
+      </div>
+
+      <!-- Success screen -->
+      <div class="ss" id="coSS">
+        <div class="ss-icon"><i class="fas fa-check"></i></div>
+        <h3>Order Placed! 🎉</h3>
+        <p>Your order has been submitted successfully. The supermarket team will confirm and arrange your delivery
+          shortly.</p>
+        <div class="ss-checks">
+          <div><i class="fas fa-check-circle"></i>Order confirmation sent to your email</div>
+          <div><i class="fas fa-check-circle"></i>Response expected within 1–2 hours</div>
+          <div><i class="fas fa-check-circle"></i>Payment collected upon delivery or pickup</div>
+        </div>
+        <button class="btn-main" onclick="closeCheckoutSuccess()"><i class="fas fa-store"></i>Continue Shopping</button>
+      </div>
+
+      <!-- Order form -->
+      <div class="co-body" id="coFW">
+        <!-- Adjustable cart summary -->
+        <div class="co-summary">
+          <div class="co-sum-title"><i class="fas fa-receipt"></i>Order Summary — <span id="co-item-count">0</span>
+            item(s)</div>
+          <div id="coItems"></div>
+          <div class="co-total-row"><span>Grand Total</span><span class="co-total-val" id="coGrandTotal">Rwf 0</span>
+          </div>
+        </div>
+
+        <form id="checkoutForm" onsubmit="submitCheckout(event)">
+          <!-- User details -->
+          <div class="frow">
+            <div class="fg"><label>Full Name *</label><input type="text" name="customerName" required
+                placeholder="Jean Claude"></div>
+            <div class="fg"><label>Phone Number *</label><input type="tel" name="customerPhone" required
+                placeholder="078..."></div>
+          </div>
+          <div class="fg"><label>Email Address *</label><input type="email" name="customerEmail" required
+              placeholder="you&#64;example.com"></div>
+          <div class="fg"><label>Supermarket</label><input type="text" id="co-store-inp" name="supermarketName"
+              readonly></div>
+          <div class="fg"><label>Delivery Location *</label><input type="text" name="deliveryAddress" required
+              placeholder="e.g. Remera, KN 5 Rd, House 12"></div>
+          <div class="frow">
+            <div class="fg">
+              <label>Delivery Option *</label>
+              <select name="deliveryOption" required>
+                <option value="">Select…</option>
+                <option>🏠 Home Delivery</option>
+                <option>🏪 In-Store Pickup</option>
+                <option>📦 Schedule for Later</option>
+              </select>
+            </div>
+            <div class="fg">
+              <label>Payment Method *</label>
+              <select name="paymentMethod" required>
+                <option value="">Select…</option>
+                <option>📱 Mobile Money (MoMo)</option>
+                <option>💵 Cash on Delivery</option>
+                <option>🏦 Bank Transfer</option>
+                <option>💳 Credit / Debit Card</option>
+              </select>
+            </div>
+          </div>
+          <div class="fg"><label>Special Notes</label><textarea name="specialNotes"
+              placeholder="Preferred delivery time, special packaging, allergies, or any other instructions…"></textarea>
+          </div>
+          <!-- Hidden fields -->
+          <input type="hidden" name="page" value="Supermarkets-CartCheckout">
+          <input type="hidden" name="cartItems" id="co-cart-h">
+          <input type="hidden" name="cartTotal" id="co-total-h">
+          <input type="hidden" name="storeName" id="co-store-h">
+          <input type="hidden" name="dealDetails" id="co-deal-h">
+          <button type="submit" class="btn-main" id="coBtn"><i class="fas fa-paper-plane"></i>Confirm &amp; Place
+            Order</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- VENDOR MODAL -->
+  <div id="vendorModal"
+    style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);backdrop-filter:blur(10px);z-index:9999;align-items:center;justify-content:center;padding:20px">
+    <div
+      style="background:#fff;border-radius:24px;max-width:560px;width:100%;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.45);position:relative;animation:vpop .4s cubic-bezier(.34,1.56,.64,1)">
+      <style>
+        @keyframes vpop {
+          from {
+            opacity: 0;
+            transform: scale(.92) translateY(18px)
+          }
+
+          to {
+            opacity: 1;
+            transform: none
+          }
         }
+      </style>
+      <div style="background:linear-gradient(135deg,#0b1640,#10b981);padding:28px 32px 22px;color:#fff">
+        <button onclick="closeVendorModal()"
+          style="position:absolute;top:14px;right:14px;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.2);border:none;cursor:pointer;color:#fff;font-size:15px;display:flex;align-items:center;justify-content:center"><i
+            class="fas fa-times"></i></button>
+        <h3 style="font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:800;margin-bottom:4px">🏭 Partner
+          With Us</h3>
+        <p style="font-size:.88rem;opacity:.75">Join Dili-Zone and reach thousands of customers.</p>
+      </div>
+      <div style="padding:24px 32px 28px;max-height:70vh;overflow-y:auto">
+        <div id="vSuccess" style="display:none;text-align:center;padding:20px 0">
+          <div style="font-size:52px;margin-bottom:12px">✅</div>
+          <h4 style="color:#0b1640;margin-bottom:8px">Application Received!</h4>
+          <p style="font-size:.88rem;color:#4a4a6a">Our team will contact you within 24–48 hours.</p><button
+            onclick="closeVendorModal()"
+            style="margin-top:16px;padding:12px 32px;background:#10b981;color:#fff;border:none;border-radius:50px;font-weight:700;cursor:pointer">Done</button>
+        </div>
+        <form id="vendorForm" onsubmit="submitVendor(event)">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
+            <div><label
+                style="display:block;font-size:11px;font-weight:700;text-transform:uppercase;color:#4a4a6a;margin-bottom:5px">First
+                Name</label><input type="text" name="vFirstName" required placeholder="Jean"
+                style="width:100%;padding:11px 13px;border:1.5px solid #e8e6e2;border-radius:9px;font-size:14px;outline:none">
+            </div>
+            <div><label
+                style="display:block;font-size:11px;font-weight:700;text-transform:uppercase;color:#4a4a6a;margin-bottom:5px">Last
+                Name</label><input type="text" name="vLastName" required placeholder="Pierre"
+                style="width:100%;padding:11px 13px;border:1.5px solid #e8e6e2;border-radius:9px;font-size:14px;outline:none">
+            </div>
+          </div>
+          <div style="margin-bottom:12px"><label
+              style="display:block;font-size:11px;font-weight:700;text-transform:uppercase;color:#4a4a6a;margin-bottom:5px">Business
+              Sector</label><select name="vSector" required
+              style="width:100%;padding:11px 13px;border:1.5px solid #e8e6e2;border-radius:9px;font-size:14px;outline:none">
+              <option value="">Select sector</option>
+              <option>Restaurants &amp; Bars</option>
+              <option>Hotels &amp; Accommodation</option>
+              <option>Supermarkets &amp; Grocery</option>
+              <option>Shops &amp; Retail</option>
+              <option>Services</option>
+              <option>Industries &amp; Manufacturing</option>
+              <option>Other</option>
+            </select></div>
+          <div style="margin-bottom:12px"><label
+              style="display:block;font-size:11px;font-weight:700;text-transform:uppercase;color:#4a4a6a;margin-bottom:5px">Email</label><input
+              type="email" name="vEmail" required placeholder="yourname&#64;company.com"
+              style="width:100%;padding:11px 13px;border:1.5px solid #e8e6e2;border-radius:9px;font-size:14px;outline:none">
+          </div>
+          <div style="margin-bottom:12px"><label
+              style="display:block;font-size:11px;font-weight:700;text-transform:uppercase;color:#4a4a6a;margin-bottom:5px">Phone
+              / WhatsApp</label><input type="tel" name="vPhone" required placeholder="078..."
+              style="width:100%;padding:11px 13px;border:1.5px solid #e8e6e2;border-radius:9px;font-size:14px;outline:none">
+          </div>
+          <div style="margin-bottom:12px"><label
+              style="display:block;font-size:11px;font-weight:700;text-transform:uppercase;color:#4a4a6a;margin-bottom:5px">Business
+              Address</label><input type="text" name="vAddress" placeholder="e.g. Kiyovu, Kigali"
+              style="width:100%;padding:11px 13px;border:1.5px solid #e8e6e2;border-radius:9px;font-size:14px;outline:none">
+          </div>
+          <div style="margin-bottom:12px"><label
+              style="display:block;font-size:11px;font-weight:700;text-transform:uppercase;color:#4a4a6a;margin-bottom:5px">Reason
+              of Interest</label><textarea name="vReason" rows="3" placeholder="Tell us about your business..."
+              style="width:100%;padding:11px 13px;border:1.5px solid #e8e6e2;border-radius:9px;font-size:14px;outline:none;resize:vertical"></textarea>
+          </div>
+          <button type="submit" id="vSubmitBtn"
+            style="width:100%;padding:14px;background:#10b981;color:#fff;border:none;border-radius:50px;font-weight:700;font-size:1rem;cursor:pointer;margin-top:6px">Submit
+            Application <i class="fas fa-arrow-right"></i></button>
+        </form>
+      </div>
+    </div>
+  </div>
 
-        // Set up event listeners
-        function setupEventListeners() {
-            // Filter buttons
-            filterButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    // Update active state
-                    filterButtons.forEach(btn => btn.classList.remove('active'));
-                    button.classList.add('active');
-                    
-                    // Update selected supermarket
-                    selectedSupermarket = button.dataset.store;
-                    
-                    // Filter deals
-                    filterDeals();
-                });
-            });
-            
-            // Search input
-            searchInput.addEventListener('input', (e) => {
-                searchQuery = e.target.value;
-                filterDeals();
-            });
-            
-            // Clear filters button
-            clearFiltersBtn.addEventListener('click', () => {
-                searchInput.value = "";
-                searchQuery = "";
-                
-                filterButtons.forEach(btn => {
-                    btn.classList.remove('active');
-                    if (btn.dataset.store === "All Stores") {
-                        btn.classList.add('active');
-                    }
-                });
-                
-                selectedSupermarket = "All Stores";
-                filterDeals();
-            });
-            
-            // Cart button
-            cartButton.addEventListener('click', () => {
-                cartContainer.classList.add('open');
-            });
-            
-            // Close cart
-            closeCart.addEventListener('click', () => {
-                cartContainer.classList.remove('open');
-            });
-            
-            // Checkout button
-            checkoutButton.addEventListener('click', () => {
-                if (cart.length > 0) {
-                    alert('Thank you for your order! Your items will be ready for pickup soon.');
-                    cart = [];
-                    updateCartUI();
-                    cartContainer.classList.remove('open');
-                }
-            });
-        }
+  <script>
+    const SHEET_URL = 'https://script.google.com/macros/s/AKfycbx8VuBmrkDKAvPieeqXtB3Sk9ctbDGVt8HSxoBp9-03ui_V9MXoVuMZ96rlm7ytTdrb/exec';
+    document.getElementById('yr').textContent = new Date().getFullYear();
 
-        // Filter deals based on selected supermarket and search query
-        function filterDeals() {
-            const filteredDeals = mockDeals.filter(deal => {
-                const matchesSupermarket = selectedSupermarket === "All Stores" || deal.supermarket === selectedSupermarket;
-                const matchesSearch = deal.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                                     deal.category.toLowerCase().includes(searchQuery.toLowerCase());
-                return matchesSupermarket && matchesSearch;
-            });
-            
-            // Update results summary
-            updateResultsSummary(filteredDeals.length);
-            
-            // Render filtered deals
-            renderDeals(filteredDeals);
-            
-            // Show/hide no results message
-            if (filteredDeals.length === 0) {
-                noResults.classList.remove('hidden');
-                dealsGrid.classList.add('hidden');
-            } else {
-                noResults.classList.add('hidden');
-                dealsGrid.classList.remove('hidden');
-            }
-        }
+    /* ── ALL DEALS ── */
+    const ALL_DEALS = [
+      { id: 'd1', name: 'Assorted Fresh Local Fruits Basket (3kg)', store: 'Sawa Citi Supermarket', discount: '30% OFF', price: 'Rwf 8,500', oldPrice: 'Rwf 12,500', save: 'Save Rwf 4,000', timer: '12h:40m', img: 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=600&q=80', desc: 'Hand-picked local fruits — avocados, passion fruits, mangoes, bananas. Perfect for a family of 4.' },
+      { id: 'd2', name: 'Inyange Fresh Milk – Whole Carton (12×1L)', store: 'Simba Supermarket', discount: '15% OFF', price: 'Rwf 10,200', oldPrice: 'Rwf 12,000', save: 'Save Rwf 1,800', timer: '', img: 'https://images.unsplash.com/photo-1601332906325-10eb0a6ea230?w=600&q=80', desc: 'Premium Inyange whole pasteurized milk — full carton of 12×1L bottles, delivered chilled.' },
+      { id: 'd3', name: 'Freshly Baked Baguettes & Croissants', store: 'Woodlands Supermarket', discount: 'Buy 2 Get 1', price: 'Rwf 3,000', oldPrice: 'Rwf 4,500', save: 'Save Rwf 1,500', timer: '2h:15m', img: 'https://images.unsplash.com/photo-1550989460-0adf9ea622e2?w=600&q=80', desc: 'Baked fresh every morning. Buy 2 and get a 3rd absolutely free.' },
+      { id: 'd4', name: 'Ariel Laundry Detergent Powder (5kg)', store: 'Frulep Supermarket', discount: '20% OFF', price: 'Rwf 12,500', oldPrice: 'Rwf 15,600', save: 'Save Rwf 3,100', timer: '', img: 'https://images.unsplash.com/photo-1583258292688-d0213dc5a3a8?w=600&q=80', desc: 'Original Ariel 5kg. Works in all water temperatures, hand and machine washing.' },
+      { id: 'd5', name: 'Farm-Fresh Eggs Tray (30 eggs)', store: 'Simba Supermarket', discount: '18% OFF', price: 'Rwf 3,700', oldPrice: 'Rwf 4,500', save: 'Save Rwf 800', timer: '8h:00m', img: 'https://images.unsplash.com/photo-1518562180175-34a163b1a9a6?w=600&q=80', desc: 'Locally sourced farm-fresh eggs, collected daily. Tray of 30.' },
+      { id: 'd6', name: 'Imported Olive Oil Extra Virgin (750ml)', store: 'Sawa Citi Supermarket', discount: '17% OFF', price: 'Rwf 12,500', oldPrice: 'Rwf 15,000', save: 'Save Rwf 2,500', timer: '', img: 'https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=600&q=80', desc: 'Cold-pressed extra virgin olive oil from Spain. Perfect for cooking and salads.' },
+      { id: 'd7', name: 'Premium Coffee Beans 250g', store: 'Woodlands Supermarket', discount: '12% OFF', price: 'Rwf 7,500', oldPrice: 'Rwf 8,500', save: 'Save Rwf 1,000', timer: '5h:30m', img: 'https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=600&q=80', desc: 'Single-origin Rwandan coffee beans, medium roast. Rich and aromatic.' },
+      { id: 'd8', name: 'Greek Yogurt 500g (2-pack)', store: 'Sawa Citi Supermarket', discount: '25% OFF', price: 'Rwf 4,800', oldPrice: 'Rwf 6,400', save: 'Save Rwf 1,600', timer: '3h:45m', img: 'https://images.unsplash.com/photo-1488477181946-6428a0291777?w=600&q=80', desc: 'Creamy Greek-style yogurt, high protein. Ideal for breakfast and snacks.' },
+    ];
 
-        // Update results summary text
-        function updateResultsSummary(count) {
-            let summaryText = `Showing <span class="font-semibold text-foreground">${count}</span> deals`;
-            
-            if (selectedSupermarket !== "All Stores") {
-                summaryText += ` from <span class="font-semibold text-primary">${selectedSupermarket}</span>`;
-            }
-            
-            resultsSummary.innerHTML = summaryText;
-        }
+    /* ── STORES ── */
+    const STORES = {
+      'Simba Supermarket': {
+        img: 'https://images.unsplash.com/photo-1534723452862-4c874018d66d?w=900&q=80', location: 'Gishushu, Kigali', rating: '4.8', products: [
+          { name: 'Organic Avocados (6pcs)', price: 1200, oldPrice: null, badge: 'new', tab: 'new', img: 'https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?w=400' },
+          { name: 'Local Honey 500g', price: 4500, oldPrice: 5500, badge: 'discount', tab: 'discount', img: 'https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=400' },
+          { name: 'Fresh Baguette', price: 800, oldPrice: null, badge: 'ordered', tab: 'ordered', img: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=400' },
+          { name: 'Premium Coffee Beans 250g', price: 8500, oldPrice: null, badge: 'liked', tab: 'liked', img: 'https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=400' },
+          { name: 'Farm-Fresh Eggs (Tray 30)', price: 3800, oldPrice: 4500, badge: 'discount', tab: 'discount', img: 'https://images.unsplash.com/photo-1518562180175-34a163b1a9a6?w=400' },
+          { name: 'Inyange Milk 1L', price: 950, oldPrice: null, badge: 'ordered', tab: 'ordered', img: 'https://images.unsplash.com/photo-1550583724-1255d1426639?w=400' },
+          { name: 'Basmati Rice 5kg', price: 9000, oldPrice: null, badge: 'liked', tab: 'liked', img: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400' },
+          { name: 'Ariel Detergent 2kg', price: 6200, oldPrice: 7000, badge: 'discount', tab: 'discount', img: 'https://images.unsplash.com/photo-1583258292688-d0213dc5a3a8?w=400' },
+        ]
+      },
+      'Sawa Citi Supermarket': {
+        img: 'https://images.unsplash.com/photo-1541334969287-202a0b16f2cc?w=900&q=80', location: 'Remera, Kigali', rating: '4.7', products: [
+          { name: 'Greek Yogurt 500g', price: 3200, oldPrice: null, badge: 'new', tab: 'new', img: 'https://images.unsplash.com/photo-1488477181946-6428a0291777?w=400' },
+          { name: 'Imported Olive Oil 750ml', price: 12500, oldPrice: 15000, badge: 'discount', tab: 'discount', img: 'https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=400' },
+          { name: 'Basmati Rice 5kg', price: 9000, oldPrice: null, badge: 'ordered', tab: 'ordered', img: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400' },
+          { name: 'Fresh Strawberries 500g', price: 3500, oldPrice: 4500, badge: 'discount', tab: 'discount', img: 'https://images.unsplash.com/photo-1464960351845-d3ec242e6da2?w=400' },
+          { name: 'Freshly Baked Sourdough', price: 2200, oldPrice: null, badge: 'liked', tab: 'liked', img: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=400' },
+          { name: 'Tropical Juice 1L', price: 4800, oldPrice: null, badge: 'liked', tab: 'liked', img: 'https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?w=400' },
+          { name: 'Assorted Fruits Basket 3kg', price: 8500, oldPrice: 12500, badge: 'discount', tab: 'discount', img: 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=400' },
+        ]
+      },
+      'Woodlands Supermarket': {
+        img: 'https://images.unsplash.com/photo-1533900298318-6b8da08a523e?w=900&q=80', location: 'Nyarutarama, Kigali', rating: '4.5', products: [
+          { name: 'Fresh Tomatoes 2kg', price: 1500, oldPrice: null, badge: 'new', tab: 'new', img: 'https://images.unsplash.com/photo-1546094096-0df4bcaaa337?w=400' },
+          { name: 'Ariel Detergent 5kg', price: 12500, oldPrice: 15600, badge: 'discount', tab: 'discount', img: 'https://images.unsplash.com/photo-1583258292688-d0213dc5a3a8?w=400' },
+          { name: 'Whole Milk 1L', price: 1100, oldPrice: null, badge: 'ordered', tab: 'ordered', img: 'https://images.unsplash.com/photo-1550583724-1255d1426639?w=400' },
+          { name: 'Croissants 4pcs', price: 2800, oldPrice: null, badge: 'liked', tab: 'liked', img: 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=400' },
+          { name: 'Coffee Beans 250g', price: 7500, oldPrice: 8500, badge: 'discount', tab: 'discount', img: 'https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=400' },
+          { name: 'Fresh Baguettes (2pcs)', price: 1600, oldPrice: null, badge: 'ordered', tab: 'ordered', img: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=400' },
+        ]
+      },
+    };
 
-        // Render deals to the grid
-        function renderDeals(deals) {
-            dealsGrid.innerHTML = '';
-            
-            deals.forEach(deal => {
-                const dealCard = document.createElement('div');
-                dealCard.className = 'deal-card';
-                dealCard.innerHTML = `
-                    <img src="${deal.image}" alt="${deal.title}" class="deal-card-image">
-                    <div class="deal-card-content">
-                        <h3 class="deal-card-title">${deal.title}</h3>
-                        <div class="deal-card-pricing">
-                            <span class="deal-card-original">$${deal.originalPrice.toFixed(2)}</span>
-                            <span class="deal-card-discounted">$${deal.discountedPrice.toFixed(2)}</span>
-                            <span class="deal-card-discount-badge">-${deal.discount}%</span>
-                        </div>
-                        <div class="deal-card-meta">
-                            <span>${deal.supermarket} • ${deal.location}</span>
-                            <span class="deal-card-rating">
-                                <i class="fas fa-star" style="color: #f59e0b;"></i>
-                                ${deal.rating}
-                            </span>
-                        </div>
-                        <div class="deal-card-meta">
-                            <span>Valid until: ${deal.validUntil}</span>
-                            <span>${deal.category}</span>
-                        </div>
-                        <div class="deal-card-actions">
-                            <button class="btn btn-outline">Add to List</button>
-                            <button class="btn-add-to-cart" data-id="${deal.id}">
-                                <i class="fas fa-cart-plus"></i> Add to Cart
-                            </button>
-                        </div>
-                    </div>
-                `;
-                
-                dealsGrid.appendChild(dealCard);
-            });
-            
-            // Add event listeners to Add to Cart buttons
-            document.querySelectorAll('.btn-add-to-cart').forEach(button => {
-                button.addEventListener('click', (e) => {
-                    const dealId = e.currentTarget.dataset.id;
-                    addToCart(dealId);
-                    
-                    // Visual feedback
-                    e.currentTarget.classList.add('added');
-                    setTimeout(() => {
-                        e.currentTarget.classList.remove('added');
-                    }, 500);
-                });
-            });
-        }
+    let cart = [], currentStore = '', activeTab = 'all';
 
-        // Add item to cart
-        function addToCart(dealId) {
-            const deal = mockDeals.find(item => item.id === dealId);
-            if (!deal) return;
-            
-            // Check if item already in cart
-            const existingItem = cart.find(item => item.id === dealId);
-            
-            if (existingItem) {
-                existingItem.quantity += 1;
-            } else {
-                cart.push({
-                    ...deal,
-                    quantity: 1
-                });
-            }
-            
-            updateCartUI();
-            
-            // Show cart if it's not already open
-            cartContainer.classList.add('open');
-        }
+    document.addEventListener('DOMContentLoaded', () => {
+      initScrollAnim(); initHamburger(); initBtt(); initCarousel(); initCategoryFilter(); initTabNav(); buildAllDealsGrid();
+      ['dealModal', 'storeModal', 'checkoutModal'].forEach(id => {
+        document.getElementById(id).addEventListener('click', e => {
+          if (e.target.id === id) { id === 'storeModal' ? closeStoreModal() : closeModal(id); }
+        });
+      });
+    });
 
-        // Remove item from cart
-        function removeFromCart(dealId) {
-            cart = cart.filter(item => item.id !== dealId);
-            updateCartUI();
-        }
+    /* ── SCROLL ANIM ── */
+    function initScrollAnim() {
+      const ob = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('on'); ob.unobserve(e.target); } }), { threshold: .08, rootMargin: '0px 0px -40px 0px' });
+      document.querySelectorAll('.fu').forEach(el => ob.observe(el));
+    }
 
-        // Update item quantity in cart
-        function updateQuantity(dealId, change) {
-            const item = cart.find(item => item.id === dealId);
-            if (!item) return;
-            
-            item.quantity += change;
-            
-            if (item.quantity <= 0) {
-                removeFromCart(dealId);
-            } else {
-                updateCartUI();
-            }
-        }
+    /* ── HAMBURGER ── */
+    function initHamburger() {
+      const hbg = document.getElementById('hbg'), mm = document.getElementById('mobMenu'), mo = document.getElementById('mobOv');
+      const t = () => { hbg.classList.toggle('open'); mm.classList.toggle('open'); mo.classList.toggle('open'); document.body.style.overflow = mm.classList.contains('open') ? 'hidden' : ''; };
+      hbg.addEventListener('click', t); mo.addEventListener('click', t);
+      mm.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { hbg.classList.remove('open'); mm.classList.remove('open'); mo.classList.remove('open'); document.body.style.overflow = ''; }));
+    }
 
-        // Update cart UI
-        function updateCartUI() {
-            // Update cart count
-            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
-            cartCount.textContent = totalItems;
-            
-            // Show/hide empty cart message
-            if (cart.length === 0) {
-                emptyCart.classList.remove('hidden');
-                checkoutButton.disabled = true;
-                checkoutButton.style.opacity = '0.6';
-            } else {
-                emptyCart.classList.add('hidden');
-                checkoutButton.disabled = false;
-                checkoutButton.style.opacity = '1';
-            }
-            
-            // Clear cart items
-            cartItems.querySelectorAll('.cart-item').forEach(item => item.remove());
-            
-            // Add items to cart
-            cart.forEach(item => {
-                const cartItem = document.createElement('div');
-                cartItem.className = 'cart-item';
-                cartItem.innerHTML = `
-                    <img src="${item.image}" alt="${item.title}" class="cart-item-image">
-                    <div class="cart-item-details">
-                        <div class="cart-item-title">${item.title}</div>
-                        <div class="cart-item-price">$${item.discountedPrice.toFixed(2)}</div>
-                    </div>
-                    <div class="cart-item-actions">
-                        <button class="quantity-btn" data-id="${item.id}" data-change="-1">-</button>
-                        <span class="cart-item-quantity">${item.quantity}</span>
-                        <button class="quantity-btn" data-id="${item.id}" data-change="1">+</button>
-                        <button class="cart-item-remove" data-id="${item.id}">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                `;
-                
-                cartItems.appendChild(cartItem);
-            });
-            
-            // Add event listeners to quantity buttons and remove buttons
-            document.querySelectorAll('.quantity-btn').forEach(button => {
-                button.addEventListener('click', (e) => {
-                    const dealId = e.currentTarget.dataset.id;
-                    const change = parseInt(e.currentTarget.dataset.change);
-                    updateQuantity(dealId, change);
-                });
-            });
-            
-            document.querySelectorAll('.cart-item-remove').forEach(button => {
-                button.addEventListener('click', (e) => {
-                    const dealId = e.currentTarget.dataset.id;
-                    removeFromCart(dealId);
-                });
-            });
-            
-            // Update total
-            const total = cart.reduce((sum, item) => sum + (item.discountedPrice * item.quantity), 0);
-            cartTotal.textContent = `$${total.toFixed(2)}`;
-        }
+    /* ── BTT ── */
+    function initBtt() {
+      const b = document.getElementById('btt');
+      window.addEventListener('scroll', () => b.classList.toggle('on', window.scrollY > 400), { passive: true });
+      b.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    }
 
-        // Initialize the application when DOM is loaded
-        document.addEventListener('DOMContentLoaded', init);
-    </script>
+    /* ── CAROUSEL ── */
+    let carIdx = 0, carAutoT;
+    function getCarVis() { return window.innerWidth <= 600 ? 1 : window.innerWidth <= 860 ? 2 : window.innerWidth <= 1100 ? 3 : 4; }
+
+    function dealCardHTML(d) {
+      return `<div class="deal-card">
+    <div class="deal-img">
+      <span class="disc-badge">${d.discount}</span>
+      <img src="${d.img}" alt="${d.name}" loading="lazy">
+      ${d.timer ? `<div class="deal-timer"><i class="fas fa-clock"></i>${d.timer}</div>` : ''}
+    </div>
+    <div class="deal-body">
+      <div class="deal-store">${d.store}</div>
+      <div class="deal-name">${d.name}</div>
+      <div class="deal-price"><span class="price-new">${d.price}</span><span class="price-old">${d.oldPrice}</span></div>
+      <button class="btn-deal" onclick='openDealModal(${JSON.stringify(d)})'><i class="fas fa-shopping-cart"></i>Request Deal</button>
+    </div>
+  </div>`;
+    }
+
+    function buildCarousel() {
+      document.getElementById('dealsTrack').innerHTML = ALL_DEALS.slice(0, 4).map(dealCardHTML).join('');
+      buildDots(); updateCarousel(); resetAuto();
+    }
+
+    function buildAllDealsGrid() {
+      document.getElementById('allDealsGrid').innerHTML = ALL_DEALS.map(dealCardHTML).join('');
+    }
+
+    function updateCarousel() {
+      requestAnimationFrame(() => {
+        const track = document.getElementById('dealsTrack');
+        const cards = track.querySelectorAll('.deal-card');
+        if (!cards.length) return;
+        const vis = getCarVis(), max = Math.max(0, cards.length - vis);
+        carIdx = Math.min(Math.max(carIdx, 0), max);
+        track.style.transform = `translateX(-${carIdx * (cards[0].offsetWidth + 20)}px)`;
+        document.querySelectorAll('.cdot').forEach((d, i) => d.classList.toggle('on', i === Math.floor(carIdx / vis)));
+      });
+    }
+    function buildDots() {
+      const vis = getCarVis(), cards = document.getElementById('dealsTrack').querySelectorAll('.deal-card');
+      const pages = Math.ceil(cards.length / vis);
+      document.getElementById('carDots').innerHTML = Array.from({ length: pages }, (_, i) => `<div class="cdot${i === 0 ? ' on' : ''}" onclick="goDot(${i})"></div>`).join('');
+    }
+    function goDot(i) { carIdx = i * getCarVis(); updateCarousel(); resetAuto(); }
+    function resetAuto() { clearInterval(carAutoT); carAutoT = setInterval(() => { carIdx++; updateCarousel(); }, 5000); }
+    function initCarousel() {
+      buildCarousel();
+      document.getElementById('carPrev').addEventListener('click', () => { carIdx--; updateCarousel(); resetAuto(); });
+      document.getElementById('carNext').addEventListener('click', () => { carIdx++; updateCarousel(); resetAuto(); });
+      let rt; window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { carIdx = 0; buildDots(); updateCarousel(); }, 150); });
+    }
+
+    /* ── ALL DEALS TOGGLE ── */
+    function toggleAllDeals() {
+      const panel = document.getElementById('allDealsPanel'), btn = document.getElementById('viewAllBtn');
+      const open = panel.classList.toggle('show');
+      btn.innerHTML = open ? 'Hide deals <i class="fas fa-chevron-up"></i>' : 'View all deals <i class="fas fa-arrow-right"></i>';
+      if (open) panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    /* ── CATEGORY FILTER ── */
+    function initCategoryFilter() {
+      document.querySelectorAll('.grocery-cat').forEach(cat => {
+        cat.addEventListener('click', () => {
+          document.querySelectorAll('.grocery-cat').forEach(c => c.classList.remove('active'));
+          cat.classList.add('active');
+          const sel = cat.dataset.category;
+          document.querySelectorAll('.smarket-card').forEach(card => {
+            const cats = card.dataset.categories || '';
+            card.style.display = (sel === 'all' || cats.split(',').map(s => s.trim()).includes(sel)) ? '' : 'none';
+          });
+          if (sel !== 'all') document.getElementById('storeDirectory').scrollIntoView({ behavior: 'smooth' });
+        });
+      });
+    }
+
+    /* ── HERO SEARCH ── */
+    function doSearch() {
+      const q = (document.getElementById('heroSrc').value || '').trim().toLowerCase();
+      if (!q) { document.getElementById('dealsSection').scrollIntoView({ behavior: 'smooth' }); return; }
+      const cards = document.querySelectorAll('.smarket-card');
+      let found = 0;
+      cards.forEach(c => { const show = c.innerText.toLowerCase().includes(q); c.style.display = show ? '' : 'none'; if (show) found++; });
+      if (!found) cards.forEach(c => c.style.display = '');
+      document.getElementById('storeDirectory').scrollIntoView({ behavior: 'smooth' });
+    }
+    document.getElementById('heroSrc').addEventListener('keydown', e => { if (e.key === 'Enter') doSearch(); });
+
+    /* ── MODAL HELPERS ── */
+    function openModal(id) { document.getElementById(id).classList.add('open'); document.body.style.overflow = 'hidden'; }
+    function closeModal(id) { document.getElementById(id).classList.remove('open'); document.body.style.overflow = ''; }
+
+    /* ── DEAL MODAL ── */
+    function openDealModal(d) {
+      document.getElementById('ddm-img').src = d.img;
+      document.getElementById('ddm-disc').textContent = d.discount;
+      document.getElementById('ddm-store-chip').textContent = d.store;
+      document.getElementById('ddm-title').textContent = d.name;
+      document.getElementById('ddm-pnew').textContent = d.price;
+      document.getElementById('ddm-pold').textContent = d.oldPrice;
+      document.getElementById('ddm-save').textContent = d.save || '';
+      document.getElementById('ddm-desc').textContent = d.desc || '';
+      document.getElementById('ddm-store-input').value = d.store;
+      document.getElementById('ddm-item-h').value = d.name;
+      document.getElementById('ddm-disc-h').value = d.discount;
+      document.getElementById('dealSS').classList.remove('show');
+      document.getElementById('dealFW').style.display = '';
+      document.getElementById('dealForm').reset();
+      document.getElementById('ddm-store-input').value = d.store;
+      document.getElementById('ddm-item-h').value = d.name;
+      document.getElementById('ddm-disc-h').value = d.discount;
+      openModal('dealModal');
+    }
+    async function submitDeal(e) {
+      e.preventDefault();
+      const btn = document.getElementById('dealBtn'); btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending…';
+      const p = new URLSearchParams(new FormData(e.target)); 
+      p.set('timestamp', new Date().toLocaleString());
+      p.set('companyName', document.getElementById('ddm-store-input').value);
+      try {
+        await fetch(SHEET_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: p.toString() });
+        document.getElementById('dealFW').style.display = 'none'; document.getElementById('dealSS').classList.add('show');
+      } catch { alert('Failed. Please try again.'); }
+      finally { btn.disabled = false; btn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Request'; }
+    }
+
+    /* ── STORE MODAL ── */
+    function openStoreModal(storeName) {
+      const store = STORES[storeName]; if (!store) return;
+      currentStore = storeName; cart = []; activeTab = 'all';
+      document.getElementById('sm-img').src = store.img;
+      document.getElementById('sm-name').textContent = storeName;
+      document.getElementById('sm-loc').textContent = store.location;
+      document.getElementById('sm-rating').innerHTML = `<i class="fas fa-star"></i>${store.rating}`;
+      document.querySelectorAll('.sm-tab').forEach(t => t.classList.toggle('active', t.dataset.tab === 'all'));
+      renderProducts(store.products, 'all');
+      renderCartSection();
+      openModal('storeModal');
+    }
+    function closeStoreModal() { closeModal('storeModal'); cart = []; }
+
+    function initTabNav() {
+      document.getElementById('smTabs').addEventListener('click', e => {
+        const btn = e.target.closest('.sm-tab'); if (!btn) return;
+        activeTab = btn.dataset.tab;
+        document.querySelectorAll('.sm-tab').forEach(t => t.classList.toggle('active', t === btn));
+        const store = STORES[currentStore]; if (store) renderProducts(store.products, activeTab);
+      });
+    }
+
+    /* ── RENDER PRODUCTS ── */
+    function renderProducts(products, tab) {
+      const filtered = tab === 'all' ? products : products.filter(p => p.tab === tab);
+      const grid = document.getElementById('prodGrid');
+      if (!filtered.length) {
+        grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--gray-400)"><i class="fas fa-box-open" style="font-size:2.5rem;display:block;margin-bottom:12px"></i>No items in this section.</div>`;
+        return;
+      }
+      const bc = { new: 'bt-new', liked: 'bt-liked', ordered: 'bt-ordered', discount: 'bt-discount' };
+      grid.innerHTML = filtered.map(p => {
+        const item = cart.find(c => c.name === p.name);
+        const qty = item ? item.qty : 0;
+        const k = safeKey(p.name);
+        return `<div class="prod-card">
+      <div class="prod-img-wrap">
+        <img src="${p.img}" alt="${p.name}" loading="lazy">
+        <span class="prod-badge ${bc[p.badge] || 'bt-new'}">${p.badge}</span>
+      </div>
+      <div class="prod-body">
+        <div class="prod-name">${p.name}</div>
+        <div class="prod-prices">
+          <span class="pp-new">Rwf ${p.price.toLocaleString()}</span>
+          ${p.oldPrice ? `<span class="pp-old">Rwf ${p.oldPrice.toLocaleString()}</span>` : ''}
+        </div>
+        <button class="btn-atc" id="atc-${k}" onclick='addToCart(${JSON.stringify(p.name)},${p.price},${JSON.stringify(p.img || '')})' style="${qty > 0 ? 'display:none' : ''}">
+          <i class="fas fa-plus"></i> Add to Cart
+        </button>
+        <div class="pqc ${qty > 0 ? 'show' : ''}" id="pqc-${k}">
+          <button class="pqb" onclick='changeQtyCard(${JSON.stringify(p.name)},-1)'>−</button>
+          <span class="pqn" id="pqn-${k}">${qty}</span>
+          <button class="pqb" onclick='changeQtyCard(${JSON.stringify(p.name)},1)'>+</button>
+        </div>
+      </div>
+    </div>`;
+      }).join('');
+    }
+
+    /* ── CART OPERATIONS ── */
+    function safeKey(name) { return name.replace(/[^a-zA-Z0-9]/g, '-'); }
+
+    function updateCard(name) {
+      const item = cart.find(i => i.name === name), qty = item ? item.qty : 0, k = safeKey(name);
+      const a = document.getElementById('atc-' + k), pqc = document.getElementById('pqc-' + k), pqn = document.getElementById('pqn-' + k);
+      if (a) a.style.display = qty > 0 ? 'none' : '';
+      if (pqc) pqc.classList.toggle('show', qty > 0);
+      if (pqn) pqn.textContent = qty;
+    }
+
+    function addToCart(name, price, img) {
+      const ex = cart.find(i => i.name === name);
+      if (ex) { ex.qty++; } else { cart.push({ name, price, qty: 1, img }); }
+      updateCard(name);
+      renderCartSection();
+      /* Scroll cart into view smoothly */
+      setTimeout(() => { const cs = document.getElementById('cartSection'); if (cs) cs.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 100);
+    }
+
+    function changeQtyCard(name, delta) {
+      const ex = cart.find(i => i.name === name);
+      if (!ex) return;
+      ex.qty += delta;
+      if (ex.qty <= 0) cart = cart.filter(i => i.name !== name);
+      updateCard(name);
+      renderCartSection();
+    }
+
+    function cartQty(name, d) {
+      const item = cart.find(i => i.name === name); if (!item) return;
+      item.qty += d; if (item.qty <= 0) cart = cart.filter(i => i.name !== name);
+      updateCard(name); renderCartSection();
+    }
+
+    function cartDel(name) {
+      cart = cart.filter(i => i.name !== name);
+      updateCard(name); renderCartSection();
+    }
+
+    function clearCart() {
+      cart = [];
+      const s = STORES[currentStore];
+      if (s) renderProducts(s.products, activeTab);
+      renderCartSection();
+    }
+
+    function renderCartSection() {
+      const cs = document.getElementById('cartSection');
+      const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+      const count = cart.reduce((s, i) => s + i.qty, 0);
+      document.getElementById('cartBadge').textContent = count;
+      document.getElementById('cartTotal').textContent = `Rwf ${total.toLocaleString()}`;
+
+      if (!cart.length) { cs.classList.remove('show'); return; }
+      cs.classList.add('show');
+
+      document.getElementById('cartList').innerHTML = cart.map(i => `
+    <div class="cir">
+      <img class="cir-img" src="${i.img || ''}" alt="${i.name}" onerror="this.style.display='none'">
+      <div class="cir-info">
+        <div class="cir-name">${i.name}</div>
+        <div class="cir-unit">Rwf ${i.price.toLocaleString()} each</div>
+      </div>
+      <div class="cir-qty">
+        <button class="cibtn" onclick='cartQty(${JSON.stringify(i.name)},-1)'>−</button>
+        <span class="ciq">${i.qty}</span>
+        <button class="cibtn" onclick='cartQty(${JSON.stringify(i.name)},1)'>+</button>
+      </div>
+      <div class="cip">Rwf ${(i.price * i.qty).toLocaleString()}</div>
+      <button class="cidel" title="Remove" onclick='cartDel(${JSON.stringify(i.name)})'><i class="fas fa-times"></i></button>
+    </div>`).join('');
+    }
+
+    /* ── CHECKOUT ── */
+    function openCheckout() {
+      if (!cart.length) return;
+      const store = STORES[currentStore];
+      document.getElementById('co-img').src = store ? store.img : '';
+      document.getElementById('co-sname').textContent = currentStore;
+      document.getElementById('co-loc').textContent = store ? store.location : '';
+      document.getElementById('co-store-inp').value = currentStore;
+      document.getElementById('co-store-h').value = currentStore;
+      syncCoCart();
+      document.getElementById('coSS').classList.remove('show');
+      document.getElementById('coFW').style.display = '';
+      document.getElementById('checkoutForm').reset();
+      document.getElementById('co-store-inp').value = currentStore;
+      document.getElementById('co-store-h').value = currentStore;
+      openModal('checkoutModal');
+    }
+
+    function syncCoCart() {
+      const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+      const count = cart.reduce((s, i) => s + i.qty, 0);
+      document.getElementById('coGrandTotal').textContent = `Rwf ${total.toLocaleString()}`;
+      document.getElementById('co-item-count').textContent = count;
+      document.getElementById('co-cart-h').value = cart.map(i => `${i.name} x${i.qty} = Rwf ${(i.price * i.qty).toLocaleString()}`).join(' | ');
+      document.getElementById('co-total-h').value = `Rwf ${total.toLocaleString()}`;
+      /* Deal details = items with discounts */
+      const deals = cart.filter(i => STORES[currentStore] && STORES[currentStore].products.find(p => p.name === i.name && p.oldPrice));
+      document.getElementById('co-deal-h').value = deals.length ? deals.map(i => { const p = STORES[currentStore].products.find(x => x.name === i.name); return `${i.name}: Rwf ${p.price} (was Rwf ${p.oldPrice})`; }).join(' | ') : 'No specific deals';
+      document.getElementById('coItems').innerHTML = cart.map(i => `
+    <div class="co-row">
+      <img class="co-rimg" src="${i.img || ''}" alt="${i.name}" onerror="this.style.display='none'">
+      <div class="co-rname">${i.name}</div>
+      <div class="co-rqty">
+        <button class="cqbtn" onclick='coQty(${JSON.stringify(i.name)},-1)'>−</button>
+        <span class="cqnum">${i.qty}</span>
+        <button class="cqbtn" onclick='coQty(${JSON.stringify(i.name)},1)'>+</button>
+      </div>
+      <div class="co-rprice">Rwf ${(i.price * i.qty).toLocaleString()}</div>
+      <button class="co-rdel" onclick='coDel(${JSON.stringify(i.name)})'><i class="fas fa-times"></i></button>
+    </div>`).join('');
+    }
+
+    function coQty(name, d) {
+      const item = cart.find(i => i.name === name); if (!item) return;
+      item.qty += d; if (item.qty <= 0) cart = cart.filter(i => i.name !== name);
+      if (!cart.length) { closeModal('checkoutModal'); renderCartSection(); return; }
+      syncCoCart(); renderCartSection(); updateCard(name);
+    }
+    function coDel(name) {
+      cart = cart.filter(i => i.name !== name);
+      if (!cart.length) { closeModal('checkoutModal'); renderCartSection(); return; }
+      syncCoCart(); renderCartSection(); updateCard(name);
+    }
+
+    async function submitCheckout(e) {
+      e.preventDefault();
+      const btn = document.getElementById('coBtn');
+      btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Placing Order…';
+      const p = new URLSearchParams(new FormData(e.target));
+      p.set('timestamp', new Date().toLocaleString());
+      p.set('companyName', document.getElementById('co-store-inp').value);
+      try {
+        await fetch(SHEET_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: p.toString() });
+        document.getElementById('coFW').style.display = 'none';
+        document.getElementById('coSS').classList.add('show');
+        cart = [];
+        renderCartSection();
+      } catch { alert('Failed to place order. Please try again.'); }
+      finally { btn.disabled = false; btn.innerHTML = '<i class="fas fa-paper-plane"></i> Confirm &amp; Place Order'; }
+    }
+
+    function closeCheckoutSuccess() { closeModal('checkoutModal'); closeStoreModal(); }
+
+    /* ── VENDOR ── */
+    function openVendorModal() { document.getElementById('vendorModal').style.display = 'flex'; document.getElementById('vSuccess').style.display = 'none'; document.getElementById('vendorForm').style.display = ''; document.getElementById('vendorForm').reset(); document.body.style.overflow = 'hidden'; }
+    function closeVendorModal() { document.getElementById('vendorModal').style.display = 'none'; document.body.style.overflow = ''; }
+    document.getElementById('vendorModal').addEventListener('click', e => { if (e.target === document.getElementById('vendorModal')) closeVendorModal(); });
+    async function submitVendor(e) {
+      e.preventDefault(); const btn = document.getElementById('vSubmitBtn'); btn.textContent = 'Submitting…'; btn.disabled = true;
+      const fd = new FormData(e.target);
+      const p = new URLSearchParams({ page: 'VendorApplication', timestamp: new Date().toLocaleString(), firstName: fd.get('vFirstName'), lastName: fd.get('vLastName'), sector: fd.get('vSector'), email: fd.get('vEmail'), phone: "'" + fd.get('vPhone'), address: fd.get('vAddress'), reason: fd.get('vReason') });
+      try {
+        await fetch(SHEET_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: p.toString() });
+        document.getElementById('vSuccess').style.display = 'block'; e.target.style.display = 'none';
+      } catch { alert('Error. Please try again.'); }
+      finally { btn.textContent = 'Submit Application'; btn.disabled = false; }
+    }
+  </script>
 </body>
+
 </html>
