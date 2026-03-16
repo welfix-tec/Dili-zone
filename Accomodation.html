@@ -1,1655 +1,1891 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Accommodation Deals | Dili-Zone</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Luxury Accommodations – Hotels, Apartments, Guest Houses & Rentals on Dili-Zone.">
+  <title>Stay in Dili – Dili-Zone | Luxury Hotels & Rentals</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-    /* Base Styles */
+    :root {
+      --navy: #1a2a6c;
+      --navy-dk: #0f1a4a;
+      --navy-lt: #2d3f8a;
+      --red: #b21f1f;
+      --gold: #ffcc00;
+      --gold-dk: #e6b800;
+      --white: #ffffff;
+      --gray-100: #f5f7fa;
+      --gray-200: #e8eaf0;
+      --gray-600: #5a6282;
+      --text: #1e2240;
+      --green: #10b981;
+      --shadow-sm: 0 2px 12px rgba(26, 42, 108, .08);
+      --shadow-md: 0 6px 28px rgba(26, 42, 108, .14);
+      --shadow-lg: 0 16px 52px rgba(26, 42, 108, .20);
+      --r: 16px;
+      --font-d: 'Playfair Display', serif;
+      --font-b: 'Plus Jakarta Sans', sans-serif;
+      --ease: cubic-bezier(.25, .46, .45, .94);
+    }
+
     * {
-      margin: 0;
-      padding: 0;
       box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    html {
+      scroll-behavior: smooth
     }
 
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f8f9fa;
-      color: #333;
+      font-family: var(--font-b);
+      color: var(--text);
+      background: #fff;
       line-height: 1.6;
-      overflow-x: hidden;
+      overflow-x: hidden
     }
 
-    /* Header Styles */
+    a {
+      text-decoration: none;
+      color: inherit
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer;
+      border: none
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      object-fit: cover
+    }
+
+    /* ── ANIMATIONS ── */
+    .fu {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity .8s var(--ease), transform .8s var(--ease)
+    }
+
+    .fu.on {
+      opacity: 1;
+      transform: none
+    }
+
+    .fu.d1 {
+      transition-delay: .12s
+    }
+
+    .fu.d2 {
+      transition-delay: .24s
+    }
+
+    .fu.d3 {
+      transition-delay: .36s
+    }
+
+    /* ═══════════════════════════════════════════
+       HEADER
+    ═══════════════════════════════════════════ */
     header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 2rem;
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-      position: sticky;
+      position: fixed;
       top: 0;
+      left: 0;
+      right: 0;
       z-index: 1000;
+      height: 70px;
+      padding: 0 clamp(1.2rem, 4vw, 3rem);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: transparent;
+      transition: background .4s var(--ease-out), box-shadow .4s var(--ease-out), height .3s;
     }
 
-    .logo {
+    header.scrolled {
+      background: rgba(11, 22, 64, .97);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 2px 24px rgba(0, 0, 0, .2);
+      height: 62px;
+    }
+
+    .logo-container {
       display: flex;
       align-items: center;
       gap: 10px;
+      text-decoration: none;
     }
 
-    .logo img {
-      height: 40px;
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 9px;
+      background: var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--navy);
+      flex-shrink: 0;
+      transition: transform .3s var(--ease-bounce);
+    }
+
+    .logo-container:hover .logo-icon {
+      transform: rotate(-8deg) scale(1.08);
     }
 
     .site-title {
-      font-size: 1.5rem;
-      font-weight: bold;
-      color: #333;
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+      font-weight: 800;
+      color: white;
+      letter-spacing: -.5px;
     }
 
-    .highlight {
-      color: #764ba2;
+    .site-title span {
+      color: var(--gold);
+    }
+
+    .nav-wrapper {
+      display: flex;
+      align-items: center;
     }
 
     .navbar {
       display: flex;
-      gap: 1.5rem;
+      gap: .2rem;
+      list-style: none;
     }
 
     .navbar a {
+      color: rgba(255, 255, 255, .82);
       text-decoration: none;
-      color: #333;
+      font-size: .86rem;
       font-weight: 500;
-      transition: color 0.3s ease;
-      position: relative;
+      padding: .44rem .85rem;
+      border-radius: 6px;
+      white-space: nowrap;
+      transition: color .2s, background .2s;
     }
 
     .navbar a:hover {
-      color: #764ba2;
+      color: white;
+      background: rgba(255, 255, 255, .1);
     }
 
-    .navbar a::after {
-      content: '';
-      position: absolute;
-      bottom: -5px;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background: #764ba2;
-      transition: width 0.3s ease;
+    .navbar a.active {
+      color: var(--gold);
     }
 
-    .navbar a:hover::after {
-      width: 100%;
-    }
-
-    .mobile-menu-btn {
+    .menu-toggle {
       display: none;
       background: none;
       border: none;
-      font-size: 1.5rem;
       cursor: pointer;
-      color: #333;
+      flex-direction: column;
+      gap: 5px;
+      padding: 4px;
     }
 
-    /* Hero Section */
-    .hero-section {
+    .menu-toggle span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: white;
+      border-radius: 2px;
+      transition: all .3s var(--ease-out);
+    }
+
+    .menu-toggle.open span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+
+    .menu-toggle.open span:nth-child(2) {
+      opacity: 0;
+      transform: translateX(-8px);
+    }
+
+    .menu-toggle.open span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    .nav-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .5);
+      z-index: 998;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .3s;
+    }
+
+    .nav-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    
+
+/* ── HERO ── */
+    .hero {
+      min-height: 780px;
       position: relative;
-      overflow: hidden;
-      height: 500px;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
-      color: white;
-      flex-direction: column;
+      color: #fff;
+      padding: 100px 20px 60px
     }
 
-    .hero-video {
+    .hero-bg {
       position: absolute;
-      top: 0;
-      left: 0;
-      min-width: 100%;
-      min-height: 100%;
-      object-fit: cover;
-      z-index: -2;
+      inset: 0;
+      z-index: 0
     }
 
-    .hero-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
+    .hero-bg img {
       width: 100%;
       height: 100%;
-      background: linear-gradient(135deg, rgba(118, 75, 162, 0.8) 0%, rgba(102, 126, 234, 0.8) 100%);
-      z-index: -1;
+      object-fit: cover
     }
 
-    .hero-content {
-      padding: 25px 15px 40px;
-      border-top: 10px solid rgba(255, 255, 255, 0.7);
-      border-bottom: 10px solid rgba(255, 255, 255, 0.7);
-      max-width: 800px;
-      margin: 0 auto;
-    }
-
-    .hero-title {
-      font-size: 2.5rem;
-      margin-bottom: 15px;
-      font-weight: 700;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-    }
-
-    .hero-description {
-      max-width: 700px;
-      margin: 0 auto;
-      font-size: 1.1rem;
-      line-height: 1.6;
-      opacity: 0.9;
-    }
-
-    /* Main Container */
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 20px;
-    }
-
-    /* Section Header */
-    .section-header {
-      text-align: center;
-      margin-bottom: 40px;
-      padding: 20px;
-    }
-
-    .section-header h1 {
-      font-size: 2.8rem;
-      margin-bottom: 10px;
-      background: linear-gradient(45deg, #764ba2, #667eea);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .section-header p {
-      font-size: 1.2rem;
-      color: #303030;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    /* Accommodation Sections */
-    .accommodation-section {
-      background: rgb(61, 69, 48);
-      border-radius: 20px;
-      padding: 30px;
-      margin-bottom: 40px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .accommodation-section::before {
-      content: '';
+    .hero-ov {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 5px;
-      background: linear-gradient(90deg, #764ba2, #667eea);
+      inset: 0;
+      background: linear-gradient(160deg, rgba(10, 18, 60, .93) 0%, rgba(26, 42, 108, .75) 60%, rgba(178, 31, 31, .35) 100%);
+      z-index: 1
     }
 
-    .section-title {
-      color: #fffbfb;
-      font-size: 2rem;
-      margin-bottom: 30px;
-      text-align: center;
+    .hero-ct {
+      position: relative;
+      z-index: 2;
+      max-width: 900px
+    }
+
+    .hero-lbl {
+      display: inline-block;
+      padding: 6px 18px;
+      border: 1px solid rgba(255, 204, 0, .6);
+      border-radius: 30px;
+      font-size: 12px;
       font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px
     }
 
-    .accommodation-container {
-      position: relative;
+    .hero h1 {
+      font-family: var(--font-d);
+      font-size: clamp(2.6rem, 6vw, 4.5rem);
+      line-height: 1.1;
+      margin-bottom: 20px
     }
 
-    .accommodation-grid {
+    .hero h1 span {
+      color: var(--gold)
+    }
+
+    .hero-sub {
+      font-size: 1.1rem;
+      opacity: .85;
+      max-width: 620px;
+      margin: 0 auto 40px
+    }
+
+    /* STATS BAR */
+    .hero-stats {
+      display: flex;
+      gap: 40px;
+      justify-content: center;
+      margin-bottom: 50px;
+      flex-wrap: wrap
+    }
+
+    .hs {
+      text-align: center
+    }
+
+    .hs-num {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--gold);
+      line-height: 1
+    }
+
+    .hs-lbl {
+      font-size: 12px;
+      opacity: .7;
+      margin-top: 4px;
+      text-transform: uppercase;
+      letter-spacing: 1px
+    }
+
+    .hs-div {
+      width: 1px;
+      background: rgba(255, 255, 255, .2);
+      height: 40px;
+      align-self: center
+    }
+
+    /* SEARCH BOX */
+    .srch-box {
+      background: rgba(255, 255, 255, .1);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, .2);
+      border-radius: 20px;
+      padding: 24px;
+      max-width: 860px;
+      width: 100%;
+      margin: 0 auto
+    }
+
+    .srch-row {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 20px;
+      grid-template-columns: 1fr 1fr auto;
+      gap: 12px;
+      align-items: end
     }
 
-    .accommodation-card {
-      background: white;
-      border-radius: 15px;
-      overflow: hidden;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-      transition: all 0.3s ease;
-      cursor: pointer;
-      position: relative;
+    .srch-grp {
+      text-align: left
     }
 
-    .accommodation-card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    .srch-grp label {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: rgba(255, 255, 255, .7);
+      text-transform: uppercase;
+      margin-bottom: 8px
     }
 
-    .card-image {
-      height: 180px;
+    .srch-grp input,
+    .srch-grp select {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: 1.5px solid rgba(255, 255, 255, .25);
+      background: rgba(255, 255, 255, .12);
+      color: #fff;
+      font-size: 14px;
+      font-family: var(--font-b);
+      outline: none;
+      transition: .3s
+    }
+
+    .srch-grp input::placeholder {
+      color: rgba(255, 255, 255, .5)
+    }
+
+    .srch-grp select option {
+      color: #000;
+      background: #fff
+    }
+
+    .srch-grp input:focus,
+    .srch-grp select:focus {
+      border-color: var(--gold);
+      background: rgba(255, 255, 255, .18)
+    }
+
+    .btn-srch {
+      padding: 14px 32px;
+      background: var(--gold);
+      color: var(--navy-dk);
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 15px;
+      transition: .3s;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    .btn-srch:hover {
+      background: var(--gold-dk);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(255, 204, 0, .3)
+    }
+
+    /* ── CATEGORY TABS ── */
+    .cat-bar {
+      padding: 32px 20px;
+      background: #fff;
+      border-bottom: 1px solid var(--gray-200);
+      position: sticky;
+      top: 72px;
+      z-index: 100;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, .06)
+    }
+
+    .cat-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap
+    }
+
+    .btn-cat {
+      padding: 11px 28px;
+      border-radius: 50px;
+      border: 2px solid var(--gray-200);
+      background: #fff;
+      color: var(--gray-600);
+      font-weight: 700;
+      font-size: 13.5px;
+      transition: all .3s;
+      display: flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    .btn-cat:hover {
+      border-color: var(--navy);
+      color: var(--navy)
+    }
+
+    .btn-cat.active {
+      background: var(--navy);
+      color: #fff;
+      border-color: var(--navy);
+      box-shadow: 0 6px 16px rgba(26, 42, 108, .25)
+    }
+
+    .btn-cat i {
+      font-size: 14px
+    }
+
+    /* ── SECTIONS ── */
+    .sec {
+      padding: 100px 20px
+    }
+
+    .sec-bg {
+      background-attachment: fixed;
       background-size: cover;
       background-position: center;
+      position: relative
+    }
+
+    .sec-bg-ov {
+      position: absolute;
+      inset: 0;
+      background: rgba(255, 255, 255, .96)
+    }
+
+    .sec-bg .con {
       position: relative;
+      z-index: 1
     }
 
-    .discount-badge {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      background: linear-gradient(45deg, #ff6b6b, #ee5a24);
-      color: white;
-      padding: 5px 12px;
-      border-radius: 20px;
-      font-weight: bold;
-      font-size: 0.8rem;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    .sec-alt {
+      background: var(--gray-100)
     }
 
-    .card-content {
-      padding: 15px;
+    .con {
+      max-width: 1240px;
+      margin: 0 auto
     }
 
-    .card-name {
-      font-size: 1.2rem;
-      font-weight: bold;
-      margin-bottom: 8px;
-      color: #333;
+    .sec-hd {
+      text-align: center;
+      margin-bottom: 60px
     }
 
-    .card-location {
-      color: #7f8c8d;
-      font-size: 0.9rem;
+    .sec-lbl {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      color: var(--red);
+      text-transform: uppercase;
       margin-bottom: 12px;
+      display: block
+    }
+
+    .sec-ttl {
+      font-family: var(--font-d);
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: var(--navy);
+      margin-bottom: 12px
+    }
+
+    .sec-ttl span {
+      color: var(--red)
+    }
+
+    .sec-sub {
+      color: var(--gray-600);
+      max-width: 540px;
+      margin: 0 auto;
+      font-size: 15px
+    }
+
+    /* TOP DEALS STRIP */
+    .deals-strip {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      padding-bottom: 12px;
+      scrollbar-width: none
+    }
+
+    .deals-strip::-webkit-scrollbar {
+      display: none
+    }
+
+    .deal-chip {
+      flex-shrink: 0;
+      background: var(--navy);
+      color: #fff;
+      border-radius: 12px;
+      padding: 14px 22px;
       display: flex;
       align-items: center;
-      gap: 5px;
+      gap: 12px;
+      min-width: 240px;
+      transition: .3s;
+      cursor: pointer
     }
 
-    .card-location i {
-      color: #764ba2;
+    .deal-chip:hover {
+      background: var(--red);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 24px rgba(178, 31, 31, .25)
     }
 
-    .price-section {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-    }
-
-    .price-info {
-      cursor: pointer;
-    }
-
-    .original-price {
-      text-decoration: line-through;
-      color: #bdc3c7;
-      font-size: 0.9rem;
-    }
-
-    .discounted-price {
-      font-size: 1.3rem;
-      font-weight: bold;
-      color: #27ae60;
-    }
-
-    .rating {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      font-size: 0.9rem;
-      color: #f39c12;
-    }
-
-    .view-details-btn {
-      width: 100%;
-      background: linear-gradient(45deg, #764ba2, #667eea);
-      color: white;
-      border: none;
-      padding: 10px;
-      border-radius: 8px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      margin-top: 10px;
-    }
-
-    .view-details-btn:hover {
-      background: linear-gradient(45deg, #667eea, #764ba2);
-      transform: translateY(-2px);
-    }
-
-    .nav-btn {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(255, 255, 255, 0.9);
-      border: none;
-      width: 50px;
-      height: 50px;
+    .deal-chip .dc-rank {
+      width: 30px;
+      height: 30px;
       border-radius: 50%;
-      cursor: pointer;
-      font-size: 1.5rem;
-      color: #333;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-      transition: all 0.3s ease;
-      z-index: 10;
+      background: var(--gold);
+      color: var(--navy-dk);
+      font-weight: 900;
+      font-size: 13px;
       display: flex;
       align-items: center;
       justify-content: center;
+      flex-shrink: 0
     }
 
-    .nav-btn:hover {
-      background: white;
-      transform: translateY(-50%) scale(1.1);
+    .deal-chip .dc-info .dc-name {
+      font-weight: 800;
+      font-size: 14px
     }
 
-    .nav-btn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
+    .deal-chip .dc-info .dc-price {
+      font-size: 12px;
+      opacity: .75;
+      margin-top: 2px
     }
 
-    .prev-btn {
-      left: -25px;
+    /* STAY CARDS */
+    .stay-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px
     }
 
-    .next-btn {
-      right: -25px;
+    .stay-card {
+      background: #fff;
+      border-radius: var(--r);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      transition: all .4s var(--ease)
     }
 
-    .page-indicator {
+    .stay-card:hover {
+      transform: translateY(-10px);
+      box-shadow: var(--shadow-lg)
+    }
+
+    .sc-img {
+      position: relative;
+      height: 240px;
+      overflow: hidden
+    }
+
+    .sc-img img {
+      height: 100%;
+      transition: transform .6s
+    }
+
+    .stay-card:hover .sc-img img {
+      transform: scale(1.09)
+    }
+
+    .sc-badge {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      padding: 5px 12px;
+      border-radius: 8px;
+      font-weight: 800;
+      font-size: 11px;
+      color: #fff;
+      z-index: 5
+    }
+
+    .sc-price {
+      position: absolute;
+      bottom: 14px;
+      right: 14px;
+      background: rgba(255, 255, 255, .96);
+      padding: 7px 13px;
+      border-radius: 9px;
+      color: var(--navy);
+      font-weight: 800;
+      font-size: 13px;
+      box-shadow: var(--shadow-sm)
+    }
+
+    .sc-body {
+      padding: 22px
+    }
+
+    .sc-name {
+      font-family: var(--font-d);
+      font-size: 1.35rem;
+      margin-bottom: 8px;
+      color: var(--navy-dk)
+    }
+
+    .sc-loc {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 13px;
+      color: var(--gray-600);
+      margin-bottom: 18px
+    }
+
+    .sc-loc i {
+      color: var(--red)
+    }
+
+    .sc-hl {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      padding-top: 16px;
+      border-top: 1px solid var(--gray-200);
+      margin-bottom: 20px;
+      font-size: 12px;
+      color: var(--gray-600)
+    }
+
+    .sc-hi {
+      display: flex;
+      align-items: center;
+      gap: 7px
+    }
+
+    .sc-hi i {
+      color: var(--gold)
+    }
+
+    .btn-book-now {
+      width: 100%;
+      padding: 13px;
+      background: var(--navy);
+      color: #fff;
+      border-radius: 10px;
+      font-weight: 800;
+      font-size: 13.5px;
+      transition: .3s
+    }
+
+    .btn-book-now:hover {
+      background: var(--red);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(178, 31, 31, .3)
+    }
+
+    /* SECTION BACKGROUNDS */
+    .hotel-sec {
+      background-image: url('https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1600')
+    }
+
+    .guest-sec {
+      background-image: url('https://images.unsplash.com/photo-1564078516393-cf04bd966897?w=1600')
+    }
+
+    .apt-sec {
+      background-image: url('https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1600')
+    }
+
+    .house-sec {
+      background-image: url('https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=1600')
+    }
+
+    /* TRUST SECTION */
+    .trust-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px
+    }
+
+    .trust-card {
       text-align: center;
-      margin-top: 20px;
-      color: #666;
-      font-weight: 500;
+      padding: 36px 28px;
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--gray-200);
+      transition: .4s
     }
 
-    /* Modal Styles */
+    .trust-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-md)
+    }
+
+    .trust-icon {
+      font-size: 44px;
+      color: var(--gold);
+      margin-bottom: 18px
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--navy-dk);
+      color: rgba(255, 255, 255, .6);
+      padding: 80px 20px 40px
+    }
+
+    .ft-grid {
+      max-width: 1240px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 50px
+    }
+
+    .ft-col h4 {
+      color: #fff;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 22px
+    }
+
+    .ft-links li {
+      margin-bottom: 10px;
+      list-style: none
+    }
+
+    .ft-links a:hover {
+      color: var(--gold)
+    }
+
+    .ft-copy {
+      max-width: 1240px;
+      margin: 40px auto 0;
+      padding-top: 30px;
+      border-top: 1px solid rgba(255, 255, 255, .1);
+      text-align: center;
+      font-size: 13px
+    }
+
+    /* MODAL */
     .modal {
       display: none;
       position: fixed;
-      z-index: 2000;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.8);
-      backdrop-filter: blur(5px);
+      inset: 0;
+      background: rgba(0, 0, 0, .88);
+      backdrop-filter: blur(10px);
+      z-index: 3000;
+      padding: 20px;
+      overflow-y: auto;
+      align-items: flex-start;
+      justify-content: center
     }
 
-    .modal-content {
-      background: white;
-      margin: 2% auto;
-      padding: 0;
-      border-radius: 20px;
-      width: 90%;
-      max-width: 800px;
-      max-height: 90vh;
-      overflow-y: auto;
+    .modal.open {
+      display: flex
+    }
+
+    .modal-box {
+      background: #fff;
+      max-width: 960px;
+      width: 100%;
+      border-radius: 24px;
+      overflow: hidden;
       position: relative;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 30px 70px rgba(0, 0, 0, .4);
+      opacity: 0;
+      transform: scale(.95) translateY(20px);
+      transition: all .5s var(--ease);
+      margin: auto
+    }
+
+    .modal.open .modal-box {
+      opacity: 1;
+      transform: none
     }
 
     .modal-close {
       position: absolute;
-      right: 20px;
-      top: 20px;
-      font-size: 2rem;
-      font-weight: bold;
-      cursor: pointer;
-      z-index: 2001;
-      color: white;
-      background: rgba(0, 0, 0, 0.5);
-      width: 40px;
-      height: 40px;
+      top: 18px;
+      right: 18px;
+      width: 42px;
+      height: 42px;
       border-radius: 50%;
+      background: #fff;
+      color: var(--navy);
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all 0.3s ease;
+      cursor: pointer;
+      z-index: 10;
+      font-size: 18px;
+      box-shadow: var(--shadow-sm);
+      transition: .3s
     }
 
     .modal-close:hover {
-      background: rgba(0, 0, 0, 0.8);
-      transform: scale(1.1);
+      background: var(--red);
+      color: #fff
     }
 
-    .carousel-container {
+    .modal-img-wrap {
+      height: 380px;
       position: relative;
-      height: 300px;
-      overflow: hidden;
-      border-radius: 20px 20px 0 0;
+      overflow: hidden
     }
 
-    .carousel-slide {
-      display: none;
+    .modal-img-wrap img {
       width: 100%;
       height: 100%;
-      background-size: cover;
-      background-position: center;
+      object-fit: cover;
+      transition: opacity .3s
     }
 
-    .carousel-slide.active {
-      display: block;
-      animation: fadeIn 0.5s ease;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0.7; }
-      to { opacity: 1; }
-    }
-
-    .carousel-nav {
+    .m-arr {
       position: absolute;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 10px;
-    }
-
-    .carousel-dot {
-      width: 12px;
-      height: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 44px;
+      height: 44px;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.5);
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .carousel-dot.active {
-      background: white;
-      transform: scale(1.2);
-    }
-
-    .booking-form {
-      padding: 30px;
-    }
-
-    .form-title {
-      font-size: 1.8rem;
-      color: #2c3e50;
-      margin-bottom: 20px;
-      text-align: center;
-    }
-
-    .form-group {
-      margin-bottom: 20px;
-    }
-
-    .form-group label {
-      display: block;
-      margin-bottom: 5px;
-      font-weight: bold;
-      color: #555;
-    }
-
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-      width: 100%;
-      padding: 12px;
-      border: 2px solid #e0e0e0;
-      border-radius: 8px;
-      font-size: 1rem;
-      transition: border-color 0.3s ease;
-    }
-
-    .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus {
-      outline: none;
-      border-color: #667eea;
-      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-    }
-
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 15px;
-    }
-
-    .book-btn {
-      width: 100%;
-      background: linear-gradient(45deg, #764ba2, #667eea);
-      color: white;
-      border: none;
-      padding: 15px;
-      border-radius: 10px;
-      font-size: 1.2rem;
-      font-weight: bold;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      margin-top: 10px;
-    }
-
-    .book-btn:hover {
-      background: linear-gradient(45deg, #667eea, #764ba2);
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-    }
-
-    /* Footer Styles */
-    footer {
-      background: linear-gradient(135deg, #2c3e50, #1a2530);
-      color: white;
-      padding: 3rem 0 1rem;
-      margin-top: 4rem;
-    }
-
-    .footer-content {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 2rem;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 2rem;
-    }
-
-    .footer-section h3 {
-      font-size: 1.5rem;
-      margin-bottom: 1.5rem;
-      position: relative;
-      padding-bottom: 0.5rem;
-    }
-
-    .footer-section h3::after {
-      content: '';
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      width: 50px;
-      height: 2px;
-      background: linear-gradient(45deg, #ff6b35, #f7931e);
-    }
-
-    .footer-links {
-      list-style: none;
-    }
-
-    .footer-links li {
-      margin-bottom: 0.8rem;
-    }
-
-    .footer-links a {
-      color: #bdc3c7;
-      text-decoration: none;
-      transition: all 0.3s ease;
-      display: inline-block;
-      position: relative;
-    }
-
-    .footer-links a::before {
-      content: '';
-      position: absolute;
-      bottom: -2px;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background: linear-gradient(45deg, #ff6b35, #f7931e);
-      transition: width 0.3s ease;
-    }
-
-    .footer-links a:hover {
-      color: white;
-      transform: translateX(5px);
-    }
-
-    .footer-links a:hover::before {
-      width: 100%;
-    }
-
-    .social-links {
+      background: rgba(255, 255, 255, .9);
+      color: var(--navy);
       display: flex;
-      gap: 1rem;
-      margin-top: 1rem;
-    }
-
-    .social-links a {
-      display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 40px;
-      height: 40px;
-      background: rgba(255, 255, 255, 0.1);
+      cursor: pointer;
+      z-index: 5;
+      transition: .3s;
+      box-shadow: var(--shadow-md)
+    }
+
+    .m-arr:hover {
+      background: var(--gold)
+    }
+
+    .m-prev {
+      left: 16px
+    }
+
+    .m-next {
+      right: 16px
+    }
+
+    .m-dots {
+      position: absolute;
+      bottom: 14px;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: center;
+      gap: 6px
+    }
+
+    .m-dot {
+      width: 7px;
+      height: 7px;
       border-radius: 50%;
-      color: white;
-      text-decoration: none;
-      transition: all 0.3s ease;
+      background: rgba(255, 255, 255, .5);
+      transition: .3s
     }
 
-    .social-links a:hover {
-      background: linear-gradient(45deg, #ff6b35, #f7931e);
-      transform: translateY(-3px);
-      box-shadow: 0 5px 15px rgba(255, 107, 53, 0.4);
+    .m-dot.active {
+      background: #fff;
+      transform: scale(1.3)
     }
 
-    .footer-bottom {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 1.5rem 2rem 0;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    .modal-body {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 0
+    }
+
+    .modal-info {
+      padding: 36px;
+      border-right: 1px solid var(--gray-200)
+    }
+
+    .modal-info h2 {
+      font-family: var(--font-d);
+      font-size: 2rem;
+      color: var(--navy);
+      margin-bottom: 8px
+    }
+
+    .mi-loc {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--gray-600);
+      margin-bottom: 16px
+    }
+
+    .mi-loc i {
+      color: var(--red)
+    }
+
+    .mi-desc {
+      font-size: 14px;
+      color: var(--gray-600);
+      line-height: 1.7;
+      margin-bottom: 24px
+    }
+
+    .mi-hl {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      font-size: 13px;
+      color: var(--gray-600)
+    }
+
+    .mi-hi {
+      display: flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    .mi-hi i {
+      color: var(--gold)
+    }
+
+    .booking-panel {
+      padding: 32px;
+      background: var(--gray-100)
+    }
+
+    .bp-title {
+      font-weight: 800;
+      font-size: 1.1rem;
+      margin-bottom: 22px;
+      color: var(--navy-dk)
+    }
+
+    .fg {
+      margin-bottom: 14px
+    }
+
+    .fg label {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--gray-600);
+      letter-spacing: 1px;
+      margin-bottom: 6px
+    }
+
+    .fg input,
+    .fg select,
+    .fg textarea {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1.5px solid var(--gray-200);
+      border-radius: 9px;
+      background: #fff;
+      font-family: var(--font-b);
+      font-size: 14px;
+      color: var(--text);
+      outline: none;
+      transition: .3s
+    }
+
+    .fg input:focus,
+    .fg select:focus,
+    .fg textarea:focus {
+      border-color: var(--navy)
+    }
+
+    .fg textarea {
+      resize: vertical;
+      min-height: 60px
+    }
+
+    .fg-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px
+    }
+
+    .btn-confirm {
+      width: 100%;
+      padding: 15px;
+      background: var(--red);
+      color: #fff;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 14.5px;
+      margin-top: 8px;
+      box-shadow: 0 8px 20px rgba(178, 31, 31, .2);
+      transition: .3s
+    }
+
+    .btn-confirm:hover {
+      background: var(--navy);
+      transform: translateY(-2px)
+    }
+
+    .success-ov {
+      display: none;
+      position: absolute;
+      inset: 0;
+      background: #fff;
+      z-index: 20;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       text-align: center;
-      color: #bdc3c7;
-      font-size: 0.9rem;
+      padding: 40px
     }
 
-    /* Responsive Design */
-    @media (max-width: 1024px) {
-      .accommodation-grid {
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      }
-      
-      .hero-title {
-        font-size: 2.2rem;
-      }
+    .success-ov.show {
+      display: flex
     }
 
-    @media (max-width: 768px) {
-      header {
-        padding: 1rem;
-        flex-wrap: wrap;
-      }
-      
-      .navbar {
-        display: none;
-        width: 100%;
-        flex-direction: column;
-        margin-top: 1rem;
-        gap: 0.5rem;
-        background: white;
-        padding: 1rem;
-        border-radius: 10px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-      }
-      
-      .navbar.active {
-        display: flex;
-      }
-      
-      .mobile-menu-btn {
-        display: block;
-      }
-      
-      .hero-title {
-        font-size: 1.8rem;
-      }
-      
-      .section-header h1 {
-        font-size: 2.2rem;
-      }
-      
-      .section-title {
-        font-size: 1.7rem;
-      }
-      
-      .container {
-        padding: 15px;
+    .suc-ico {
+      font-size: 60px;
+      color: var(--green);
+      margin-bottom: 20px
+    }
+
+    /* RESPONSIVE */
+    @media(max-width:1024px) {
+      .stay-grid {
+        grid-template-columns: repeat(2, 1fr)
       }
 
-      .accommodation-section {
-        padding: 20px;
+      .ft-grid {
+        grid-template-columns: 1fr 1fr
       }
-      
-      .form-row {
-        grid-template-columns: 1fr;
-      }
-      
-      .modal-content {
-        width: 95%;
-        margin: 5% auto;
-      }
-      
-      .nav-btn {
-        width: 40px;
-        height: 40px;
-        font-size: 1.2rem;
-      }
-      
-      .prev-btn {
-        left: -15px;
-      }
-      
-      .next-btn {
-        right: -15px;
-      }
-      
-      .footer-content {
-        grid-template-columns: 1fr;
-        text-align: center;
-      }
-      
-      .footer-section h3::after {
-        left: 50%;
-        transform: translateX(-50%);
+
+      .trust-grid {
+        grid-template-columns: 1fr 1fr
       }
     }
 
-    @media (max-width: 480px) {
-      .hero-title {
-        font-size: 1.5rem;
+    @media(max-width:768px) {
+      .stay-grid {
+        grid-template-columns: 1fr
       }
 
-      .hero-content {
-        padding: 20px 10px 30px;
+      .main-nav {
+        display: none
       }
-      
-      .section-header h1 {
-        font-size: 1.8rem;
+
+      .mob-tog {
+        display: block
       }
-      
-      .section-title {
-        font-size: 1.5rem;
+
+      .modal-body {
+        grid-template-columns: 1fr
       }
-      
-      .accommodation-grid {
-        grid-template-columns: 1fr;
+
+      .modal-info {
+        border-right: none;
+        border-bottom: 1px solid var(--gray-200)
       }
-      
-      .card-image {
-        height: 160px;
+
+      .srch-row {
+        grid-template-columns: 1fr
+      }
+
+      .ft-grid {
+        grid-template-columns: 1fr 1fr
+      }
+    }
+
+    @media(max-width:480px) {
+      .ft-grid {
+        grid-template-columns: 1fr
+      }
+
+      .hero-stats {
+        gap: 20px
+      }
+
+      .trust-grid {
+        grid-template-columns: 1fr
       }
     }
   </style>
 </head>
+
 <body>
-  <!-- Header -->
-  <header>
-    <div class="logo">
-      <img src="images/logo.png" alt="Dili-Zone Logo" height="40" />
-      <span class="site-title">Dili<span class="highlight">-Zone</span></span>
+
+  <!-- HEADER -->
+  <header id="header">
+    <div class="hdr">
+      <div class="hdi">
+        <a href="index.html" class="logo">
+          <div class="lm">D</div>
+          <div class="lt">
+            <div class="mn">Dili-Zone</div>
+            <div class="sb">Luxury & Comfort</div>
+          </div>
+        </a>
+        <nav class="main-nav">
+          <a href="index.html">Home</a>
+          <a href="restaurants.html">Restaurants</a>
+          <a href="Accomodation.html" class="active">Stay</a>
+          <a href="supermarkets.html">Supermarkets</a>
+          <a href="industries.html">Industries</a>
+          <a href="Shops.html">Shops</a>
+        </nav>
+        <button class="mob-tog" onclick="toggleMob()"><i class="fas fa-bars"></i></button>
+      </div>
     </div>
-    <button class="mobile-menu-btn">
-      <i class="fas fa-bars"></i>
-    </button>
-    <nav class="navbar">
-      <a href="index.html">Home</a>
-      <a href="restaurants.html">Restaurants</a>
-      <a href="Accomodation.html">Hotels</a>
-      <a href="supermarket.html">Supermarkets</a>
-      <a href="services.html">Services</a>
-      <a href="industries.html">Industries</a>
-      <a href="shops.html">Shops</a>
-    </nav>
   </header>
 
-  <!-- Hero Section -->
-  <section class="hero-section">
-    <video autoplay muted loop playsinline class="hero-video">
-      <source src="images/video 2.mp4" type="video/webm">
-      Your browser does not support the video tag.
-    </video>
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
-      <h1 class="hero-title">Accommodation Deals</h1>
-      <p class="hero-description">
-        Discover exclusive promotions from leading Hotels and Apartments across Rwanda. Book smarter and save more on your next stay.
-      </p>
+  
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg">
+      <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1800" alt="Luxury Accommodation">
+    </div>
+    <div class="hero-ov"></div>
+    <div class="hero-ct">
+      <div class="hero-lbl fu">✦ Dili-Zone Verified Properties</div>
+      <h1 class="fu d1">Find Your Perfect <span>Luxury Stay</span></h1>
+      <p class="hero-sub fu d2">Hotels, Guest Houses, Serviced Apartments & Premium Rentals — all in one place.</p>
+
+      <!-- STATS -->
+      <div class="hero-stats fu d2">
+        <div class="hs">
+          <div class="hs-num">120+</div>
+          <div class="hs-lbl">Listed Properties</div>
+        </div>
+        <div class="hs-div"></div>
+        <div class="hs">
+          <div class="hs-num">4.8★</div>
+          <div class="hs-lbl">Avg. Rating</div>
+        </div>
+        <div class="hs-div"></div>
+        <div class="hs">
+          <div class="hs-num">5,000+</div>
+          <div class="hs-lbl">Happy Guests</div>
+        </div>
+        <div class="hs-div"></div>
+        <div class="hs">
+          <div class="hs-num">4</div>
+          <div class="hs-lbl">Categories</div>
+        </div>
+      </div>
+
+      <!-- SEARCH BOX -->
+      <div class="srch-box fu d3" id="searchBox">
+        <div class="srch-row">
+          <div class="srch-grp">
+            <label><i class="fas fa-map-marker-alt"></i> Location</label>
+            <select id="locationFilter" onchange="doSearch()">
+              <option value="">All Locations</option>
+              <option>Kiyovu</option>
+              <option>Nyarutarama</option>
+              <option>Gacuriro</option>
+              <option>Kimihurura</option>
+              <option>Kacyiru</option>
+              <option>Remera</option>
+              <option>Kigali CBD</option>
+            </select>
+          </div>
+          <div class="srch-grp">
+            <label><i class="fas fa-th-large"></i> Category</label>
+            <select id="categoryFilter" onchange="doSearch()">
+              <option value="">All Categories</option>
+              <option value="hotel">Hotels</option>
+              <option value="guest">Guest Houses</option>
+              <option value="apartment">Apartments</option>
+              <option value="house">Rent Houses</option>
+            </select>
+          </div>
+          <button class="btn-srch" onclick="doSearch()"><i class="fas fa-search"></i> Search</button>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- Main Content -->
-  <div class="container">
-    <div class="section-header">
-      <h1>Hotel Deals & Discounts</h1>
-      <p>Discover amazing hotel deals and save on your next getaway!</p>
-    </div>
-
-    <!-- Hotels Section -->
-    <div class="accommodation-section">
-      <h2 class="section-title">Hotels</h2>
-      
-      <div class="accommodation-container">
-        <button class="nav-btn prev-btn" id="prevBtn" onclick="changeHotelGroup(-1)">
-          <i class="fas fa-chevron-left"></i>
-        </button>
-        <button class="nav-btn next-btn" id="nextBtn" onclick="changeHotelGroup(1)">
-          <i class="fas fa-chevron-right"></i>
-        </button>
-        
-        <div class="accommodation-grid" id="hotelsGrid">
-          <!-- Hotels will be populated by JavaScript -->
-        </div>
-      </div>
-      
-      <div class="page-indicator" id="pageIndicator">
-        Page 1 of 1
-      </div>
-    </div>
-
-    <!-- Apartments Section -->
-    <div class="accommodation-section">
-      <h2 class="section-title">Apartments</h2>
-      
-      <div class="accommodation-container">
-        <button class="nav-btn prev-btn" id="prevBtnApt" onclick="changeApartmentGroup(-1)">
-          <i class="fas fa-chevron-left"></i>
-        </button>
-        <button class="nav-btn next-btn" id="nextBtnApt" onclick="changeApartmentGroup(1)">
-          <i class="fas fa-chevron-right"></i>
-        </button>
-        
-        <div class="accommodation-grid" id="apartmentsGrid">
-          <!-- Apartments will be populated by JavaScript -->
-        </div>
-      </div>
-      
-      <div class="page-indicator" id="pageIndicatorApt">
-        Page 1 of 1
-      </div>
-    </div>
-
-    <!-- Rooms Section -->
-    <div class="accommodation-section">
-      <h2 class="section-title">Rooms</h2>
-      
-      <div class="accommodation-container">
-        <button class="nav-btn prev-btn" id="prevBtnRoom" onclick="changeRoomGroup(-1)">
-          <i class="fas fa-chevron-left"></i>
-        </button>
-        <button class="nav-btn next-btn" id="nextBtnRoom" onclick="changeRoomGroup(1)">
-          <i class="fas fa-chevron-right"></i>
-        </button>
-        
-        <div class="accommodation-grid" id="roomsGrid">
-          <!-- Rooms will be populated by JavaScript -->
-        </div>
-      </div>
-      
-      <div class="page-indicator" id="pageIndicatorRoom">
-        Page 1 of 1
-      </div>
+  <!-- CATEGORY TABS -->
+  <div class="cat-bar">
+    <div class="cat-inner">
+      <button class="btn-cat active" id="tab-all" onclick="filterCat('all',this)"><i class="fas fa-th"></i> All
+        Luxury</button>
+      <button class="btn-cat" id="tab-hotel" onclick="filterCat('hotel',this)"><i class="fas fa-hotel"></i>
+        Hotels</button>
+      <button class="btn-cat" id="tab-guest" onclick="filterCat('guest',this)"><i class="fas fa-house-user"></i> Guest
+        Houses</button>
+      <button class="btn-cat" id="tab-apartment" onclick="filterCat('apartment',this)"><i class="fas fa-building"></i>
+        Apartments</button>
+      <button class="btn-cat" id="tab-house" onclick="filterCat('house',this)"><i class="fas fa-home"></i> Rent
+        Houses</button>
     </div>
   </div>
 
-  <!-- Footer -->
-  <footer>
-    <div class="footer-content">
-      <div class="footer-section">
-        <h3>About Dili-Zone</h3>
-        <p>Your ultimate guide to the best accommodation and travel experiences in Rwanda. Discover hidden gems and popular spots with exclusive deals.</p>
-        <div class="social-links">
-          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-          <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-          <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+  <!-- HOTELS SECTION -->
+  <section class="sec sec-bg hotel-sec" id="sec-hotel">
+    <div class="sec-bg-ov"></div>
+    <div class="con">
+      <div class="sec-hd fu">
+        <span class="sec-lbl">Category 01</span>
+        <h2 class="sec-ttl">Luxury <span>Hotels</span></h2>
+        <p class="sec-sub">World-class service, breathtaking views and exclusive amenities.</p>
+      </div>
+      <!-- Top Deals Strip -->
+      <div id="topDeals-hotel" class="deals-strip fu" style="margin-bottom:40px"></div>
+      <!-- Cards -->
+      <div id="grid-hotel" class="stay-grid"></div>
+    </div>
+  </section>
+
+  <!-- GUEST HOUSES SECTION -->
+  <section class="sec sec-bg guest-sec" id="sec-guest">
+    <div class="sec-bg-ov"></div>
+    <div class="con">
+      <div class="sec-hd fu">
+        <span class="sec-lbl">Category 02</span>
+        <h2 class="sec-ttl">Cozy <span>Guest Houses</span></h2>
+        <p class="sec-sub">Home-away-from-home comfort with personalized service.</p>
+      </div>
+      <div id="topDeals-guest" class="deals-strip fu" style="margin-bottom:40px"></div>
+      <div id="grid-guest" class="stay-grid"></div>
+    </div>
+  </section>
+
+  <!-- APARTMENTS SECTION -->
+  <section class="sec sec-bg apt-sec" id="sec-apartment">
+    <div class="sec-bg-ov"></div>
+    <div class="con">
+      <div class="sec-hd fu">
+        <span class="sec-lbl">Category 03</span>
+        <h2 class="sec-ttl">Serviced <span>Apartments</span></h2>
+        <p class="sec-sub">Modern furnished flats with all the comforts of home, long-term or short-term.</p>
+      </div>
+      <div id="topDeals-apartment" class="deals-strip fu" style="margin-bottom:40px"></div>
+      <div id="grid-apartment" class="stay-grid"></div>
+    </div>
+  </section>
+
+  <!-- RENT HOUSES SECTION -->
+  <section class="sec sec-bg house-sec" id="sec-house">
+    <div class="sec-bg-ov"></div>
+    <div class="con">
+      <div class="sec-hd fu">
+        <span class="sec-lbl">Category 04</span>
+        <h2 class="sec-ttl">Premium <span>Rent Houses</span></h2>
+        <p class="sec-sub">Spacious private residences and villas for families and long-term stays.</p>
+      </div>
+      <div id="topDeals-house" class="deals-strip fu" style="margin-bottom:40px"></div>
+      <div id="grid-house" class="stay-grid"></div>
+    </div>
+  </section>
+
+  <!-- SEARCH RESULTS SECTION (hidden by default) -->
+  <section class="sec" id="sec-results" style="display:none;background:var(--gray-100)">
+    <div class="con">
+      <div class="sec-hd">
+        <span class="sec-lbl">Search Results</span>
+        <h2 class="sec-ttl" id="results-title">Showing Results</h2>
+      </div>
+      <div id="grid-results" class="stay-grid"></div>
+      <div style="text-align:center;margin-top:30px">
+        <button class="btn-cat" onclick="clearSearch()"
+          style="background:var(--navy);color:#fff;border-color:var(--navy);padding:12px 32px">
+          <i class="fas fa-times"></i> Clear Search
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST SECTION -->
+  <section class="sec" style="background: linear-gradient(135deg,var(--navy-dk) 0%,var(--navy) 100%);">
+    <div class="con">
+      <div class="sec-hd fu">
+        <span class="sec-lbl" style="color:var(--gold)">Why Dili-Zone</span>
+        <h2 class="sec-ttl" style="color:#fff">The Luxury <span style="color:var(--gold)">Standard</span></h2>
+        <p class="sec-sub" style="color:rgba(255,255,255,.7)">Every listing is manually verified. You're guaranteed
+          quality.</p>
+      </div>
+      <div class="trust-grid">
+        <div class="trust-card fu">
+          <div class="trust-icon"><i class="fas fa-shield-halved"></i></div>
+          <h4 style="margin-bottom:8px;color:var(--navy)">Verified Properties</h4>
+          <p style="font-size:14px;color:var(--gray-600)">Only top-rated, legally registered accommodations make our
+            listing.</p>
+        </div>
+        <div class="trust-card fu d1">
+          <div class="trust-icon"><i class="fas fa-headset"></i></div>
+          <h4 style="margin-bottom:8px;color:var(--navy)">24/7 Support</h4>
+          <p style="font-size:14px;color:var(--gray-600)">Our team is always available to assist with bookings and
+            on-site issues.</p>
+        </div>
+        <div class="trust-card fu d2">
+          <div class="trust-icon"><i class="fas fa-gem"></i></div>
+          <h4 style="margin-bottom:8px;color:var(--navy)">Exclusive Deals</h4>
+          <p style="font-size:14px;color:var(--gray-600)">Access Dili-Zone exclusive discounts and VIP room upgrades.
+          </p>
         </div>
       </div>
-      
-      <div class="footer-section">
-        <h3>Quick Links</h3>
-        <ul class="footer-links">
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="ft-grid">
+      <div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+          <div class="lm">D</div>
+          <div style="color:#fff;font-weight:800;font-size:1.4rem">Dili-Zone</div>
+        </div>
+        <p>Premium accommodation directory in Dili. Connecting you with the most luxurious and comfortable properties.
+        </p>
+        <div style="display:flex;gap:14px;margin-top:20px;font-size:18px">
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+      <div class="ft-col">
+        <h4>Categories</h4>
+        <ul class="ft-links">
+          <li><a href="#">Luxury Hotels</a></li>
+          <li><a href="#">Guest Houses</a></li>
+          <li><a href="#">Serviced Apartments</a></li>
+          <li><a href="#">Rent Houses</a></li>
+        </ul>
+      </div>
+      <div class="ft-col">
+        <h4>Explore</h4>
+        <ul class="ft-links">
           <li><a href="index.html">Home</a></li>
           <li><a href="restaurants.html">Restaurants</a></li>
-          <li><a href="Accomodation.html">Hotels</a></li>
-          <li><a href="supermarket.html">Supermarkets</a></li>
-          <li><a href="services.html">Services</a></li>
+          <li><a href="Shops.html">Shops</a></li>
+          <li><a href="industries.html">Industries</a></li>
         </ul>
       </div>
-      
-      <div class="footer-section">
-        <h3>Accommodation</h3>
-        <ul class="footer-links">
-          <li><a href="#">Luxury Hotels</a></li>
-          <li><a href="#">Budget Stays</a></li>
-          <li><a href="#">Apartments</a></li>
-          <li><a href="#">Vacation Rentals</a></li>
-          <li><a href="#">Business Hotels</a></li>
-        </ul>
-      </div>
-      
-      <div class="footer-section">
-        <h3>Contact Us</h3>
-        <ul class="footer-links">
-          <li><i class="fas fa-envelope"></i> info@dili-zone.com</li>
-          <li><i class="fas fa-phone"></i> +250 780 491 405</li>
-          <li><i class="fas fa-map-marker-alt"></i> Kigali, Rwanda</li>
-          <li><a href="#"><i class="fas fa-headset"></i> Customer Support</a></li>
+      <div class="ft-col">
+        <h4>Company</h4>
+        <ul class="ft-links">
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">List Your Property</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Contact</a></li>
         </ul>
       </div>
     </div>
-    
-    <div class="footer-bottom">
-      <p>&copy; 2026 Dili-Zone. All rights reserved. | Designed with <i class="fas fa-heart" style="color: #e74c3c;"></i> for travelers</p>
-    </div>
+    <div class="ft-copy">© 2025 Dili-Zone. All rights reserved. Built with ❤️ for Dili's best stays.</div>
   </footer>
 
-  <!-- Booking Modal -->
-  <div id="bookingModal" class="modal">
-    <div class="modal-content">
-      <span class="modal-close" onclick="closeModal()">&times;</span>
-      
-      <div class="carousel-container">
-        <div class="carousel-slide active" id="slide1"></div>
-        <div class="carousel-slide" id="slide2"></div>
-        <div class="carousel-slide" id="slide3"></div>
-        
-        <div class="carousel-nav">
-          <div class="carousel-dot active" onclick="currentSlide(1)"></div>
-          <div class="carousel-dot" onclick="currentSlide(2)"></div>
-          <div class="carousel-dot" onclick="currentSlide(3)"></div>
-        </div>
+  <!-- BOOKING MODAL -->
+  <div id="bookModal" class="modal" onclick="handleModalBg(event)">
+    <div class="modal-box">
+      <div class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></div>
+
+      <!-- Success Overlay -->
+      <div class="success-ov" id="successOv">
+        <div class="suc-ico"><i class="fas fa-circle-check"></i></div>
+        <h3 style="font-family:var(--font-d);font-size:2rem;color:var(--navy);margin-bottom:12px">Request Received! 🎉
+        </h3>
+        <p style="color:var(--gray-600);max-width:360px">Your booking request has been submitted. Our team will contact
+          you within 2 hours to confirm your reservation.</p>
+        <button class="btn-confirm" style="max-width:220px;margin-top:24px" onclick="closeModal()">Done</button>
       </div>
-      
-      <div class="booking-form">
-        <h3 class="form-title" id="modalHotelName">Book Your Stay</h3>
-        
-        <form id="bookingForm">
-          <div class="form-row">
-            <div class="form-group">
-              <label for="firstName">First Name *</label>
-              <input type="text" id="firstName" name="firstName" required>
+
+      <!-- Image Slider -->
+      <div class="modal-img-wrap">
+        <img id="mImg" src="" alt="">
+        <div class="m-arr m-prev" onclick="slideImg(-1)"><i class="fas fa-chevron-left"></i></div>
+        <div class="m-arr m-next" onclick="slideImg(1)"><i class="fas fa-chevron-right"></i></div>
+        <div class="m-dots" id="mDots"></div>
+      </div>
+
+      <div class="modal-body">
+        <div class="modal-info">
+          <h2 id="mTitle"></h2>
+          <div class="mi-loc" id="mLoc"></div>
+          <p class="mi-desc" id="mDesc"></p>
+          <div class="mi-hl" id="mHl"></div>
+        </div>
+        <div class="booking-panel">
+          <div class="bp-title" id="bpTitle">Confirm Your Stay</div>
+          <form id="bookForm" onsubmit="submitBook(event)">
+            <div class="fg-row">
+              <div class="fg">
+                <label>First Name</label>
+                <input type="text" name="firstName" required placeholder="John">
+              </div>
+              <div class="fg">
+                <label>Last Name</label>
+                <input type="text" name="lastName" required placeholder="Doe">
+              </div>
             </div>
-            <div class="form-group">
-              <label for="lastName">Last Name *</label>
-              <input type="text" id="lastName" name="lastName" required>
+            <div class="fg">
+              <label>WhatsApp / Phone</label>
+              <input type="tel" name="phone" required placeholder="078...">
             </div>
-          </div>
-          
-          <div class="form-group">
-            <label for="email">Email Address *</label>
-            <input type="email" id="email" name="email" required>
-          </div>
-          
-          <div class="form-group">
-            <label for="phone">Phone Number *</label>
-            <input type="tel" id="phone" name="phone" required>
-          </div>
-          
-          <div class="form-row">
-            <div class="form-group">
-              <label for="checkIn">Check-in Date *</label>
-              <input type="date" id="checkIn" name="checkIn" required>
+            <div id="dynFields"></div>
+            <div class="fg">
+              <label>Special Request</label>
+              <textarea name="specialRequest" placeholder="Any special preferences or requirements..."></textarea>
             </div>
-            <div class="form-group">
-              <label for="checkOut">Check-out Date *</label>
-              <input type="date" id="checkOut" name="checkOut" required>
-            </div>
-          </div>
-          
-          <div class="form-row">
-            <div class="form-group">
-              <label for="guests">Number of Guests</label>
-              <select id="guests" name="guests">
-                <option value="1">1 Guest</option>
-                <option value="2" selected>2 Guests</option>
-                <option value="3">3 Guests</option>
-                <option value="4">4 Guests</option>
-                <option value="5+">5+ Guests</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="roomType">Room Type</label>
-              <select id="roomType" name="roomType">
-                <option value="standard">Standard Room</option>
-                <option value="deluxe">Deluxe Room</option>
-                <option value="suite">Suite</option>
-                <option value="presidential">Presidential Suite</option>
-              </select>
-            </div>
-          </div>
-          
-          <div class="form-group">
-            <label for="specialRequests">Special Requests</label>
-            <textarea id="specialRequests" name="specialRequests" rows="3" placeholder="Any special requests or preferences..."></textarea>
-          </div>
-          
-          <button type="submit" class="book-btn">Complete Booking</button>
-        </form>
+            <button type="submit" class="btn-confirm" id="submitBtn">Confirm Reservation</button>
+          </form>
+        </div>
       </div>
     </div>
   </div>
 
   <script>
-    // Hotel data with multiple images for carousel
-    const hotelData = [
+    // ─── DATA ───────────────────────────────────────────────────────────────────
+    const stays = [
       {
-        id: 1,
-        name: "Grand Palace Hotel",
-        location: "Kigali, Rwanda",
+        id: 1, type: 'hotel', name: 'Kigali Marriott Hotel', location: 'Kigali CBD',
+        price: 'Rwf 250,000/Night', badge: 'Luxury 5★', badgeColor: '#1a2a6c',
+        rank: 1,
         images: [
-          "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800&h=300&fit=crop",
-          "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&h=300&fit=crop",
-          "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800&h=300&fit=crop"
+          'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1000',
+          'https://images.unsplash.com/photo-1582719508461-905c673771fd?w=1000',
+          'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1000',
+          'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1000'
         ],
-        originalPrice: 299,
-        discountedPrice: 199,
-        discount: 33,
-        rating: 4.8
+        desc: 'Experience world-class service at Kigali Marriott Hotel. Featuring an outdoor pool, spa, and multiple fine-dining restaurants.',
+        hl: ['Pool & Spa', 'Free WiFi', 'City Center', '24/7 Service'],
+        attraction: 'Convention Center (2km)', proximity: 'Main Street: 0 min', market: 'Simba Supermarket: 2 min'
       },
       {
-        id: 2,
-        name: "Kigali Heights Suites",
-        location: "Kigali, Rwanda",
+        id: 2, type: 'hotel', name: 'Radisson Blu Hotel & Convention Centre',
+        location: 'Kacyiru', price: 'Rwf 190,000/Night', badge: 'Top Rated', badgeColor: '#b21f1f', rank: 2,
         images: [
-          "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&h=300&fit=crop",
-          "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&h=300&fit=crop",
-          "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800&h=300&fit=crop"
+          'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=1000',
+          'https://images.unsplash.com/photo-1445019980597-93fa8acb246c?w=1000'
         ],
-        originalPrice: 179,
-        discountedPrice: 129,
-        discount: 28,
-        rating: 4.5
+        desc: 'An iconic 5-star hotel in Kacyiru offering panoramic views of Kigali, a wellness center, and world-class conference facilities.',
+        hl: ['Conference Hall', 'Pool', 'Business Center', 'Airport Shuttle'],
+        attraction: 'Parliament (1km)', proximity: 'Main Street: 2 min', market: 'UTC Mall: 5 min'
       },
       {
-        id: 3,
-        name: "Lake View Resort",
-        location: "Rubavu, Rwanda",
+        id: 3, type: 'guest', name: 'The Retreat Guest House', location: 'Kiyovu',
+        price: 'Rwf 85,000/Night', badge: 'Cozy Stay', badgeColor: '#2d7a4f', rank: 1,
         images: [
-          "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&h=300&fit=crop",
-          "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800&h=300&fit=crop",
-          "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&h=300&fit=crop"
+          'https://images.unsplash.com/photo-1544124499-58d098e9b6a9?w=1000',
+          'https://images.unsplash.com/photo-1464890100898-a385f744067f?w=1000'
         ],
-        originalPrice: 249,
-        discountedPrice: 149,
-        discount: 40,
-        rating: 4.7
+        desc: 'A quiet and charming guest house perfect for long-term travelers or business trips. Homemade breakfast included every morning.',
+        hl: ['Breakfast Incl.', 'Garden Access', 'Quiet Area', 'Pet Friendly'],
+        attraction: 'City Center (1.5km)', proximity: 'Main Street: 5 min', market: 'Local Market: 8 min'
       },
       {
-        id: 4,
-        name: "Mountain Retreat",
-        location: "Musanze, Rwanda",
+        id: 4, type: 'guest', name: 'Hillside Boutique Retreat', location: 'Remera',
+        price: 'Rwf 65,000/Night', badge: 'Best Value', badgeColor: '#e65c00', rank: 2,
         images: [
-          "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800&h=300&fit=crop",
-          "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&h=300&fit=crop",
-          "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800&h=300&fit=crop"
+          'https://images.unsplash.com/photo-1512918728672-1b3fc7d832df?w=1000',
         ],
-        originalPrice: 399,
-        discountedPrice: 249,
-        discount: 38,
-        rating: 4.6
+        desc: 'A beautifully designed boutique guest house with a garden terrace, free parking and daily cleaning services. Great for extended stays.',
+        hl: ['Free Parking', 'Garden Terrace', 'Daily Cleaning', 'Self-Catering'],
+        attraction: 'Remera Market (0.5km)', proximity: 'Main Street: 4 min', market: 'Nakumatt: 6 min'
       },
       {
-        id: 5,
-        name: "City Center Hotel",
-        location: "Kigali, Rwanda",
+        id: 5, type: 'apartment', name: 'Nyarutarama Modern Flats', location: 'Nyarutarama',
+        price: 'Rwf 1,200,000/Month', badge: 'Most Liked', badgeColor: '#1a2a6c', rank: 1,
         images: [
-          "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&h=300&fit=crop",
-          "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800&h=300&fit=crop",
-          "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&h=300&fit=crop"
+          'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1000',
+          'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=1000',
+          'https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=1000'
         ],
-        originalPrice: 349,
-        discountedPrice: 199,
-        discount: 43,
-        rating: 4.9
+        desc: 'A stunning 3-bedroom apartment with ultra-modern finishes, private balcony, and 24-hour security.',
+        hl: ['Fully Furnished', 'Backup Generator', 'Secure Parking', 'Balcony View'],
+        attraction: 'Golf Club (1km)', proximity: 'Main Street: 3 min', market: 'Frulep Market: 5 min'
       },
       {
-        id: 6,
-        name: "Nyungwe Forest Lodge",
-        location: "Nyungwe, Rwanda",
+        id: 6, type: 'apartment', name: 'Kimihurura Executive Suites', location: 'Kimihurura',
+        price: 'Rwf 850,000/Month', badge: 'New Listing', badgeColor: '#b21f1f', rank: 2,
         images: [
-          "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800&h=300&fit=crop",
-          "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&h=300&fit=crop",
-          "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800&h=300&fit=crop"
+          'https://images.unsplash.com/photo-1616627056886-c4e968a9e5ef?w=1000',
+          'https://images.unsplash.com/photo-1536376072261-38c75010e6c9?w=1000'
         ],
-        originalPrice: 229,
-        discountedPrice: 159,
-        discount: 31,
-        rating: 4.4
+        desc: 'Upscale 2-bedroom suites in the diplomatic zone with stunning city views, gym, and rooftop terrace access.',
+        hl: ['Gym Access', 'Rooftop Terrace', 'Diplomatic Zone', 'City Views'],
+        attraction: 'US Embassy (0.5km)', proximity: 'Main Street: 2 min', market: 'Simba: 4 min'
       },
       {
-        id: 7,
-        name: "Akagera Safari Lodge",
-        location: "Akagera, Rwanda",
+        id: 7, type: 'house', name: 'Gacuriro Family Villa', location: 'Gacuriro',
+        price: 'Rwf 2,500,000/Month', badge: 'Premium Rental', badgeColor: '#1a2a6c', rank: 1,
         images: [
-          "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&h=300&fit=crop",
-          "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&h=300&fit=crop",
-          "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800&h=300&fit=crop"
+          'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=1000',
+          'https://images.unsplash.com/photo-1613977257363-707ba9348227?w=1000'
         ],
-        originalPrice: 279,
-        discountedPrice: 199,
-        discount: 29,
-        rating: 4.8
+        desc: 'Spacious 5-bedroom villa with a lush garden, domestic staff quarters, and high-walled security. Perfect for large families.',
+        hl: ['Garden & Patio', '5 Bedrooms', 'Staff Quarters', 'Modern Kitchen'],
+        attraction: 'MTN Center (3km)', proximity: 'Main Street: 8 min', market: 'Sawa Citi: 5 min'
       },
       {
-        id: 8,
-        name: "Business Hotel",
-        location: "Kigali, Rwanda",
+        id: 8, type: 'house', name: 'Kiyovu Elegant Residence', location: 'Kiyovu',
+        price: 'Rwf 1,800,000/Month', badge: 'High Demand', badgeColor: '#b21f1f', rank: 2,
         images: [
-          "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&h=300&fit=crop",
-          "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800&h=300&fit=crop",
-          "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&h=300&fit=crop"
+          'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=1000',
+          'https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=1000'
         ],
-        originalPrice: 189,
-        discountedPrice: 129,
-        discount: 32,
-        rating: 4.6
+        desc: 'A gorgeous 4-bedroom house in the heart of Kiyovu with a manicured garden, covered parking and modern interior finish.',
+        hl: ['4 Bedrooms', 'Covered Parking', 'Manicured Garden', 'Solar Power'],
+        attraction: 'Kigali Heights (1km)', proximity: 'Main Street: 3 min', market: 'Nakumatt: 4 min'
       }
     ];
 
-    // Apartment data
-    const apartmentData = [
-      {
-        id: 101,
-        name: "Luxury Downtown Apartment",
-        location: "Kigali, Rwanda",
-        images: [
-          "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&h=300&fit=crop",
-          "https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800&h=300&fit=crop",
-          "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&h=300&fit=crop"
-        ],
-        originalPrice: 180,
-        discountedPrice: 120,
-        discount: 33,
-        rating: 4.6
-      },
-      {
-        id: 102,
-        name: "Cozy Studio Apartment",
-        location: "Kigali, Rwanda",
-        images: [
-          "https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800&h=300&fit=crop",
-          "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&h=300&fit=crop",
-          "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&h=300&fit=crop"
-        ],
-        originalPrice: 150,
-        discountedPrice: 99,
-        discount: 34,
-        rating: 4.4
-      },
-      {
-        id: 103,
-        name: "Modern City Apartment",
-        location: "Kigali, Rwanda",
-        images: [
-          "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&h=300&fit=crop",
-          "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&h=300&fit=crop",
-          "https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800&h=300&fit=crop"
-        ],
-        originalPrice: 200,
-        discountedPrice: 140,
-        discount: 30,
-        rating: 4.7
-      },
-      {
-        id: 104,
-        name: "Seaside Apartment",
-        location: "Rubavu, Rwanda",
-        images: [
-          "https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800&h=300&fit=crop",
-          "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&h=300&fit=crop",
-          "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&h=300&fit=crop"
-        ],
-        originalPrice: 160,
-        discountedPrice: 110,
-        discount: 31,
-        rating: 4.5
-      },
-      {
-        id: 105,
-        name: "Mountain View Apartment",
-        location: "Musanze, Rwanda",
-        images: [
-          "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&h=300&fit=crop",
-          "https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800&h=300&fit=crop",
-          "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&h=300&fit=crop"
-        ],
-        originalPrice: 220,
-        discountedPrice: 150,
-        discount: 32,
-        rating: 4.8
-      },
-      {
-        id: 106,
-        name: "Historic District Apartment",
-        location: "Nyanza, Rwanda",
-        images: [
-          "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&h=300&fit=crop",
-          "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&h=300&fit=crop",
-          "https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800&h=300&fit=crop"
-        ],
-        originalPrice: 140,
-        discountedPrice: 95,
-        discount: 32,
-        rating: 4.3
-      },
-      {
-        id: 107,
-        name: "Business District Apartment",
-        location: "Kigali, Rwanda",
-        images: [
-          "https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800&h=300&fit=crop",
-          "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&h=300&fit=crop",
-          "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&h=300&fit=crop"
-        ],
-        originalPrice: 190,
-        discountedPrice: 130,
-        discount: 32,
-        rating: 4.6
-      },
-      {
-        id: 108,
-        name: "Beachfront Apartment",
-        location: "Rubavu, Rwanda",
-        images: [
-          "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&h=300&fit=crop",
-          "https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800&h=300&fit=crop",
-          "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&h=300&fit=crop"
-        ],
-        originalPrice: 250,
-        discountedPrice: 175,
-        discount: 30,
-        rating: 4.9
-      }
-    ];
+    let currentStay = null, imgIdx = 0;
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx8VuBmrkDKAvPieeqXtB3Sk9ctbDGVt8HSxoBp9-03ui_V9MXoVuMZ96rlm7ytTdrb/exec';
 
-    // Room data
-    const roomData = [
-      {
-        id: 201,
-        name: "Deluxe Single Room",
-        location: "Kigali Heights Hotel",
-        images: [
-          "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&h=300&fit=crop",
-          "https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=800&h=300&fit=crop",
-          "https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=800&h=300&fit=crop"
-        ],
-        originalPrice: 120,
-        discountedPrice: 85,
-        discount: 29,
-        rating: 4.5
-      },
-      {
-        id: 202,
-        name: "Executive Double Room",
-        location: "Grand Palace Hotel",
-        images: [
-          "https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=800&h=300&fit=crop",
-          "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&h=300&fit=crop",
-          "https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=800&h=300&fit=crop"
-        ],
-        originalPrice: 180,
-        discountedPrice: 125,
-        discount: 31,
-        rating: 4.7
-      },
-      {
-        id: 203,
-        name: "Premium Suite",
-        location: "Lake View Resort",
-        images: [
-          "https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=800&h=300&fit=crop",
-          "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&h=300&fit=crop",
-          "https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=800&h=300&fit=crop"
-        ],
-        originalPrice: 350,
-        discountedPrice: 245,
-        discount: 30,
-        rating: 4.9
-      },
-      {
-        id: 204,
-        name: "Family Room",
-        location: "Mountain Retreat",
-        images: [
-          "https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=800&h=300&fit=crop",
-          "https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=800&h=300&fit=crop",
-          "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&h=300&fit=crop"
-        ],
-        originalPrice: 200,
-        discountedPrice: 140,
-        discount: 30,
-        rating: 4.6
-      },
-      {
-        id: 205,
-        name: "Lake View Room",
-        location: "Lake View Resort",
-        images: [
-          "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&h=300&fit=crop",
-          "https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=800&h=300&fit=crop",
-          "https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=800&h=300&fit=crop"
-        ],
-        originalPrice: 280,
-        discountedPrice: 195,
-        discount: 30,
-        rating: 4.8
-      },
-      {
-        id: 206,
-        name: "Standard Room",
-        location: "City Center Hotel",
-        images: [
-          "https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=800&h=300&fit=crop",
-          "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&h=300&fit=crop",
-          "https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=800&h=300&fit=crop"
-        ],
-        originalPrice: 150,
-        discountedPrice: 105,
-        discount: 30,
-        rating: 4.4
-      },
-      {
-        id: 207,
-        name: "Penthouse Suite",
-        location: "Grand Palace Hotel",
-        images: [
-          "https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=800&h=300&fit=crop",
-          "https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=800&h=300&fit=crop",
-          "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&h=300&fit=crop"
-        ],
-        originalPrice: 400,
-        discountedPrice: 280,
-        discount: 30,
-        rating: 4.9
-      },
-      {
-        id: 208,
-        name: "Garden View Room",
-        location: "Nyungwe Forest Lodge",
-        images: [
-          "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&h=300&fit=crop",
-          "https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=800&h=300&fit=crop",
-          "https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=800&h=300&fit=crop"
-        ],
-        originalPrice: 160,
-        discountedPrice: 110,
-        discount: 31,
-        rating: 4.5
-      }
-    ];
-
-    let currentGroup = 0;
-    let currentApartmentGroup = 0;
-    let currentRoomGroup = 0;
-    const itemsPerGroup = 8;
-    const totalGroups = Math.ceil(hotelData.length / itemsPerGroup);
-    const totalApartmentGroups = Math.ceil(apartmentData.length / itemsPerGroup);
-    const totalRoomGroups = Math.ceil(roomData.length / itemsPerGroup);
-    let currentHotel = null;
-    let currentSlideIndex = 1;
-
-    // Google Sheets configuration
-    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx0cxkcUAiRNhCDyhJXKNuMmYUZNiFDCTHWlxL6Tig-Ra4tlUQASmDJY1Jn60BaUAUj/exec';
-
-    function renderHotels() {
-      const grid = document.getElementById('hotelsGrid');
-      const startIndex = currentGroup * itemsPerGroup;
-      const endIndex = Math.min(startIndex + itemsPerGroup, hotelData.length);
-      const hotelsToShow = hotelData.slice(startIndex, endIndex);
-
-      grid.innerHTML = hotelsToShow.map(hotel => `
-        <div class="accommodation-card">
-          <div class="card-image" style="background-image: url('${hotel.images[0]}')">
-            <div class="discount-badge">${hotel.discount}% OFF</div>
-          </div>
-          <div class="card-content">
-            <h3 class="card-name">${hotel.name}</h3>
-            <p class="card-location"><i class="fas fa-map-marker-alt"></i> ${hotel.location}</p>
-            <div class="price-section">
-              <div class="price-info">
-                <div class="original-price">$${hotel.originalPrice}/night</div>
-                <div class="discounted-price">$${hotel.discountedPrice}/night</div>
-              </div>
-              <div class="rating">
-                <span>⭐</span>
-                <span>${hotel.rating}</span>
-              </div>
-            </div>
-            <button class="view-details-btn" onclick="openModal(${hotel.id})">View Details & Book</button>
-          </div>
+    // ─── RENDER ──────────────────────────────────────────────────────────────────
+    function cardHTML(s) {
+      const btnLabel = (s.type === 'hotel' || s.type === 'guest') ? 'Book Now' : 'Schedule Visit';
+      return `
+    <div class="stay-card fu on" data-type="${s.type}" data-loc="${s.location}" data-id="${s.id}">
+      <div class="sc-img">
+        <span class="sc-badge" style="background:${s.badgeColor}">${s.badge}</span>
+        <img src="${s.images[0]}" alt="${s.name}">
+        <div class="sc-price">${s.price}</div>
+      </div>
+      <div class="sc-body">
+        <h3 class="sc-name">${s.name}</h3>
+        <div class="sc-loc"><i class="fas fa-map-marker-alt"></i>${s.location}</div>
+        <div class="sc-hl">
+          <div class="sc-hi"><i class="fas fa-landmark"></i>${s.attraction}</div>
+          <div class="sc-hi"><i class="fas fa-road"></i>${s.proximity}</div>
         </div>
-      `).join('');
-
-      // Update navigation buttons
-      document.getElementById('prevBtn').disabled = currentGroup === 0;
-      document.getElementById('nextBtn').disabled = currentGroup === totalGroups - 1;
-
-      // Update page indicator
-      document.getElementById('pageIndicator').textContent = `Page ${currentGroup + 1} of ${totalGroups}`;
+        <button class="btn-book-now" onclick="openModal(${s.id})">${btnLabel}</button>
+      </div>
+    </div>`;
     }
 
-    function changeHotelGroup(direction) {
-      const newGroup = currentGroup + direction;
-      if (newGroup >= 0 && newGroup < totalGroups) {
-        currentGroup = newGroup;
-        renderHotels();
-      }
+    function topDealChips(type) {
+      return stays.filter(s => s.type === type).sort((a, b) => a.rank - b.rank).map(s => `
+    <div class="deal-chip" onclick="openModal(${s.id})">
+      <div class="dc-rank">#${s.rank}</div>
+      <div class="dc-info">
+        <div class="dc-name">${s.name}</div>
+        <div class="dc-price">${s.price}</div>
+      </div>
+    </div>`).join('');
     }
 
-    // Apartment functions
-    function renderApartments() {
-      const grid = document.getElementById('apartmentsGrid');
-      const startIndex = currentApartmentGroup * itemsPerGroup;
-      const endIndex = Math.min(startIndex + itemsPerGroup, apartmentData.length);
-      const apartmentsToShow = apartmentData.slice(startIndex, endIndex);
-
-      grid.innerHTML = apartmentsToShow.map(apartment => `
-        <div class="accommodation-card">
-          <div class="card-image" style="background-image: url('${apartment.images[0]}')">
-            <div class="discount-badge">${apartment.discount}% OFF</div>
-          </div>
-          <div class="card-content">
-            <h3 class="card-name">${apartment.name}</h3>
-            <p class="card-location"><i class="fas fa-map-marker-alt"></i> ${apartment.location}</p>
-            <div class="price-section">
-              <div class="price-info">
-                <div class="original-price">$${apartment.originalPrice}/night</div>
-                <div class="discounted-price">$${apartment.discountedPrice}/night</div>
-              </div>
-              <div class="rating">
-                <span>⭐</span>
-                <span>${apartment.rating}</span>
-              </div>
-            </div>
-            <button class="view-details-btn" onclick="openModal(${apartment.id}, 'apartment')">View Details & Book</button>
-          </div>
-        </div>
-      `).join('');
-
-      document.getElementById('prevBtnApt').disabled = currentApartmentGroup === 0;
-      document.getElementById('nextBtnApt').disabled = currentApartmentGroup === totalApartmentGroups - 1;
-      document.getElementById('pageIndicatorApt').textContent = `Page ${currentApartmentGroup + 1} of ${totalApartmentGroups}`;
+    function initGrids() {
+      ['hotel', 'guest', 'apartment', 'house'].forEach(type => {
+        document.getElementById('grid-' + type).innerHTML = stays.filter(s => s.type === type).map(cardHTML).join('');
+        document.getElementById('topDeals-' + type).innerHTML = topDealChips(type);
+      });
     }
 
-    function changeApartmentGroup(direction) {
-      const newGroup = currentApartmentGroup + direction;
-      if (newGroup >= 0 && newGroup < totalApartmentGroups) {
-        currentApartmentGroup = newGroup;
-        renderApartments();
-      }
+    function filterCat(type, btn) {
+      document.querySelectorAll('.btn-cat').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('sec-results').style.display = 'none';
+      ['hotel', 'guest', 'apartment', 'house'].forEach(t => {
+        const sec = document.getElementById('sec-' + t);
+        sec.style.display = (type === 'all' || type === t) ? 'block' : 'none';
+      });
     }
 
-    // Room functions
-    function renderRooms() {
-      const grid = document.getElementById('roomsGrid');
-      const startIndex = currentRoomGroup * itemsPerGroup;
-      const endIndex = Math.min(startIndex + itemsPerGroup, roomData.length);
-      const roomsToShow = roomData.slice(startIndex, endIndex);
+    // ─── SEARCH ──────────────────────────────────────────────────────────────────
+    function doSearch() {
+      const loc = document.getElementById('locationFilter').value.toLowerCase();
+      const cat = document.getElementById('categoryFilter').value;
+      if (!loc && !cat) { clearSearch(); return; }
 
-      grid.innerHTML = roomsToShow.map(room => `
-        <div class="accommodation-card">
-          <div class="card-image" style="background-image: url('${room.images[0]}')">
-            <div class="discount-badge">${room.discount}% OFF</div>
-          </div>
-          <div class="card-content">
-            <h3 class="card-name">${room.name}</h3>
-            <p class="card-location"><i class="fas fa-map-marker-alt"></i> ${room.location}</p>
-            <div class="price-section">
-              <div class="price-info">
-                <div class="original-price">$${room.originalPrice}/night</div>
-                <div class="discounted-price">$${room.discountedPrice}/night</div>
-              </div>
-              <div class="rating">
-                <span>⭐</span>
-                <span>${room.rating}</span>
-              </div>
-            </div>
-            <button class="view-details-btn" onclick="openModal(${room.id}, 'room')">View Details & Book</button>
-          </div>
-        </div>
-      `).join('');
+      let filtered = stays;
+      if (loc) filtered = filtered.filter(s => s.location.toLowerCase().includes(loc));
+      if (cat) filtered = filtered.filter(s => s.type === cat);
 
-      document.getElementById('prevBtnRoom').disabled = currentRoomGroup === 0;
-      document.getElementById('nextBtnRoom').disabled = currentRoomGroup === totalRoomGroups - 1;
-      document.getElementById('pageIndicatorRoom').textContent = `Page ${currentRoomGroup + 1} of ${totalRoomGroups}`;
+      ['hotel', 'guest', 'apartment', 'house'].forEach(t => {
+        document.getElementById('sec-' + t).style.display = 'none';
+      });
+
+      const res = document.getElementById('sec-results');
+      res.style.display = 'block';
+      const parts = [loc && `in "${loc}"`, cat && `in "${cat}"`].filter(Boolean).join(', ');
+      document.getElementById('results-title').textContent = `${filtered.length} Result${filtered.length !== 1 ? 's' : ''} ${parts}`;
+      document.getElementById('grid-results').innerHTML = filtered.length
+        ? filtered.map(cardHTML).join('')
+        : '<div style="grid-column:1/-1;text-align:center;padding:60px 0;color:var(--gray-600)"><i class="fas fa-search" style="font-size:48px;margin-bottom:16px;opacity:.3;display:block"></i>No accommodations found matching your criteria.</div>';
+
+      res.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      document.querySelectorAll('.btn-cat').forEach(b => b.classList.remove('active'));
+
+      // re-observe new cards
+      requestAnimationFrame(() => {
+        document.querySelectorAll('.fu').forEach(el => observer.observe(el));
+      });
     }
 
-    function changeRoomGroup(direction) {
-      const newGroup = currentRoomGroup + direction;
-      if (newGroup >= 0 && newGroup < totalRoomGroups) {
-        currentRoomGroup = newGroup;
-        renderRooms();
-      }
+    function clearSearch() {
+      document.getElementById('locationFilter').value = '';
+      document.getElementById('categoryFilter').value = '';
+      document.getElementById('sec-results').style.display = 'none';
+      ['hotel', 'guest', 'apartment', 'house'].forEach(t => {
+        document.getElementById('sec-' + t).style.display = 'block';
+      });
+      document.getElementById('tab-all').classList.add('active');
     }
 
-    function openModal(id, type = 'hotel') {
-      let currentItem;
-      
-      if (type === 'apartment') {
-        currentItem = apartmentData.find(apartment => apartment.id === id);
-      } else if (type === 'room') {
-        currentItem = roomData.find(room => room.id === id);
-      } else {
-        currentItem = hotelData.find(hotel => hotel.id === id);
-      }
-      
-      if (!currentItem) return;
-      
-      currentHotel = currentItem;
+    // ─── MODAL ───────────────────────────────────────────────────────────────────
+    function openModal(id) {
+      const s = stays.find(x => x.id === id);
+      currentStay = s; imgIdx = 0;
+      document.getElementById('successOv').classList.remove('show');
+      document.getElementById('bookForm').reset();
 
-      // Set modal title
-      document.getElementById('modalHotelName').textContent = `Book ${currentItem.name}`;
+      document.getElementById('mImg').src = s.images[0];
+      document.getElementById('mTitle').textContent = s.name;
+      document.getElementById('mLoc').innerHTML = `<i class="fas fa-map-marker-alt"></i>${s.location}`;
+      document.getElementById('mDesc').textContent = s.desc;
+      document.getElementById('mHl').innerHTML = [
+        `<div class="mi-hi"><i class="fas fa-landmark"></i>${s.attraction}</div>`,
+        `<div class="mi-hi"><i class="fas fa-road"></i>${s.proximity}</div>`,
+        `<div class="mi-hi"><i class="fas fa-shopping-bag"></i>${s.market}</div>`,
+        ...s.hl.slice(0, 1).map(h => `<div class="mi-hi"><i class="fas fa-check-circle"></i>${h}</div>`)
+      ].join('');
 
-      // Set carousel images
-      document.getElementById('slide1').style.backgroundImage = `url('${currentItem.images[0]}')`;
-      document.getElementById('slide2').style.backgroundImage = `url('${currentItem.images[1]}')`;
-      document.getElementById('slide3').style.backgroundImage = `url('${currentItem.images[2]}')`;
+      // Dots
+      document.getElementById('mDots').innerHTML = s.images.map((_, i) => `<div class="m-dot ${i === 0 ? 'active' : ''}" onclick="jumpImg(${i})"></div>`).join('');
 
-      // Reset carousel to first image
-      currentSlideIndex = 1;
-      showSlide(currentSlideIndex);
+      // Dynamic form fields
+      const isBooking = s.type === 'hotel' || s.type === 'guest';
+      document.getElementById('bpTitle').textContent = isBooking ? '📅 Confirm Your Reservation' : '🏠 Schedule a Property Visit';
+      document.getElementById('submitBtn').textContent = isBooking ? 'Confirm Booking' : 'Request Visit';
+      document.getElementById('dynFields').innerHTML = isBooking ? `
+    <div class="fg-row">
+      <div class="fg"><label>Check-In</label><input type="date" name="checkIn" required min="${new Date().toISOString().split('T')[0]}"></div>
+      <div class="fg"><label>Check-Out</label><input type="date" name="checkOut" required></div>
+    </div>
+    <div class="fg"><label>Number of Guests</label>
+      <select name="guests"><option>1 Adult</option><option selected>2 Adults</option><option>2 Adults, 1 Child</option><option>Family (4+)</option></select>
+    </div>` : `
+    <div class="fg"><label>Preferred Visit Date</label><input type="date" name="visitDate" required min="${new Date().toISOString().split('T')[0]}"></div>
+    <div class="fg"><label>Preferred Time</label>
+      <select name="visitTime"><option>Morning (9 AM–12 PM)</option><option selected>Afternoon (2 PM–5 PM)</option><option>Weekend Only</option></select>
+    </div>`;
 
-      // Show modal
-      document.getElementById('bookingModal').style.display = 'block';
+      document.getElementById('bookModal').classList.add('open');
       document.body.style.overflow = 'hidden';
     }
 
     function closeModal() {
-      document.getElementById('bookingModal').style.display = 'none';
-      document.body.style.overflow = 'auto';
-      document.getElementById('bookingForm').reset();
+      document.getElementById('bookModal').classList.remove('open');
+      document.body.style.overflow = '';
     }
 
-    function currentSlide(n) {
-      showSlide(currentSlideIndex = n);
+    function handleModalBg(e) {
+      if (e.target === document.getElementById('bookModal')) closeModal();
     }
 
-    function showSlide(n) {
-      const slides = document.querySelectorAll('.carousel-slide');
-      const dots = document.querySelectorAll('.carousel-dot');
-      
-      if (n > slides.length) { currentSlideIndex = 1; }
-      if (n < 1) { currentSlideIndex = slides.length; }
-      
-      slides.forEach(slide => slide.classList.remove('active'));
-      dots.forEach(dot => dot.classList.remove('active'));
-      
-      slides[currentSlideIndex - 1].classList.add('active');
-      dots[currentSlideIndex - 1].classList.add('active');
+    function setImg(i) {
+      imgIdx = i;
+      const imgs = currentStay.images;
+      const img = document.getElementById('mImg');
+      img.style.opacity = '0';
+      setTimeout(() => { img.src = imgs[imgIdx]; img.style.opacity = '1'; }, 200);
+      document.querySelectorAll('.m-dot').forEach((d, j) => d.classList.toggle('active', j === imgIdx));
     }
+    function slideImg(dir) { setImg((imgIdx + dir + currentStay.images.length) % currentStay.images.length); }
+    function jumpImg(i) { setImg(i); }
 
-    // Auto-advance carousel
-    setInterval(() => {
-      if (document.getElementById('bookingModal').style.display === 'block') {
-        currentSlideIndex++;
-        if (currentSlideIndex > 3) currentSlideIndex = 1;
-        showSlide(currentSlideIndex);
-      }
-    }, 4000);
-
-    // Form submission
-    document.getElementById('bookingForm').addEventListener('submit', async function(e) {
+    // ─── SUBMIT ──────────────────────────────────────────────────────────────────
+    async function submitBook(e) {
       e.preventDefault();
-      
-      const formData = new FormData(this);
-      const bookingData = {
-        hotelName: currentHotel.name,
-        hotelLocation: currentHotel.location,
-        originalPrice: currentHotel.originalPrice,
-        discountedPrice: currentHotel.discountedPrice,
-        firstName: formData.get('firstName'),
-        lastName: formData.get('lastName'),
-        email: formData.get('email'),
-        phone: "'" + formData.get('phone'),
-        checkIn: formData.get('checkIn'),
-        checkOut: formData.get('checkOut'),
-        guests: formData.get('guests'),
-        roomType: formData.get('roomType'),
-        specialRequests: formData.get('specialRequests'),
-        bookingDate: new Date().toISOString()
-      };
+      const btn = document.getElementById('submitBtn');
+      btn.textContent = 'Submitting…'; btn.disabled = true;
+
+      const fd = new FormData(e.target);
+      const isBooking = currentStay.type === 'hotel' || currentStay.type === 'guest';
+      const params = new URLSearchParams({
+        page: 'Accommodation',
+        timestamp: new Date().toLocaleString(),
+        propertyName: currentStay.name,
+        propertyType: currentStay.type,
+        location: currentStay.location,
+        firstName: fd.get('firstName'),
+        lastName: fd.get('lastName'),
+        fullName: `${fd.get('firstName')} ${fd.get('lastName')}`,
+        phone: "'" + fd.get('phone'),
+        bookingType: isBooking ? 'Booking' : 'Visit Request',
+        checkIn: isBooking ? fd.get('checkIn') : fd.get('visitDate'),
+        checkOut: fd.get('checkOut') || '',
+        guests: isBooking ? fd.get('guests') : (fd.get('visitTime') || ''),
+        specialRequest: fd.get('specialRequest') || ''
+      });
 
       try {
-        // Send to Google Sheets
-        const response = await fetch(GOOGLE_SCRIPT_URL, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(bookingData)
+        await fetch(SCRIPT_URL, {
+          method: 'POST', mode: 'no-cors',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: params.toString()
         });
-
-        alert('Booking submitted successfully! We will contact you shortly to confirm your reservation.');
-        closeModal();
-      } catch (error) {
-        console.error('Error submitting booking:', error);
-        alert('There was an error submitting your booking. Please try again or contact us directly.');
-      }
-    });
-
-    // Close modal when clicking outside
-    window.onclick = function(event) {
-      const modal = document.getElementById('bookingModal');
-      if (event.target === modal) {
-        closeModal();
+        document.getElementById('successOv').classList.add('show');
+      } catch (err) {
+        alert('Error submitting. Please try again.');
+      } finally {
+        btn.textContent = isBooking ? 'Confirm Booking' : 'Request Visit';
+        btn.disabled = false;
       }
     }
 
-    // Set minimum date to today
-    const today = new Date().toISOString().split('T')[0];
-    document.getElementById('checkIn').min = today;
-    document.getElementById('checkOut').min = today;
+    // ─── MISC ─────────────────────────────────────────────────────────────────────
+    function toggleMob() {
+      const m = document.getElementById('mobMenu');
+      m.style.display = m.style.display === 'flex' ? 'none' : 'flex';
+    }
 
-    // Update checkout minimum when checkin changes
-    document.getElementById('checkIn').addEventListener('change', function() {
-      const checkInDate = new Date(this.value);
-      checkInDate.setDate(checkInDate.getDate() + 1);
-      document.getElementById('checkOut').min = checkInDate.toISOString().split('T')[0];
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('on'); });
+    }, { threshold: .08 });
+
+    window.addEventListener('DOMContentLoaded', () => {
+      initGrids();
+      document.querySelectorAll('.fu').forEach(el => observer.observe(el));
     });
-
-    // Mobile menu toggle
-    document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
-      document.querySelector('.navbar').classList.toggle('active');
-    });
-
-    // Close mobile menu when clicking outside
-    document.addEventListener('click', function(e) {
-      const navbar = document.querySelector('.navbar');
-      const menuBtn = document.querySelector('.mobile-menu-btn');
-      
-      if (navbar.classList.contains('active') && 
-          !navbar.contains(e.target) && 
-          !menuBtn.contains(e.target)) {
-        navbar.classList.remove('active');
-      }
-    });
-
-    // Initialize
-    renderHotels();
-    renderApartments();
-    renderRooms();
   </script>
+
+<!-- VENDOR MODAL -->
+  <div id="vendorModal" class="v-modal-ov"
+    style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);backdrop-filter:blur(10px);z-index:9999;align-items:center;justify-content:center;padding:20px">
+    <div
+      style="background:#fff;border-radius:24px;max-width:560px;width:100%;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.45);position:relative;animation:vpop .4s cubic-bezier(.34,1.56,.64,1)">
+      <style>
+        @keyframes vpop {
+          from {
+            opacity: 0;
+            transform: scale(.92) translateY(18px)
+          }
+
+          to {
+            opacity: 1;
+            transform: none
+          }
+        }
+      </style>
+      <div style="background:linear-gradient(135deg,#0b1640,#c0202a);padding:28px 32px 22px;color:#fff">
+        <button onclick="closeVendorModal()"
+          style="position:absolute;top:14px;right:14px;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.2);border:none;cursor:pointer;color:#fff;font-size:15px;display:flex;align-items:center;justify-content:center"><i
+            class="fas fa-times"></i></button>
+        <h3 style="font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:800;margin-bottom:4px">🏭 Partner With Us
+        </h3>
+        <p style="font-size:.88rem;opacity:.75">Join Dili-Zone and reach thousands of customers.</p>
+      </div>
+      <div style="padding:24px 32px 28px;max-height:70vh;overflow-y:auto">
+        <div id="vSuccess" style="display:none;text-align:center;padding:20px 0">
+          <div style="font-size:52px;margin-bottom:12px">✅</div>
+          <h4 style="font-family:'Syne',sans-serif;color:#0b1640;margin-bottom:8px">Application Received!</h4>
+          <p style="font-size:.88rem;color:#4a4a6a">Our team will contact you within 24–48 hours.</p>
+          <button onclick="closeVendorModal()"
+            style="margin-top:16px;padding:12px 32px;background:#c0202a;color:#fff;border:none;border-radius:50px;font-weight:700;cursor:pointer">Done</button>
+        </div>
+        <form id="vendorForm" onsubmit="submitVendor(event)">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
+            <div><label
+                style="display:block;font-size:11px;font-weight:700;text-transform:uppercase;color:#4a4a6a;margin-bottom:5px">First
+                Name</label><input type="text" name="vFirstName" required placeholder="Jean"
+                style="width:100%;padding:11px 13px;border:1.5px solid #e8e6e2;border-radius:9px;font-size:14px;outline:none">
+            </div>
+            <div><label
+                style="display:block;font-size:11px;font-weight:700;text-transform:uppercase;color:#4a4a6a;margin-bottom:5px">Last
+                Name</label><input type="text" name="vLastName" required placeholder="Pierre"
+                style="width:100%;padding:11px 13px;border:1.5px solid #e8e6e2;border-radius:9px;font-size:14px;outline:none">
+            </div>
+          </div>
+          <div style="margin-bottom:12px"><label
+              style="display:block;font-size:11px;font-weight:700;text-transform:uppercase;color:#4a4a6a;margin-bottom:5px">Business
+              Sector</label><select name="vSector" required
+              style="width:100%;padding:11px 13px;border:1.5px solid #e8e6e2;border-radius:9px;font-size:14px;outline:none">
+              <option value="">Select sector</option>
+              <option>Restaurants &amp; Bars</option>
+              <option>Hotels &amp; Accommodation</option>
+              <option>Supermarkets &amp; Grocery</option>
+              <option>Shops &amp; Retail</option>
+              <option>Services</option>
+              <option>Industries &amp; Manufacturing</option>
+              <option>Other</option>
+            </select></div>
+          <div style="margin-bottom:12px"><label
+              style="display:block;font-size:11px;font-weight:700;text-transform:uppercase;color:#4a4a6a;margin-bottom:5px">Email
+              Address</label><input type="email" name="vEmail" required placeholder="yourname@company.com"
+              style="width:100%;padding:11px 13px;border:1.5px solid #e8e6e2;border-radius:9px;font-size:14px;outline:none">
+          </div>
+          <div style="margin-bottom:12px"><label
+              style="display:block;font-size:11px;font-weight:700;text-transform:uppercase;color:#4a4a6a;margin-bottom:5px">Phone
+              / WhatsApp</label><input type="tel" name="vPhone" required placeholder="078..."
+              style="width:100%;padding:11px 13px;border:1.5px solid #e8e6e2;border-radius:9px;font-size:14px;outline:none">
+          </div>
+          <div style="margin-bottom:12px"><label
+              style="display:block;font-size:11px;font-weight:700;text-transform:uppercase;color:#4a4a6a;margin-bottom:5px">Business
+              Address</label><input type="text" name="vAddress" placeholder="e.g. Kiyovu, Kigali"
+              style="width:100%;padding:11px 13px;border:1.5px solid #e8e6e2;border-radius:9px;font-size:14px;outline:none">
+          </div>
+          <div style="margin-bottom:12px"><label
+              style="display:block;font-size:11px;font-weight:700;text-transform:uppercase;color:#4a4a6a;margin-bottom:5px">Reason
+              of Interest</label><textarea name="vReason" rows="3" placeholder="Tell us about your business..."
+              style="width:100%;padding:11px 13px;border:1.5px solid #e8e6e2;border-radius:9px;font-size:14px;outline:none;resize:vertical"></textarea>
+          </div>
+          <button type="submit" id="vSubmitBtn"
+            style="width:100%;padding:14px;background:#c0202a;color:#fff;border:none;border-radius:50px;font-weight:700;font-size:1rem;cursor:pointer;margin-top:6px;box-shadow:0 6px 18px rgba(192,32,42,.3)">Submit
+            Application <i class="fas fa-arrow-right"></i></button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script>
+    function openVendorModal() { document.getElementById('vendorModal').style.display = 'flex'; document.getElementById('vSuccess').style.display = 'none'; document.getElementById('vendorForm').reset(); document.body.style.overflow = 'hidden'; }
+    function closeVendorModal() { document.getElementById('vendorModal').style.display = 'none'; document.body.style.overflow = ''; }
+    document.getElementById('vendorModal').addEventListener('click', e => { if (e.target === document.getElementById('vendorModal')) closeVendorModal(); });
+    async function submitVendor(e) {
+      e.preventDefault();
+      const btn = document.getElementById('vSubmitBtn');
+      btn.textContent = 'Submitting…'; btn.disabled = true;
+      const fd = new FormData(e.target);
+      const p = new URLSearchParams({ page: 'VendorApplication', timestamp: new Date().toLocaleString(), firstName: fd.get('vFirstName'), lastName: fd.get('vLastName'), sector: fd.get('vSector'), email: fd.get('vEmail'), phone: "'" + fd.get('vPhone'), address: fd.get('vAddress'), reason: fd.get('vReason') });
+      try {
+        await fetch('https://script.google.com/macros/s/AKfycbx8VuBmrkDKAvPieeqXtB3Sk9ctbDGVt8HSxoBp9-03ui_V9MXoVuMZ96rlm7ytTdrb/exec', { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: p.toString() });
+        document.getElementById('vSuccess').style.display = 'block'; e.target.style.display = 'none';
+      }
+      catch { alert('Error. Please try again.'); }
+      finally { btn.textContent = 'Submit Application'; btn.disabled = false; }
+    }
+  </script>
+
 </body>
+
 </html>
