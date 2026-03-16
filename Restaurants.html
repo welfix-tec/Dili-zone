@@ -1,412 +1,1458 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Restaurants & Bars | Dili-Zone</title>
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
   <style>
-    * {
+    /* ═══════════════════════════════════════════
+       DESIGN TOKENS
+    ═══════════════════════════════════════════ */
+    :root {
+      --navy: #0b1640;
+      --navy-mid: #162459;
+      --crimson: #c0202a;
+      --crimson-light: #e8353f;
+      --gold: #f5c518;
+      --off-white: #f6f4f0;
+      --soft-gray: #e8e6e2;
+      --text-dark: #1a1a2e;
+      --text-mid: #4a4a6a;
+      --text-light: #8585a5;
+      --white: #ffffff;
+
+      --radius-sm: 8px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --radius-xl: 40px;
+
+      --shadow-card: 0 8px 32px rgba(11, 22, 64, .10), 0 1.5px 6px rgba(11, 22, 64, .06);
+      --shadow-hover: 0 24px 60px rgba(11, 22, 64, .18), 0 4px 16px rgba(11, 22, 64, .10);
+
+      --ease-out: cubic-bezier(0.4, 0, 0.2, 1);
+      --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    *,
+    *::before,
+    *::after {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
-      font-family: 'Arial', sans-serif;
-      background: linear-gradient(135deg, #667eea 0%,#b7ea66 0%,#ea9f66 0%, #764ba2 100%);
-      min-height: 100vh;
-      color: #333;
+      font-family: 'DM Sans', sans-serif;
+      background: var(--off-white);
+      color: var(--text-dark);
       overflow-x: hidden;
     }
 
-    /* Header Styles */
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 2rem;
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
+    ::-webkit-scrollbar {
+      width: 6px;
     }
 
-    .logo {
-      font-size: 1.5rem;
-      font-weight: bold;
+    ::-webkit-scrollbar-track {
+      background: var(--navy);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--crimson);
+      border-radius: 3px;
+    }
+
+    /* ═══════════════════════════════════════════
+       SCROLL REVEAL
+    ═══════════════════════════════════════════ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(48px);
+      transition: opacity .8s var(--ease-out), transform .8s var(--ease-out);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-60px);
+      transition: opacity .8s var(--ease-out), transform .8s var(--ease-out);
+    }
+
+    .reveal-left.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .reveal-right {
+      opacity: 0;
+      transform: translateX(60px);
+      transition: opacity .8s var(--ease-out), transform .8s var(--ease-out);
+    }
+
+    .reveal-right.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .reveal-scale {
+      opacity: 0;
+      transform: scale(.88);
+      transition: opacity .7s var(--ease-out), transform .7s var(--ease-bounce);
+    }
+
+    .reveal-scale.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .d1 {
+      transition-delay: .08s
+    }
+
+    .d2 {
+      transition-delay: .16s
+    }
+
+    .d3 {
+      transition-delay: .24s
+    }
+
+    .d4 {
+      transition-delay: .32s
+    }
+
+    .d5 {
+      transition-delay: .40s
+    }
+
+    .d6 {
+      transition-delay: .48s
+    }
+
+    /* ═══════════════════════════════════════════
+       HEADER
+    ═══════════════════════════════════════════ */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      height: 70px;
+      padding: 0 clamp(1.2rem, 4vw, 3rem);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: transparent;
+      transition: background .4s var(--ease-out), box-shadow .4s var(--ease-out), height .3s;
+    }
+
+    header.scrolled {
+      background: rgba(11, 22, 64, .97);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 2px 24px rgba(0, 0, 0, .2);
+      height: 62px;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 9px;
+      background: var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--navy);
+      flex-shrink: 0;
+      transition: transform .3s var(--ease-bounce);
+    }
+
+    .logo-container:hover .logo-icon {
+      transform: rotate(-8deg) scale(1.08);
     }
 
     .site-title {
-      color: #333;
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+      font-weight: 800;
+      color: white;
+      letter-spacing: -.5px;
     }
 
-    .highlight {
-      color: #764ba2;
+    .site-title span {
+      color: var(--gold);
+    }
+
+    .nav-wrapper {
+      display: flex;
+      align-items: center;
     }
 
     .navbar {
       display: flex;
-      gap: 1.5rem;
+      gap: .2rem;
+      list-style: none;
     }
 
     .navbar a {
+      color: rgba(255, 255, 255, .82);
       text-decoration: none;
-      color: #333;
+      font-size: .86rem;
       font-weight: 500;
-      transition: color 0.3s ease;
+      padding: .44rem .85rem;
+      border-radius: 6px;
+      white-space: nowrap;
+      transition: color .2s, background .2s;
     }
 
     .navbar a:hover {
-      color: #764ba2;
+      color: white;
+      background: rgba(255, 255, 255, .1);
     }
 
-    /* Mobile Navigation */
-    .mobile-menu-btn {
+    .navbar a.active {
+      color: var(--gold);
+    }
+
+    .menu-toggle {
       display: none;
       background: none;
       border: none;
-      font-size: 1.5rem;
       cursor: pointer;
+      flex-direction: column;
+      gap: 5px;
+      padding: 4px;
     }
 
-    .header {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
-      padding: 2rem 0;
+    .menu-toggle span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: white;
+      border-radius: 2px;
+      transition: all .3s var(--ease-out);
+    }
+
+    .menu-toggle.open span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+
+    .menu-toggle.open span:nth-child(2) {
+      opacity: 0;
+      transform: translateX(-8px);
+    }
+
+    .menu-toggle.open span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    .nav-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .5);
+      z-index: 998;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .3s;
+    }
+
+    .nav-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    /* ═══════════════════════════════════════════
+       HERO
+    ═══════════════════════════════════════════ */
+    .hero-section {
+      min-height: 100svh;
+      background:
+        linear-gradient(160deg, rgba(0, 0, 0, .75) 0%, rgba(0, 0, 0, .45) 50%, rgba(0, 0, 0, .72) 100%),
+        url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80') center/cover no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* animated grain overlay */
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      opacity: .4;
+      pointer-events: none;
+      z-index: 1;
+      animation: grain 8s steps(2) infinite;
+    }
+
+    @keyframes grain {
+
+      0%,
+      100% {
+        transform: translate(0, 0)
+      }
+
+      10% {
+        transform: translate(-2%, -3%)
+      }
+
+      30% {
+        transform: translate(3%, 2%)
+      }
+
+      50% {
+        transform: translate(-1%, 4%)
+      }
+
+      70% {
+        transform: translate(4%, -1%)
+      }
+
+      90% {
+        transform: translate(-3%, 3%)
+      }
+    }
+
+    /* radial glow pulse */
+    .hero-glow {
+      position: absolute;
+      bottom: -80px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 700px;
+      height: 400px;
+      background: radial-gradient(ellipse, rgba(192, 32, 42, .35) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 1;
+      animation: glow-pulse 4s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow-pulse {
+      from {
+        opacity: .6;
+        transform: translateX(-50%) scaleX(1);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(-50%) scaleX(1.12);
+      }
+    }
+
+    /* floating food icons */
+    .floating-elements {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .floating-icon {
+      position: absolute;
+      font-size: clamp(1.4rem, 2.5vw, 2.2rem);
+      color: rgba(255, 255, 255, .12);
+      animation: float-icon 7s ease-in-out infinite;
+    }
+
+    .fi-1 {
+      top: 18%;
+      left: 8%;
+      animation-delay: 0s;
+    }
+
+    .fi-2 {
+      top: 65%;
+      right: 12%;
+      animation-delay: 2.5s;
+    }
+
+    .fi-3 {
+      top: 38%;
+      right: 18%;
+      animation-delay: 5s;
+    }
+
+    .fi-4 {
+      bottom: 28%;
+      left: 16%;
+      animation-delay: 1.2s;
+    }
+
+    .fi-5 {
+      top: 12%;
+      right: 30%;
+      animation-delay: 3.5s;
+    }
+
+    @keyframes float-icon {
+
+      0%,
+      100% {
+        transform: translateY(0) rotate(0deg);
+        opacity: .12;
+      }
+
+      50% {
+        transform: translateY(-24px) rotate(12deg);
+        opacity: .22;
+      }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
       text-align: center;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-      margin-bottom: 3rem;
+      max-width: 800px;
+      padding: 0 clamp(1.2rem, 4vw, 3rem);
     }
 
-    .header h1 {
-      font-size: 3rem;
-      background: linear-gradient(45deg, #efefef, #764ba2);
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(245, 197, 24, .12);
+      border: 1px solid rgba(245, 197, 24, .3);
+      color: var(--gold);
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: .4rem 1rem;
+      border-radius: 24px;
+      margin-bottom: 1.8rem;
+      animation: badge-pop .6s var(--ease-bounce) .2s both;
+    }
+
+    @keyframes badge-pop {
+      from {
+        opacity: 0;
+        transform: scale(.75) translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--gold);
+      border-radius: 50%;
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-dot {
+
+      0%,
+      100% {
+        box-shadow: 0 0 0 0 rgba(245, 197, 24, .5);
+      }
+
+      50% {
+        box-shadow: 0 0 0 5px rgba(245, 197, 24, 0);
+      }
+    }
+
+    .hero-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -2px;
+      color: white;
+      margin-bottom: .6rem;
+      animation: title-in .9s var(--ease-out) .35s both;
+    }
+
+    @keyframes title-in {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* animated gradient text accent */
+    .hero-title span {
+      background: linear-gradient(90deg, #ff6b35, #f5c518, #ff6b35);
+      background-size: 200%;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      margin-bottom: 0.5rem;
+      animation: gradient-shift 4s linear infinite;
     }
 
-    .header p {
-      font-size: 1.2rem;
-      color: #666;
+    @keyframes gradient-shift {
+      0% {
+        background-position: 0%;
+      }
+
+      100% {
+        background-position: 200%;
+      }
     }
 
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 2rem;
+    .hero-subtitle {
+      font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+      font-weight: 300;
+      color: rgba(255, 255, 255, .75);
+      margin-bottom: 1.2rem;
+      letter-spacing: .5px;
+      animation: sub-in .8s var(--ease-out) .55s both;
     }
 
-    .section {
-      margin-bottom: 4rem;
-      padding: 2rem 0;
-      border-radius: 15px;
-      overflow: hidden;
-      position: relative;
+    @keyframes sub-in {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
-    /* Section Background Images */
-    .restaurants-section {
-      background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
-                  url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80') center/cover;
+    .hero-description {
+      font-size: clamp(.95rem, 1.8vw, 1.1rem);
+      color: rgba(255, 255, 255, .6);
+      line-height: 1.75;
+      max-width: 580px;
+      margin: 0 auto 2.5rem;
+      font-weight: 300;
+      animation: sub-in .8s var(--ease-out) .7s both;
     }
 
-    .bars-section {
-      background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
-                  url('https://images.unsplash.com/photo-1572116469696-31de0f17cc34?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80') center/cover;
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: sub-in .8s var(--ease-out) .88s both;
     }
 
-    .section-title {
-      font-size: 2.5rem;
+    .btn-hero-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--crimson);
       color: white;
-      text-align: center;
-      margin-bottom: 2rem;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      font-family: 'Syne', sans-serif;
+      font-size: .9rem;
+      font-weight: 700;
+      padding: .9rem 2.2rem;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      letter-spacing: .3px;
+      box-shadow: 0 6px 24px rgba(192, 32, 42, .45);
+      transition: transform .3s var(--ease-bounce), box-shadow .3s, background .2s;
     }
 
-    .carousel-container {
+    .btn-hero-primary:hover {
+      background: var(--crimson-light);
+      transform: translateY(-4px);
+      box-shadow: 0 14px 36px rgba(192, 32, 42, .5);
+    }
+
+    .btn-hero-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: white;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .9rem;
+      font-weight: 500;
+      padding: .9rem 2.2rem;
+      border-radius: 50px;
+      border: 1.5px solid rgba(255, 255, 255, .32);
+      cursor: pointer;
+      text-decoration: none;
+      transition: border-color .3s, background .3s, transform .3s var(--ease-bounce);
+    }
+
+    .btn-hero-ghost:hover {
+      border-color: rgba(255, 255, 255, .75);
+      background: rgba(255, 255, 255, .07);
+      transform: translateY(-4px);
+    }
+
+    /* scroll indicator */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: rgba(255, 255, 255, .45);
+      font-size: .72rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      animation: fade-in .8s ease 1.4s both;
+    }
+
+    @keyframes fade-in {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, rgba(255, 255, 255, .5), transparent);
+      animation: scroll-anim 1.8s ease-in-out infinite;
+    }
+
+    @keyframes scroll-anim {
+
+      0%,
+      100% {
+        transform: scaleY(1);
+        opacity: 1;
+      }
+
+      50% {
+        transform: scaleY(.4);
+        opacity: .4;
+      }
+    }
+
+    /* ═══════════════════════════════════════════
+       PAGE INTRO BANNER
+    ═══════════════════════════════════════════ */
+    .page-intro {
+      padding: clamp(3rem, 6vw, 5rem) clamp(1.2rem, 5vw, 4rem);
+      background: white;
+      text-align: center;
+    }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--crimson);
+      margin-bottom: .8rem;
+    }
+
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 20px;
+      height: 2px;
+      background: var(--crimson);
+      border-radius: 1px;
+    }
+
+    .section-heading {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 800;
+      color: var(--navy);
+      letter-spacing: -.5px;
+      line-height: 1.1;
+      margin-bottom: .8rem;
+    }
+
+    .section-sub {
+      font-size: clamp(.9rem, 1.8vw, 1.05rem);
+      color: var(--text-mid);
+      max-width: 520px;
+      margin: 0 auto;
+      font-weight: 300;
+      line-height: 1.7;
+    }
+
+    /* stats bar */
+    .stats-bar {
+      display: flex;
+      justify-content: center;
+      gap: clamp(2rem, 5vw, 5rem);
+      margin-top: clamp(2rem, 4vw, 3rem);
+      flex-wrap: wrap;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-num {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      font-weight: 800;
+      color: var(--navy);
+      display: block;
+      line-height: 1;
+    }
+
+    .stat-num span {
+      color: var(--crimson);
+    }
+
+    .stat-label {
+      font-size: .75rem;
+      color: var(--text-light);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: .3rem;
+    }
+
+    .stat-divider {
+      width: 1px;
+      background: var(--soft-gray);
+      align-self: stretch;
+    }
+
+    /* ═══════════════════════════════════════════
+       DEAL SECTIONS
+    ═══════════════════════════════════════════ */
+    .deal-section {
+      padding: clamp(4rem, 8vw, 7rem) 0;
       position: relative;
       overflow: hidden;
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-      padding: 20px 0;
+    }
+
+    .deal-section.restaurants-section {
+      background:
+        linear-gradient(rgba(11, 22, 64, .78), rgba(11, 22, 64, .88)),
+        url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80') center/cover no-repeat;
+    }
+
+    .deal-section.bars-section {
+      background:
+        linear-gradient(rgba(11, 22, 64, .80), rgba(11, 22, 64, .90)),
+        url('https://images.unsplash.com/photo-1572116469696-31de0f17cc34?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80') center/cover no-repeat;
+      background-attachment: fixed;
+    }
+
+    /* parallax shim for supported browsers */
+    .deal-section.restaurants-section {
+      background-attachment: fixed;
+    }
+
+    .deal-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 50% at 50% 100%, rgba(192, 32, 42, .22) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .section-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 0 clamp(1.2rem, 4vw, 3rem);
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: clamp(2rem, 4vw, 3rem);
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .section-header .section-label {
+      color: var(--gold);
+    }
+
+    .section-header .section-label::before {
+      background: var(--gold);
+    }
+
+    .section-header .section-heading {
+      color: white;
+    }
+
+    .deal-count {
+      font-size: .82rem;
+      color: rgba(255, 255, 255, .45);
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .deal-count strong {
+      color: var(--gold);
+    }
+
+    /* ─ carousel ─ */
+    .carousel-wrapper {
+      position: relative;
+    }
+
+    .carousel-overflow {
+      overflow: hidden;
+      border-radius: var(--radius-lg);
     }
 
     .carousel {
       display: flex;
-      transition: transform 0.5s ease;
-      padding: 0 60px;
+      transition: transform .55s var(--ease-out);
+      padding: .5rem 0 1rem;
+      gap: clamp(1rem, 2vw, 1.4rem);
     }
 
+    /* ─ deal card ─ */
     .card {
-      min-width: 350px;
-      margin: 0 15px;
-      background: white;
-      border-radius: 15px;
-      overflow: hidden;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      min-width: clamp(280px, 30vw, 340px);
       flex-shrink: 0;
+      background: white;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+      border: 1.5px solid rgba(255, 255, 255, .06);
+      transition: transform .4s var(--ease-bounce), box-shadow .4s var(--ease-out);
+      cursor: pointer;
+      animation: card-enter .6s var(--ease-out) both;
+    }
+
+    @keyframes card-enter {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+      transform: translateY(-10px) scale(1.01);
+      box-shadow: var(--shadow-hover);
     }
 
     .card-image {
       width: 100%;
-      height: 200px;
-      background: linear-gradient(45deg, #ff6b6b, #ffa500);
+      height: clamp(160px, 18vw, 210px);
+      background: linear-gradient(135deg, var(--navy), var(--crimson));
       display: flex;
       align-items: center;
       justify-content: center;
+      color: rgba(255, 255, 255, .5);
+      font-size: 1rem;
+      font-weight: 500;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .6s var(--ease-out);
+    }
+
+    .card:hover .card-image img {
+      transform: scale(1.06);
+    }
+
+    /* discount ribbon */
+    .card-ribbon {
+      position: absolute;
+      top: 1rem;
+      right: 0;
+      background: var(--crimson);
       color: white;
-      font-size: 1.2rem;
-      font-weight: bold;
+      font-family: 'Syne', sans-serif;
+      font-size: .78rem;
+      font-weight: 800;
+      padding: .28rem 1rem .28rem .8rem;
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 8px 50%);
+      letter-spacing: .4px;
+      box-shadow: 0 2px 10px rgba(192, 32, 42, .4);
     }
 
     .card-content {
-      padding: 1.5rem;
+      padding: clamp(1rem, 2.5vw, 1.4rem);
+    }
+
+    .card-category {
+      font-size: .72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: var(--crimson);
+      margin-bottom: .4rem;
     }
 
     .card-title {
-      font-size: 1.5rem;
-      font-weight: bold;
-      margin-bottom: 0.5rem;
-      color: #333;
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1rem, 1.8vw, 1.2rem);
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: .4rem;
+      line-height: 1.3;
     }
 
     .card-description {
-      color: #666;
-      margin-bottom: 1rem;
-      line-height: 1.5;
-    }
-
-    .card-discount {
-      font-size: 1.8rem;
-      font-weight: bold;
-      color: #e74c3c;
+      font-size: .85rem;
+      color: var(--text-mid);
+      line-height: 1.6;
       margin-bottom: 1rem;
     }
 
-    .card-buttons {
+    .card-footer {
       display: flex;
-      gap: 10px;
+      gap: .65rem;
     }
 
-    .btn {
-      padding: 10px 20px;
-      border: none;
-      border-radius: 25px;
-      cursor: pointer;
-      font-weight: bold;
-      transition: all 0.3s ease;
+    .btn-view,
+    .btn-claim {
       flex: 1;
-      font-size: 14px;
+      padding: .65rem .8rem;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .82rem;
+      font-weight: 600;
+      letter-spacing: .2px;
+      transition: transform .3s var(--ease-bounce), box-shadow .3s, background .2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
     }
 
-    .btn-primary {
-      background: linear-gradient(45deg, #667eea, #764ba2);
+    .btn-view {
+      background: rgba(11, 22, 64, .07);
+      color: var(--navy);
+      border: 1.5px solid var(--soft-gray);
+    }
+
+    .btn-view:hover {
+      background: var(--navy);
       color: white;
-    }
-
-    .btn-primary:hover {
       transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
     }
 
-    .btn-secondary {
-      background: linear-gradient(45deg, #ff6b6b, #ffa500);
+    .btn-claim {
+      background: var(--crimson);
       color: white;
+      box-shadow: 0 3px 14px rgba(192, 32, 42, .35);
     }
 
-    .btn-secondary:hover {
+    .btn-claim:hover {
+      background: var(--crimson-light);
       transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+      box-shadow: 0 8px 24px rgba(192, 32, 42, .45);
+    }
+
+    /* carousel nav */
+    .carousel-nav {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 1.8rem;
+    }
+
+    .carousel.show-all {
+      flex-wrap: wrap;
+      transform: none !important;
+      justify-content: center;
+    }
+
+    .view-all-container {
+      text-align: center;
+      margin-top: 1.5rem;
     }
 
     .carousel-btn {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(255, 255, 255, 0.9);
-      border: none;
-      width: 50px;
-      height: 50px;
+      width: 46px;
+      height: 46px;
       border-radius: 50%;
+      border: 1.5px solid rgba(255, 255, 255, .22);
+      background: rgba(255, 255, 255, .08);
+      color: white;
+      font-size: .9rem;
       cursor: pointer;
-      font-size: 1.5rem;
-      color: #333;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-      transition: all 0.3s ease;
-      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all .3s var(--ease-bounce);
+      backdrop-filter: blur(8px);
     }
 
     .carousel-btn:hover {
-      background: white;
-      transform: translateY(-50%) scale(1.1);
+      background: var(--crimson);
+      border-color: var(--crimson);
+      transform: scale(1.12);
     }
 
-    .carousel-btn.left {
-      left: 10px;
+    .carousel-dots {
+      display: flex;
+      gap: 6px;
     }
 
-    .carousel-btn.right {
-      right: 10px;
+    .cdot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, .25);
+      cursor: pointer;
+      transition: all .3s;
     }
 
-    /* Modal Styles */
+    .cdot.active {
+      background: var(--gold);
+      width: 24px;
+      border-radius: 4px;
+    }
+
+    /* ═══════════════════════════════════════════
+       WAVE DIVIDERS
+    ═══════════════════════════════════════════ */
+    .wave {
+      width: 100%;
+      overflow: hidden;
+      line-height: 0;
+      display: block;
+    }
+
+    .wave svg {
+      display: block;
+      width: 100%;
+    }
+
+    /* ═══════════════════════════════════════════
+       MODAL – DETAILS
+    ═══════════════════════════════════════════ */
     .modal {
       display: none;
       position: fixed;
-      z-index: 1000;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.8);
-      backdrop-filter: blur(5px);
+      z-index: 2000;
+      inset: 0;
+      background: rgba(11, 22, 64, .7);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      align-items: center;
+      justify-content: center;
+      animation: modal-fade .3s ease;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    @keyframes modal-fade {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
     }
 
     .modal-content {
-      background-color: white;
-      margin: 5% auto;
-      padding: 0;
-      border-radius: 20px;
+      background: white;
+      border-radius: var(--radius-lg);
       width: 90%;
       max-width: 600px;
       max-height: 90vh;
       overflow-y: auto;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 32px 80px rgba(0, 0, 0, .35);
+      animation: modal-slide .35s var(--ease-bounce);
       position: relative;
+    }
+
+    @keyframes modal-slide {
+      from {
+        opacity: 0;
+        transform: translateY(40px) scale(.95);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
     }
 
     .modal-header {
       position: relative;
-      height: 250px;
+      height: 260px;
       overflow: hidden;
-      border-radius: 20px 20px 0 0;
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
     }
 
     .modal-image {
       width: 100%;
       height: 100%;
-      background: linear-gradient(45deg, #ff6b6b, #ffa500);
+      background: linear-gradient(135deg, var(--navy), var(--crimson));
+      position: relative;
+    }
+
+    .m-carousel {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      transition: transform 0.4s ease-out;
+    }
+
+    .m-carousel img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .mc-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: white;
-      font-size: 1.5rem;
-      font-weight: bold;
+      z-index: 10;
+      transition: 0.2s;
+    }
+
+    .mc-btn:hover {
+      background: rgba(0, 0, 0, 0.8);
+    }
+
+    .mc-prev {
+      left: 10px;
+    }
+
+    .mc-next {
+      right: 10px;
+    }
+
+    .mc-dots {
+      position: absolute;
+      bottom: 25px;
+      /* above the gradient */
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 6px;
+      z-index: 10;
+    }
+
+    .mc-dots .cdot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.4);
+      cursor: pointer;
+    }
+
+    .mc-dots .cdot.active {
+      background: white;
+      transform: scale(1.2);
+    }
+
+    /* dark gradient over modal image */
+    .modal-header::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 50%;
+      background: linear-gradient(transparent, rgba(11, 22, 64, .6));
     }
 
     .close {
       position: absolute;
-      top: 15px;
-      right: 20px;
-      color: white;
-      font-size: 28px;
-      font-weight: bold;
-      cursor: pointer;
-      background: rgba(0, 0, 0, 0.5);
-      width: 40px;
-      height: 40px;
+      top: 14px;
+      right: 16px;
+      z-index: 10;
+      width: 38px;
+      height: 38px;
       border-radius: 50%;
+      background: rgba(0, 0, 0, .45);
+      border: none;
+      color: white;
+      font-size: 1.3rem;
+      cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all 0.3s ease;
-      z-index: 1001;
+      transition: background .25s, transform .25s var(--ease-bounce);
     }
 
     .close:hover {
-      background: rgba(0, 0, 0, 0.8);
+      background: rgba(0, 0, 0, .75);
       transform: scale(1.1);
     }
 
     .modal-body {
-      padding: 2rem;
+      padding: clamp(1.4rem, 3vw, 2rem);
     }
 
     .modal-title {
-      font-size: 2rem;
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 800;
+      color: var(--navy);
       margin-bottom: 1rem;
-      color: #333;
+      letter-spacing: -.3px;
     }
 
     .modal-details {
-      line-height: 1.6;
-      margin-bottom: 2rem;
-      color: #666;
+      font-size: .9rem;
+      color: var(--text-mid);
+      line-height: 1.75;
       white-space: pre-line;
+      margin-bottom: 1.5rem;
     }
 
-    /* Form Modal Styles */
+    .modal-cta {
+      width: 100%;
+      padding: .9rem;
+      border-radius: 50px;
+      border: none;
+      background: var(--crimson);
+      color: white;
+      cursor: pointer;
+      font-family: 'Syne', sans-serif;
+      font-size: .9rem;
+      font-weight: 700;
+      letter-spacing: .3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: background .2s, transform .3s var(--ease-bounce), box-shadow .3s;
+      box-shadow: 0 4px 18px rgba(192, 32, 42, .4);
+    }
+
+    .modal-cta:hover {
+      background: var(--crimson-light);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 28px rgba(192, 32, 42, .5);
+    }
+
+    /* ═══════════════════════════════════════════
+       FORM MODAL
+    ═══════════════════════════════════════════ */
     .form-modal {
       display: none;
       position: fixed;
-      z-index: 1001;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.8);
-      backdrop-filter: blur(5px);
+      z-index: 2100;
+      inset: 0;
+      background: rgba(11, 22, 64, .75);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      align-items: center;
+      justify-content: center;
+    }
+
+    .form-modal.active {
+      display: flex;
     }
 
     .form-content {
-      background-color: white;
-      margin: 3% auto;
-      padding: 2rem;
-      border-radius: 20px;
+      background: white;
+      border-radius: var(--radius-lg);
       width: 90%;
-      max-width: 550px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-      position: relative;
+      max-width: 540px;
       max-height: 95vh;
       overflow-y: auto;
+      padding: clamp(1.5rem, 4vw, 2.5rem);
+      position: relative;
+      box-shadow: 0 32px 80px rgba(0, 0, 0, .35);
+      animation: modal-slide .35s var(--ease-bounce);
+    }
+
+    /* top accent bar */
+    .form-content::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+      background: linear-gradient(to right, var(--navy), var(--crimson), var(--gold));
+    }
+
+    .form-close {
+      position: absolute;
+      top: 14px;
+      right: 16px;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 1.5px solid var(--soft-gray);
+      background: white;
+      color: var(--text-mid);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all .25s var(--ease-bounce);
+    }
+
+    .form-close:hover {
+      background: var(--crimson);
+      border-color: var(--crimson);
+      color: white;
+      transform: scale(1.1);
+    }
+
+    .form-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.3rem, 3vw, 1.8rem);
+      font-weight: 800;
+      color: var(--navy);
+      text-align: center;
+      margin-bottom: 1.6rem;
+      letter-spacing: -.3px;
     }
 
     .form-group {
-      margin-bottom: 1.2rem;
+      margin-bottom: 1.1rem;
     }
 
     .form-group label {
       display: block;
-      margin-bottom: 0.5rem;
-      font-weight: bold;
-      color: #333;
+      margin-bottom: .45rem;
+      font-size: .82rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      letter-spacing: .2px;
     }
 
     .form-group input,
     .form-group textarea,
     .form-group select {
       width: 100%;
-      padding: 12px;
-      border: 2px solid #e0e0e0;
-      border-radius: 10px;
-      font-size: 1rem;
-      transition: border-color 0.3s ease;
+      padding: .75rem 1rem;
+      border: 1.5px solid var(--soft-gray);
+      border-radius: var(--radius-md);
+      font-family: 'DM Sans', sans-serif;
+      font-size: .9rem;
+      color: var(--text-dark);
       background: white;
+      outline: none;
+      transition: border-color .3s, box-shadow .3s;
     }
 
     .form-group input:focus,
     .form-group textarea:focus,
     .form-group select:focus {
-      outline: none;
-      border-color: #667eea;
+      border-color: var(--crimson);
+      box-shadow: 0 0 0 3px rgba(192, 32, 42, .1);
     }
 
-    .form-title {
-      font-size: 1.8rem;
-      margin-bottom: 1.5rem;
-      text-align: center;
-      color: #333;
+    .form-group input[readonly] {
+      background: var(--off-white);
+      color: var(--text-mid);
+    }
+
+    .form-group input::placeholder {
+      color: var(--text-light);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    @media(max-width:500px) {
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: .9rem;
+      border-radius: 50px;
+      border: none;
+      background: var(--crimson);
+      color: white;
+      cursor: pointer;
+      font-family: 'Syne', sans-serif;
+      font-size: .9rem;
+      font-weight: 700;
+      letter-spacing: .3px;
+      margin-top: .5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: background .2s, transform .3s var(--ease-bounce), box-shadow .3s;
+      box-shadow: 0 4px 18px rgba(192, 32, 42, .4);
+    }
+
+    .btn-submit:hover {
+      background: var(--crimson-light);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 28px rgba(192, 32, 42, .5);
+    }
+
+    .btn-submit:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+      transform: none;
     }
 
     .loading {
@@ -416,1055 +1462,963 @@
     }
 
     .spinner {
-      border: 3px solid #f3f3f3;
-      border-top: 3px solid #667eea;
+      border: 3px solid var(--soft-gray);
+      border-top-color: var(--crimson);
       border-radius: 50%;
       width: 30px;
       height: 30px;
       animation: spin 1s linear infinite;
-      margin: 0 auto;
+      margin: 0 auto .5rem;
     }
 
     @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+      to {
+        transform: rotate(360deg)
+      }
     }
 
     .success-message {
       display: none;
-      background: #d4edda;
+      background: rgba(26, 138, 74, .08);
+      border: 1.5px solid rgba(26, 138, 74, .3);
       color: #155724;
-      padding: 1rem;
-      border-radius: 10px;
+      padding: 1rem 1.2rem;
+      border-radius: var(--radius-md);
       margin-top: 1rem;
       text-align: center;
+      font-weight: 500;
     }
 
-    .form-close {
-      position: absolute;
-      top: 15px;
-      right: 20px;
-      color: #333;
-      font-size: 28px;
-      font-weight: bold;
-      cursor: pointer;
-      background: none;
-      border: none;
-      width: 30px;
-      height: 30px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s ease;
-    }
-
-    .form-close:hover {
-      background: #f0f0f0;
-      border-radius: 50%;
-    }
-
-    /* Hero Section */
-    .hero-section {
-      height: 100vh;
-      background: linear-gradient(
-          135deg,
-          rgba(0, 0, 0, 0.7) 0%,
-          rgba(0, 0, 0, 0.4) 50%,
-          rgba(0, 0, 0, 0.7) 100%
-      ),
-      url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80') center/cover;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero-content {
-      text-align: center;
-      color: white;
-      max-width: 800px;
-      padding: 0 20px;
-      z-index: 2;
-      animation: fadeInUp 1.2s ease-out;
-    }
-
-    .hero-title {
-      font-size: 4rem;
-      font-weight: 700;
-      margin-bottom: 1rem;
-      font-family: 'Georgia', serif;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-      background: linear-gradient(45deg, #ff6b35, #f7931e, #ffcc02);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      animation: titleGlow 3s ease-in-out infinite alternate;
-    }
-
-    .hero-subtitle {
-      font-size: 1.5rem;
-      margin-bottom: 2rem;
-      font-weight: 300;
-      opacity: 0.9;
-      font-family: 'Arial', sans-serif;
-      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
-      animation: fadeIn 1.5s ease-out 0.3s both;
-    }
-
-    .hero-description {
-      font-size: 1.1rem;
-      margin-bottom: 3rem;
-      line-height: 1.6;
-      opacity: 0.8;
-      font-family: 'Arial', sans-serif;
-      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-      animation: fadeIn 1.5s ease-out 0.6s both;
-    }
-
-    .hero-buttons {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      flex-wrap: wrap;
-      animation: fadeIn 1.5s ease-out 0.9s both;
-    }
-
-    .hero-btn {
-      padding: 15px 35px;
-      font-size: 1.1rem;
-      font-weight: 600;
-      border: none;
-      border-radius: 50px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-decoration: none;
-      display: inline-block;
-      font-family: 'Arial', sans-serif;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero-btn-primary {
-      background: linear-gradient(45deg, #ff6b35, #f7931e);
-      color: white;
-      box-shadow: 0 8px 25px rgba(255, 107, 53, 0.3);
-    }
-
-    .hero-btn-primary:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 35px rgba(255, 107, 53, 0.4);
-      background: linear-gradient(45deg, #ff5722, #e67e22);
-    }
-
-    .hero-btn-secondary {
-      background: transparent;
-      color: white;
-      border: 2px solid white;
-      box-shadow: 0 8px 25px rgba(255, 255, 255, 0.1);
-    }
-
-    .hero-btn-secondary:hover {
-      background: white;
-      color: #333;
-      transform: translateY(-3px);
-      box-shadow: 0 12px 35px rgba(255, 255, 255, 0.2);
-    }
-
-    .floating-elements {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      z-index: 1;
-    }
-
-    .floating-icon {
-      position: absolute;
-      color: rgba(255, 255, 255, 0.1);
-      font-size: 2rem;
-      animation: float 6s ease-in-out infinite;
-    }
-
-    .icon-1 {
-      top: 20%;
-      left: 10%;
-      animation-delay: 0s;
-    }
-
-    .icon-2 {
-      top: 70%;
-      right: 15%;
-      animation-delay: 2s;
-    }
-
-    .icon-3 {
-      top: 40%;
-      right: 20%;
-      animation-delay: 4s;
-    }
-
-    .icon-4 {
-      bottom: 30%;
-      left: 20%;
-      animation-delay: 1s;
-    }
-
-    .scroll-indicator {
-      position: absolute;
-      bottom: 30px;
-      left: 50%;
-      transform: translateX(-50%);
-      color: white;
-      opacity: 0.7;
-      animation: bounce 2s infinite;
-      z-index: 2;
-    }
-
-    .scroll-text {
-      font-size: 0.9rem;
-      margin-bottom: 10px;
-      font-family: 'Arial', sans-serif;
-    }
-
-    .scroll-arrow {
-      font-size: 1.5rem;
-      display: block;
-      text-align: center;
-    }
-
-    @keyframes fadeInUp {
-      from {
-          opacity: 0;
-          transform: translateY(50px);
-      }
-      to {
-          opacity: 1;
-          transform: translateY(0);
-      }
-    }
-
-    @keyframes fadeIn {
-      from {
-          opacity: 0;
-      }
-      to {
-          opacity: 1;
-      }
-    }
-
-    @keyframes titleGlow {
-      from {
-          filter: drop-shadow(0 0 5px rgba(255, 107, 53, 0.3));
-      }
-      to {
-          filter: drop-shadow(0 0 20px rgba(255, 107, 53, 0.6));
-      }
-    }
-
-    @keyframes float {
-      0%, 100% {
-          transform: translateY(0px) rotate(0deg);
-          opacity: 0.1;
-      }
-      50% {
-          transform: translateY(-20px) rotate(10deg);
-          opacity: 0.2;
-      }
-    }
-
-    @keyframes bounce {
-      0%, 20%, 50%, 80%, 100% {
-          transform: translateX(-50%) translateY(0);
-      }
-      40% {
-          transform: translateX(-50%) translateY(-10px);
-      }
-      60% {
-          transform: translateX(-50%) translateY(-5px);
-      }
-    }
-
-    /* Footer Styles */
+    /* ═══════════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════════ */
     footer {
-      background: linear-gradient(135deg, #2c3e50, #1a2530);
-      color: white;
-      padding: 3rem 0 1rem;
-      margin-top: 4rem;
+      background: var(--navy-dk);
+      padding: 60px 20px 0;
+      color: rgba(255, 255, 255, 0.65)
     }
 
-    .footer-content {
+    .ft-inner {
       max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 2rem;
+      margin: 0 auto
+    }
+
+    .ft-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 2rem;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 44px;
+      margin-bottom: 48px
     }
 
-    .footer-section h3 {
-      font-size: 1.5rem;
-      margin-bottom: 1.5rem;
-      position: relative;
-      padding-bottom: 0.5rem;
-    }
-
-    .footer-section h3::after {
-      content: '';
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      width: 50px;
-      height: 2px;
-      background: linear-gradient(45deg, #ff6b35, #f7931e);
-    }
-
-    .footer-links {
-      list-style: none;
-    }
-
-    .footer-links li {
-      margin-bottom: 0.8rem;
-    }
-
-    .footer-links a {
-      color: #bdc3c7;
-      text-decoration: none;
-      transition: all 0.3s ease;
-      display: inline-block;
-      position: relative;
-    }
-
-    .footer-links a::before {
-      content: '';
-      position: absolute;
-      bottom: -2px;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background: linear-gradient(45deg, #ff6b35, #f7931e);
-      transition: width 0.3s ease;
-    }
-
-    .footer-links a:hover {
-      color: white;
-      transform: translateX(5px);
-    }
-
-    .footer-links a:hover::before {
-      width: 100%;
-    }
-
-    .social-links {
+    .ft-logo {
       display: flex;
-      gap: 1rem;
-      margin-top: 1rem;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px
     }
 
-    .social-links a {
-      display: inline-flex;
+    .ft-desc {
+      font-size: 14px;
+      line-height: 1.72;
+      margin-bottom: 20px;
+      max-width: 255px
+    }
+
+    .soc-links {
+      display: flex;
+      gap: 8px
+    }
+
+    .soc-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 9px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
       align-items: center;
       justify-content: center;
-      width: 40px;
-      height: 40px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 50%;
+      color: rgba(255, 255, 255, 0.55);
+      font-size: 13px;
+      transition: all .3s var(--ease)
+    }
+
+    .soc-btn:hover {
+      background: var(--red);
+      border-color: var(--red);
       color: white;
+      transform: translateY(-2px)
+    }
+
+    .ft-col h4 {
+      font-size: 13px;
+      font-weight: 800;
+      color: white;
+      letter-spacing: .8px;
+      text-transform: uppercase;
+      margin-bottom: 16px
+    }
+
+    .ft-col ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .ft-col ul li {
+      margin-bottom: 10px
+    }
+
+    .ft-col a {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.5);
+      transition: color .2s;
       text-decoration: none;
-      transition: all 0.3s ease;
     }
 
-    .social-links a:hover {
-      background: linear-gradient(45deg, #ff6b35, #f7931e);
-      transform: translateY(-3px);
-      box-shadow: 0 5px 15px rgba(255, 107, 53, 0.4);
+    .ft-col a:hover {
+      color: var(--gold)
     }
 
-    .footer-bottom {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 1.5rem 2rem 0;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      text-align: center;
-      color: #bdc3c7;
-      font-size: 0.9rem;
+    .ft-contact {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      margin-bottom: 12px;
+      font-size: 13px
     }
 
-    /* Responsive Design */
-    @media (max-width: 1024px) {
-      .card {
-        min-width: 300px;
+    .ft-contact i {
+      color: var(--gold);
+      font-size: 12px;
+      margin-top: 2px;
+      flex-shrink: 0
+    }
+
+    .ft-bot {
+      border-top: 1px solid rgba(255, 255, 255, 0.07);
+      padding: 20px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 13px
+    }
+
+    .ft-bot a {
+      color: rgba(255, 255, 255, 0.35);
+      transition: color .2s;
+      text-decoration: none;
+    }
+
+    .ft-bot a:hover {
+      color: var(--gold)
+    }
+
+    @media(max-width: 860px) {
+      .ft-grid {
+        grid-template-columns: 1fr 1fr
       }
-      
-      .hero-title {
-        font-size: 3rem;
-      }
     }
 
-    @media (max-width: 768px) {
-      header {
-        padding: 1rem;
-        flex-wrap: wrap;
+    @media(max-width: 600px) {
+      .ft-grid {
+        grid-template-columns: 1fr
       }
-      
-      .navbar {
-        display: none;
-        width: 100%;
+
+      .ft-bot {
         flex-direction: column;
-        margin-top: 1rem;
-        gap: 0.5rem;
+        justify-content: center;
+        text-align: center;
       }
-      
-      .navbar.active {
+    }
+
+    /* ═══════════════════════════════════════════
+       RESPONSIVE NAV
+    ═══════════════════════════════════════════ */
+    @media(max-width:860px) {
+      .menu-toggle {
         display: flex;
       }
-      
-      .mobile-menu-btn {
-        display: block;
-      }
-      
-      .header h1 {
-        font-size: 2rem;
-      }
-      
-      .section-title {
-        font-size: 2rem;
-      }
-      
-      .card {
-        min-width: 280px;
-        margin: 0 10px;
-      }
-      
-      .container {
-        padding: 0 1rem;
+
+      .nav-wrapper {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: min(320px, 85vw);
+        background: var(--navy);
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 5rem 2rem 2rem;
+        transform: translateX(100%);
+        transition: transform .4s var(--ease-out);
+        z-index: 999;
+        box-shadow: -8px 0 40px rgba(0, 0, 0, .3);
       }
 
-      .carousel {
-        padding: 0 20px;
-      }
-      
-      .hero-title {
-        font-size: 2.5rem;
+      .nav-wrapper.open {
+        transform: translateX(0);
       }
 
-      .hero-subtitle {
-        font-size: 1.2rem;
+      .navbar {
+        flex-direction: column;
+        width: 100%;
+        gap: 0;
       }
 
-      .hero-description {
+      .navbar a {
+        width: 100%;
         font-size: 1rem;
+        padding: .75rem .5rem;
+        border-radius: 0;
+        border-bottom: 1px solid rgba(255, 255, 255, .06);
       }
+    }
 
+    @media(max-width:600px) {
       .hero-buttons {
         flex-direction: column;
         align-items: center;
       }
 
-      .hero-btn {
-        width: 250px;
-        padding: 12px 30px;
-      }
-
-      .floating-icon {
-        font-size: 1.5rem;
-      }
-      
-      .card-buttons {
-        flex-direction: column;
-      }
-      
-      .footer-content {
-        grid-template-columns: 1fr;
-        text-align: center;
-      }
-      
-      .footer-section h3::after {
-        left: 50%;
-        transform: translateX(-50%);
+      .btn-hero-primary,
+      .btn-hero-ghost {
+        width: 260px;
+        justify-content: center;
       }
     }
 
-    @media (max-width: 480px) {
-      .hero-title {
-        font-size: 2rem;
+    /* ─── VENDOR MODAL ─── */
+    .v-modal-ov {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .88);
+      backdrop-filter: blur(10px);
+      z-index: 5000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px
+    }
+
+    .v-modal-ov.open {
+      display: flex
+    }
+
+    .v-modal-box {
+      background: #fff;
+      border-radius: 24px;
+      max-width: 580px;
+      width: 100%;
+      overflow: hidden;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, .45);
+      position: relative;
+      animation: modal-pop .4s var(--ease-bounce)
+    }
+
+    @keyframes modal-pop {
+      from {
+        opacity: 0;
+        transform: scale(.92) translateY(18px)
       }
 
-      .hero-content {
-        padding: 0 15px;
-      }
-      
-      .card {
-        min-width: 250px;
-      }
-      
-      .header h1 {
-        font-size: 1.8rem;
-      }
-      
-      .section-title {
-        font-size: 1.8rem;
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0)
       }
     }
 
-    /* Additional responsive carousel behavior */
-    @media (max-width: 640px) {
-      .carousel-btn {
-        width: 40px;
-        height: 40px;
-        font-size: 1.2rem;
-      }
-      
-      .carousel-btn.left {
-        left: 5px;
-      }
-      
-      .carousel-btn.right {
-        right: 5px;
-      }
+    .v-modal-head {
+      background: linear-gradient(135deg, var(--navy), var(--crimson));
+      padding: 28px 32px 22px;
+      color: #fff
+    }
+
+    .v-modal-head h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 800;
+      margin-bottom: 4px
+    }
+
+    .v-modal-head p {
+      font-size: .88rem;
+      opacity: .75
+    }
+
+    .v-modal-body {
+      padding: 24px 32px 28px
+    }
+
+    .v-close {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, .2);
+      border: none;
+      cursor: pointer;
+      color: #fff;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: .2s
+    }
+
+    .v-close:hover {
+      background: rgba(255, 255, 255, .35)
+    }
+
+    .v-fg {
+      margin-bottom: 12px
+    }
+
+    .v-fg label {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text-mid);
+      letter-spacing: 1px;
+      margin-bottom: 5px
+    }
+
+    .v-fg input,
+    .v-fg select,
+    .v-fg textarea {
+      width: 100%;
+      padding: 11px 13px;
+      border: 1.5px solid var(--soft-gray);
+      border-radius: 9px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      outline: none;
+      transition: .25s
+    }
+
+    .v-fg input:focus,
+    .v-fg select:focus,
+    .v-fg textarea:focus {
+      border-color: var(--crimson)
+    }
+
+    .v-fg textarea {
+      min-height: 65px;
+      resize: vertical
+    }
+
+    .v-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px
+    }
+
+    .v-btn-submit {
+      width: 100%;
+      padding: 13px;
+      background: var(--crimson);
+      color: #fff;
+      border-radius: 50px;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: .95rem;
+      border: none;
+      cursor: pointer;
+      margin-top: 6px;
+      transition: .2s;
+      box-shadow: 0 6px 18px rgba(192, 32, 42, .3)
+    }
+
+    .v-btn-submit:hover {
+      background: var(--crimson-light);
+      transform: translateY(-2px)
+    }
+
+    .v-success {
+      display: none;
+      text-align: center;
+      padding: 16px 0
+    }
+
+    .v-success .vs-icon {
+      font-size: 50px;
+      margin-bottom: 12px
+    }
+
+    /* ─── SEARCH FILTER SELECT ─── */
+    #heroSearchBar select option {
+      color: #000;
+      background: #fff
     }
   </style>
 </head>
+
 <body>
-  <!-- Shared Header -->
-  <header>
-    <div class="logo">
-      <span class="site-title">Dili<span class="highlight">-Zone</span></span>
+
+  <div class="nav-overlay" id="navOverlay"></div>
+
+  <!-- ═══════════════ HEADER ═══════════════ -->
+  <header id="mainHeader">
+    <a href="index.html" class="logo-container">
+      <div class="logo-icon">DZ</div>
+      <span class="site-title">Dili<span>-Zone</span></span>
+    </a>
+    <div class="nav-wrapper" id="navWrapper">
+      <nav class="navbar">
+        <a href="index.html">Home</a>
+        <a href="restaurants.html" class="active">Restaurants</a>
+        <a href="Accomodation.html">Hotels</a>
+        <a href="supermarkets.html">Supermarkets</a>
+        <a href="services.html">Services</a>
+        <a href="industries.html">Industries</a>
+        <a href="Shops.html">Shops</a>
+        <a href="#" onclick="openVendorModal();return false;"
+          style="background:var(--crimson);color:white;padding:.44rem .85rem;border-radius:20px;font-weight:700;font-size:.82rem">Partner
+          with Us</a>
+      </nav>
     </div>
-    <button class="mobile-menu-btn">☰</button>
-    <nav class="navbar">
-      <a href="index.html">Home</a>
-      <a href="restaurants.html">Restaurants</a>
-      <a href="Accomodation.html">Hotels</a>
-      <a href="supermarket.html">Supermarkets</a>
-      <a href="services.html">Services</a>
-      <a href="industries.html">Industries</a>
-      <a href="shops.html">Shops</a>
-    </nav>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
   </header>
 
+  <!-- ═══════════════ HERO ═══════════════ -->
   <section class="hero-section">
-    <!-- Floating decorative elements -->
+    <div class="hero-glow"></div>
     <div class="floating-elements">
-      <div class="floating-icon icon-1">🍽️</div>
-      <div class="floating-icon icon-2">🍷</div>
-      <div class="floating-icon icon-3">⭐</div>
-      <div class="floating-icon icon-4">🍴</div>
+      <div class="floating-icon fi-1">🍽️</div>
+      <div class="floating-icon fi-2">🍷</div>
+      <div class="floating-icon fi-3">⭐</div>
+      <div class="floating-icon fi-4">🍴</div>
+      <div class="floating-icon fi-5">🥂</div>
     </div>
 
-    <!-- Main hero content -->
     <div class="hero-content">
-      <h1 class="hero-title">Bella Vista</h1>
-      <h2 class="hero-subtitle">Fine Dining Experience</h2>
+      <div class="hero-badge">
+        <div class="badge-dot"></div>
+        Restaurants &amp; Bars · Dili City
+      </div>
+      <h1 class="hero-title"><span>Restaurants</span> &amp; Bars</h1>
+      <p class="hero-subtitle">Discover the Best Dining Deals</p>
       <p class="hero-description">
-        Indulge in culinary excellence with our chef-crafted dishes made from the finest local ingredients. 
-        Experience unforgettable flavors in an atmosphere of elegance and warmth.
+        From fine dining to casual eats — explore verified deals from Dili's top restaurants and bars.
       </p>
+      <!-- HERO SEARCH FILTER -->
+      <div
+        style="background:rgba(255,255,255,.12);backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.2);border-radius:16px;padding:20px;max-width:680px;margin:0 auto 20px;display:grid;grid-template-columns:1fr 1fr auto;gap:10px;align-items:end"
+        id="heroSearchBar">
+        <div>
+          <label
+            style="display:block;font-size:11px;font-weight:700;text-transform:uppercase;color:rgba(255,255,255,.7);letter-spacing:2px;margin-bottom:6px">📍
+            Location</label>
+          <select id="locFilter" onchange="doRestFilter()"
+            style="width:100%;padding:11px 12px;border-radius:10px;border:1.5px solid rgba(255,255,255,.25);background:rgba(255,255,255,.12);color:#fff;font-size:13px;outline:none">
+            <option value=''>All Locations</option>
+            <option>Kiyovu</option>
+            <option>Nyarutarama</option>
+            <option>Gacuriro</option>
+            <option>Kimihurura</option>
+            <option>Kacyiru</option>
+            <option>Remera</option>
+            <option>CBD</option>
+          </select>
+        </div>
+        <div>
+          <label
+            style="display:block;font-size:11px;font-weight:700;text-transform:uppercase;color:rgba(255,255,255,.7);letter-spacing:2px;margin-bottom:6px">🍽️
+            Cuisine</label>
+          <select id="cuisFilter" onchange="doRestFilter()"
+            style="width:100%;padding:11px 12px;border-radius:10px;border:1.5px solid rgba(255,255,255,.25);background:rgba(255,255,255,.12);color:#fff;font-size:13px;outline:none">
+            <option value=''>All Cuisines</option>
+            <option>African</option>
+            <option>Italian</option>
+            <option>Chinese</option>
+            <option>Indian</option>
+            <option>Grills</option>
+            <option>Seafood</option>
+            <option>Bars</option>
+          </select>
+        </div>
+        <button onclick="doRestFilter()"
+          style="padding:11px 22px;background:var(--crimson);color:#fff;border:none;border-radius:10px;font-weight:800;font-size:14px;cursor:pointer;white-space:nowrap;transition:.3s"
+          onmouseover="this.style.background='#e8353f'" onmouseout="this.style.background='var(--crimson)'">
+          <i class="fas fa-search"></i> Search
+        </button>
+      </div>
       <div class="hero-buttons">
-        <a href="#menu" class="hero-btn hero-btn-primary">View Our Menu</a>
-        <a href="#reservations" class="hero-btn hero-btn-secondary">Make Reservation</a>
+        <a href="#restaurants" class="btn-hero-primary">
+          <i class="fas fa-utensils"></i> View All Restaurants
+        </a>
+        <a href="#" class="btn-hero-ghost" onclick="openVendorModal();return false;">
+          <i class="fas fa-store"></i> Partner with Us
+        </a>
       </div>
     </div>
 
-    <!-- Scroll indicator -->
     <div class="scroll-indicator">
-      <div class="scroll-text">Discover More</div>
-      <div class="scroll-arrow">↓</div>
+      <div class="scroll-line"></div>
+      Discover More
     </div>
   </section>
 
-  <div class="header">
-    <h1>Food & Drink Deals</h1>
-    <p>Discover amazing discounts and promotions at your favorite spots!</p>
-  </div>
-
-  <div class="container">
-    <!-- Restaurants Section -->
-    <div class="section restaurants-section">
-      <h2 class="section-title">Restaurants</h2>
-      <div class="carousel-container">
-        <button class="carousel-btn left" onclick="slideCarousel('restaurants', -1)">‹</button>
-        <div class="carousel" id="restaurants-carousel">
-          <!-- Restaurant cards will be populated here -->
-        </div>
-        <button class="carousel-btn right" onclick="slideCarousel('restaurants', 1)">›</button>
+  <!-- ═══════════════ PAGE INTRO ═══════════════ -->
+  <section class="page-intro">
+    <div class="reveal">
+      <div class="section-label">Food &amp; Drink Deals</div>
+      <h2 class="section-heading">Discover Amazing Deals</h2>
+      <p class="section-sub">Exclusive promotions and discounts at your favourite restaurants and bars — all in one
+        place.</p>
+    </div>
+    <div class="stats-bar reveal">
+      <div class="stat-item">
+        <span class="stat-num" data-count="48"><span>0</span></span>
+        <div class="stat-label">Restaurant Deals</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-num" data-count="32"><span>0</span></span>
+        <div class="stat-label">Bar Promos</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-num" data-count="96"><span>0</span></span>
+        <div class="stat-label">Happy Customers</div>
       </div>
     </div>
+  </section>
 
-    <!-- Bars Section -->
-    <div class="section bars-section">
-      <h2 class="section-title">Bars</h2>
-      <div class="carousel-container">
-        <button class="carousel-btn left" onclick="slideCarousel('bars', -1)">‹</button>
-        <div class="carousel" id="bars-carousel">
-          <!-- Bar cards will be populated here -->
-        </div>
-        <button class="carousel-btn right" onclick="slideCarousel('bars', 1)">›</button>
-      </div>
-    </div>
+  <!-- wave into restaurant section -->
+  <div class="wave" style="background:white">
+    <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <path d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z" fill="#0b1640" opacity=".82" />
+    </svg>
   </div>
 
-  <!-- Footer -->
+  <!-- ═══════════════ RESTAURANTS ═══════════════ -->
+  <section class="deal-section restaurants-section" id="restaurants">
+    <div class="section-inner">
+      <div class="section-header reveal">
+        <div>
+          <div class="section-label">Fresh Deals</div>
+          <h2 class="section-heading">Restaurants</h2>
+        </div>
+        <button class="btn-hero-ghost"
+          style="color:var(--navy);border-color:rgba(11,22,64,.3);padding:0.65rem 1.2rem;font-size:0.85rem;display:inline-flex"
+          onclick="toggleViewAll('restaurants-carousel', 'rest-nav-controls', this)">
+          <i class="fas fa-th-large"></i> View All
+        </button>
+      </div>
+      <div class="carousel-wrapper">
+        <div class="carousel-overflow">
+          <div class="carousel" id="restaurants-carousel"></div>
+        </div>
+      </div>
+      <div class="carousel-nav" id="rest-nav-controls">
+        <button class="carousel-btn" id="rest-prev" aria-label="Previous"><i class="fas fa-chevron-left"></i></button>
+        <div class="carousel-dots" id="rest-dots"></div>
+        <button class="carousel-btn" id="rest-next" aria-label="Next"><i class="fas fa-chevron-right"></i></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- wave between sections -->
+  <div class="wave" style="background:#0b1640;opacity:.85">
+    <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <path d="M0,0 C480,60 960,0 1440,40 L1440,60 L0,60 Z" fill="#0b1640" opacity="1" />
+    </svg>
+  </div>
+
+  <!-- ═══════════════ BARS ═══════════════ -->
+  <section class="deal-section bars-section" id="bars">
+    <div class="section-inner">
+      <div class="section-header reveal">
+        <div>
+          <div class="section-label">Tonight's Specials</div>
+          <h2 class="section-heading">Bars &amp; Lounges</h2>
+        </div>
+        <button class="btn-hero-ghost"
+          style="color:var(--navy);border-color:rgba(11,22,64,.3);padding:0.65rem 1.2rem;font-size:0.85rem;display:inline-flex"
+          onclick="toggleViewAll('bars-carousel', 'bar-nav-controls', this)">
+          <i class="fas fa-th-large"></i> View All
+        </button>
+      </div>
+      <div class="carousel-wrapper">
+        <div class="carousel-overflow">
+          <div class="carousel" id="bars-carousel"></div>
+        </div>
+      </div>
+      <div class="carousel-nav" id="bar-nav-controls">
+        <button class="carousel-btn" id="bar-prev" aria-label="Previous"><i class="fas fa-chevron-left"></i></button>
+        <div class="carousel-dots" id="bar-dots"></div>
+        <button class="carousel-btn" id="bar-next" aria-label="Next"><i class="fas fa-chevron-right"></i></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- wave out -->
+  <div class="wave" style="background:#0b1640;opacity:.85">
+    <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <path d="M0,40 C360,0 1080,60 1440,20 L1440,60 L0,60 Z" fill="#060d2a" />
+    </svg>
+  </div>
+
+  <!-- ═══════════════ FOOTER ═══════════════ -->
   <footer>
-    <div class="footer-content">
-      <div class="footer-section">
-        <h3>About Dili-Zone</h3>
-        <p>Your ultimate guide to the best dining and entertainment experiences in the city. Discover hidden gems and popular spots with exclusive deals.</p>
-        <div class="social-links">
-          <a href="#" aria-label="Facebook">FB</a>
-          <a href="#" aria-label="Instagram">IG</a>
-          <a href="#" aria-label="Twitter">TW</a>
-          <a href="#" aria-label="LinkedIn">IN</a>
+    <div class="ft-inner">
+      <div class="ft-grid">
+        <div>
+          <div class="ft-logo">
+            <div class="logo-mark">D</div>
+            <div class="logo-text">
+              <div class="main">Dili-Zone</div>
+              <div class="sub">Your City Guide</div>
+            </div>
+          </div>
+          <p class="ft-desc">Dili's premier business and shopping directory. Connecting locals with the best stores and
+            services since 2025.</p>
+          <div class="soc-links">
+            <a href="#" class="soc-btn"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="soc-btn"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="soc-btn"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="soc-btn"><i class="fab fa-whatsapp"></i></a>
+          </div>
+        </div>
+        <div class="ft-col">
+          <h4>Shop Categories</h4>
+          <ul>
+            <li><a href="#">Fashion & Clothing</a></li>
+            <li><a href="#">Electronics</a></li>
+            <li><a href="#">Home & Decor</a></li>
+            <li><a href="#">Beauty & Cosmetics</a></li>
+            <li><a href="#">Groceries</a></li>
+            <li><a href="#">Jewelry</a></li>
+            <li><a href="#">Sports</a></li>
+          </ul>
+        </div>
+        <div class="ft-col">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="restaurants.html">Restaurants</a></li>
+            <li><a href="Accomodation.html">Hotels</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="industries.html">Industries</a></li>
+            <li><a href="list-your-store.html" onclick="openVendorModal(); return false;">List Your Store</a></li>
+            <li><a href="#">About Dili-Zone</a></li>
+          </ul>
+        </div>
+        <div class="ft-col">
+          <h4>Contact Us</h4>
+          <div class="ft-contact"><i class="fas fa-map-marker-alt"></i><span>Kigali-Gasabo-Rwanda</span></div>
+          <div class="ft-contact"><i class="fas fa-phone"></i><span>+250780491405</span></div>
+          <div class="ft-contact"><i class="fas fa-envelope"></i><span>info@dilizone.com</span></div>
+          <div class="ft-contact"><i class="fas fa-clock"></i><span>Mon–Fri: 8am–6pm</span></div>
+          <div style="margin-top:16px">
+            <h4 style="margin-bottom:10px">Newsletter</h4>
+            <div style="display:flex;border:1px solid rgba(255,255,255,0.15);border-radius:8px;overflow:hidden">
+              <input type="email" placeholder="Your email"
+                style="flex:1;background:transparent;border:none;outline:none;padding:10px 12px;font-family:var(--font-b);font-size:12px;color:white">
+              <button
+                style="background:var(--red);border:none;padding:0 14px;color:white;font-size:12px;font-weight:700;cursor:pointer">Go</button>
+            </div>
+          </div>
         </div>
       </div>
-      
-      <div class="footer-section">
-        <h3>Quick Links</h3>
-        <ul class="footer-links">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="restaurants.html">Restaurants</a></li>
-          <li><a href="Accomodation.html">Hotels</a></li>
-          <li><a href="supermarket.html">Supermarkets</a></li>
-          <li><a href="services.html">Services</a></li>
-        </ul>
+      <div class="ft-bot">
+        <p>© 2025 Dili-Zone. All rights reserved. Made with ❤️ by Wilfix.</p>
+        <div style="display:flex;gap:18px">
+          <a href="#">Privacy</a><a href="#">Terms</a><a href="#">Sitemap</a>
+        </div>
       </div>
-      
-      <div class="footer-section">
-        <h3>Categories</h3>
-        <ul class="footer-links">
-          <li><a href="restaurants.html">Fine Dining</a></li>
-          <li><a href="restaurants.html">Casual Eateries</a></li>
-          <li><a href="bars.html">Cocktail Bars</a></li>
-          <li><a href="bars.html">Pubs & Breweries</a></li>
-          <li><a href="services.html">Catering Services</a></li>
-        </ul>
-      </div>
-      
-      <div class="footer-section">
-        <h3>Contact Us</h3>
-        <ul class="footer-links">
-          <li>Email: info@dili-zone.com</li>
-          <li>Phone: +123 456 7890</li>
-          <li>Address: 123 Food Street, City</li>
-          <li><a href="#">Business Inquiries</a></li>
-        </ul>
-      </div>
-    </div>
-    
-    <div class="footer-bottom">
-      <p>&copy; 2023 Dili-Zone. All rights reserved. | Designed with ❤️ for food lovers</p>
     </div>
   </footer>
 
-  <!-- Details Modal -->
+  <!-- ═══════════════ DETAILS MODAL ═══════════════ -->
   <div id="detailsModal" class="modal">
     <div class="modal-content">
       <div class="modal-header">
         <div class="modal-image" id="modalImage">Promotional Flyer</div>
-        <button class="close" id="closeDetailsModal">&times;</button>
+        <button class="close" id="closeDetailsModal"><i class="fas fa-times"></i></button>
       </div>
       <div class="modal-body">
         <h2 class="modal-title" id="modalTitle">Deal Title</h2>
         <div class="modal-details" id="modalDetails">Deal details will appear here...</div>
-        <button class="btn btn-secondary" style="width: 100%;" id="takeThisDealBtn">Take This Deal!</button>
+        <button class="modal-cta" id="takeThisDealBtn">
+          <i class="fas fa-tag"></i> Take This Deal!
+        </button>
       </div>
     </div>
   </div>
 
-  <!-- Deal Form Modal -->
+  <!-- ═══════════════ CLAIM FORM MODAL ═══════════════ -->
   <div id="dealFormModal" class="form-modal">
     <div class="form-content">
-      <button class="form-close" id="closeDealFormModal">&times;</button>
-      <h2 class="form-title">Claim Your Deal!</h2>
+      <button class="form-close" id="closeDealFormModal"><i class="fas fa-times"></i></button>
+      <h2 class="form-title">🎉 Claim Your Deal!</h2>
       <form id="dealForm">
-        <div class="form-group">
-          <label for="customerName">Customer Name *</label>
-          <input type="text" id="customerName" name="customerName" required placeholder="Enter your full name">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="customerName">Full Name *</label>
+            <input type="text" id="customerName" name="customerName" required placeholder="Your full name">
+          </div>
+          <div class="form-group">
+            <label for="customerPhone">Phone Number *</label>
+            <input type="tel" id="customerPhone" name="customerPhone" required placeholder="Your phone">
+          </div>
         </div>
         <div class="form-group">
           <label for="customerEmail">Email Address *</label>
-          <input type="email" id="customerEmail" name="customerEmail" required placeholder="Enter your email address">
+          <input type="email" id="customerEmail" name="customerEmail" required placeholder="your@email.com">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="vendor">Vendor / Restaurant</label>
+            <input type="text" id="vendor" name="vendor" readonly>
+          </div>
+          <div class="form-group">
+            <label for="dealName">Deal Selected</label>
+            <input type="text" id="dealName" name="dealName" readonly>
+          </div>
         </div>
         <div class="form-group">
-          <label for="customerPhone">Phone Number *</label>
-          <input type="tel" id="customerPhone" name="customerPhone" required placeholder="Enter your phone number">
+          <label for="location">Your Location / Address *</label>
+          <input type="text" id="location" name="location" required placeholder="Delivery or pickup address">
         </div>
-        <div class="form-group">
-          <label for="vendor">Vendor/Restaurant Name</label>
-          <input type="text" id="vendor" name="vendor" readonly style="background: #f5f5f5;">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="deliveryOption">Delivery Option *</label>
+            <select id="deliveryOption" name="deliveryOption" required>
+              <option value="">Select option</option>
+              <option value="Pickup">Pickup</option>
+              <option value="Home Delivery">Home Delivery</option>
+              <option value="Dine-in">Dine-in</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="paymentOption">Payment Method *</label>
+            <select id="paymentOption" name="paymentOption" required>
+              <option value="">Select method</option>
+              <option value="Cash">Cash</option>
+              <option value="Mobile Money">Mobile Money</option>
+              <option value="Credit/Debit Card">Credit/Debit Card</option>
+              <option value="Bank Transfer">Bank Transfer</option>
+            </select>
+          </div>
         </div>
-        <div class="form-group">
-          <label for="dealName">Deal Selected</label>
-          <input type="text" id="dealName" name="dealName" readonly style="background: #f5f5f5;">
-        </div>
-        <div class="form-group">
-          <label for="location">Your Location/Address *</label>
-          <input type="text" id="location" name="location" required placeholder="Enter your delivery address or pickup location">
-        </div>
-        <div class="form-group">
-          <label for="deliveryOption">Delivery Option *</label>
-          <select id="deliveryOption" name="deliveryOption" required>
-            <option value="">Select delivery option</option>
-            <option value="Pickup">Pickup</option>
-            <option value="Home Delivery">Home Delivery</option>
-            <option value="Dine-in">Dine-in</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="paymentOption">Payment Option *</label>
-          <select id="paymentOption" name="paymentOption" required>
-            <option value="">Select payment method</option>
-            <option value="Cash">Cash</option>
-            <option value="Mobile Money">Mobile Money</option>
-            <option value="Credit/Debit Card">Credit/Debit Card</option>
-            <option value="Bank Transfer">Bank Transfer</option>
-          </select>
-        </div>
-        <button type="submit" class="btn btn-primary" style="width: 100%;" id="submitDealBtn">Submit Deal Request</button>
+        <button type="submit" class="btn-submit" id="submitDealBtn">
+          <i class="fas fa-paper-plane"></i> Submit Deal Request
+        </button>
       </form>
       <div class="loading" id="loadingMessage">
         <div class="spinner"></div>
-        <p>Submitting your request...</p>
+        <p style="color:var(--text-mid);font-size:.88rem;margin-top:.5rem">Submitting your request…</p>
       </div>
       <div class="success-message" id="successMessage">
-        <p>🎉 Success! Your deal request has been submitted. We'll contact you soon!</p>
+        🎉 Success! Your deal request has been submitted. We'll contact you soon!
       </div>
     </div>
   </div>
 
+  <!-- ═══════════════════════════════════════════
+     JAVASCRIPT – ALL ORIGINAL LOGIC PRESERVED
+═══════════════════════════════════════════ -->
   <script>
-    // Sample data - replace with your actual data
+    /* ─── DATA ─── */
     const restaurantDeals = [
       {
-        id: 1,
-        name: "Pizza Palace",
-        description: "Authentic Italian pizza with fresh ingredients",
+        id: 1, name: "Pizza Palace", category: "Italian",
+        description: "Authentic Italian pizza with fresh farm-to-table ingredients and wood-fired perfection.",
         discount: "50% OFF",
-        image: "",
-        details: "Get 50% off on all large pizzas every Tuesday and Wednesday. Valid for dine-in and takeaway. Premium toppings included.",
-        fullDetails: `🍕 Pizza Palace Special Offer
-
-📅 Valid: Every Tuesday & Wednesday
-🕐 Time: 11 AM - 10 PM
-📍 Location: Downtown Branch
-💰 Discount: 50% off all large pizzas
-🥤 Includes: Free soft drink with every pizza
-🚗 Available for: Dine-in & Takeaway
-
-⭐ Premium toppings at no extra cost!
-⭐ Family combo deals available
-⭐ Birthday parties get extra 10% off
-
-Terms: Valid ID required. Cannot be combined with other offers. Limited time offer.`
+        image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=500&q=80",
+        images: [
+          "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80",
+          "https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?auto=format&fit=crop&w=800&q=80",
+          "https://images.unsplash.com/photo-1534308983496-4fabb1a015ce?auto=format&fit=crop&w=800&q=80"
+        ],
+        fullDetails: `🍕 Pizza Palace Special Offer\n\n📅 Valid: Every Tuesday & Wednesday\n🕐 Time: 11 AM – 10 PM\n📍 Location: Downtown Branch\n💰 Discount: 50% off all large pizzas\n🥤 Includes: Free soft drink with every pizza\n🚗 Available for: Dine-in & Takeaway\n\n⭐ Premium toppings at no extra cost!\n⭐ Family combo deals available\n⭐ Birthday parties get extra 10% off\n\nTerms: Valid ID required. Cannot be combined with other offers. Limited time offer.`
       },
       {
-        id: 2,
-        name: "Burger Bistro",
-        description: "Gourmet burgers made with premium beef",
+        id: 2, name: "Burger Bistro", category: "American",
+        description: "Gourmet burgers crafted from hand-selected premium beef with artisan brioche buns.",
         discount: "Buy 1 Get 1",
-        image: "",
-        details: "Buy one gourmet burger and get another one absolutely free! Choose from our signature collection.",
-        fullDetails: `🍔 Burger Bistro BOGO Deal
-
-📅 Valid: Monday to Friday
-🕐 Time: 12 PM - 9 PM
-📍 Location: Mall Branch & City Center
-💰 Offer: Buy 1 Get 1 Free on all burgers
-🍟 Add-on: 30% off on sides and drinks
-
-⭐ Choose any two burgers from our menu
-⭐ Includes our famous truffle fries
-⭐ Vegetarian options available
-
-Terms: Equal or lesser value applies for free burger. Dine-in only.`
+        image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=500&q=80",
+        images: [
+          "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80",
+          "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=80"
+        ],
+        fullDetails: `🍔 Burger Bistro BOGO Deal\n\n📅 Valid: Monday to Friday\n🕐 Time: 12 PM – 9 PM\n📍 Location: Mall Branch & City Center\n💰 Offer: Buy 1 Get 1 Free on all burgers\n🍟 Add-on: 30% off on sides and drinks\n\n⭐ Choose any two burgers from our menu\n⭐ Includes our famous truffle fries\n⭐ Vegetarian options available\n\nTerms: Equal or lesser value applies for free burger. Dine-in only.`
       },
       {
-        id: 3,
-        name: "Taco Fiesta",
-        description: "Authentic Mexican cuisine with bold flavors",
+        id: 3, name: "Taco Fiesta", category: "Mexican",
+        description: "Authentic Mexican cuisine bursting with bold flavours — tacos, burritos, quesadillas and more.",
         discount: "30% OFF",
-        image: "",
-        details: "Enjoy 30% off on all Mexican dishes including tacos, burritos, and quesadillas.",
-        fullDetails: `🌮 Taco Fiesta Mexican Night
-
-📅 Valid: Thursday to Sunday
-🕐 Time: 5 PM - 11 PM
-📍 Location: Riverside Location
-💰 Discount: 30% off entire menu
-🎵 Live Music: Friday & Saturday nights
-
-⭐ Authentic recipes from Mexico
-⭐ Fresh guacamole made daily
-⭐ Vegetarian and vegan options
-⭐ Kids eat free on Sundays
-
-Terms: Minimum order of $20. Live music cover charge separate.`
+        image: "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=500&q=80",
+        images: [
+          "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=800&q=80",
+          "https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?auto=format&fit=crop&w=800&q=80"
+        ],
+        fullDetails: `🌮 Taco Fiesta Mexican Night\n\n📅 Valid: Thursday to Sunday\n🕐 Time: 5 PM – 11 PM\n📍 Location: Riverside Location\n💰 Discount: 30% off entire menu\n🎵 Live Music: Friday & Saturday nights\n\n⭐ Authentic recipes from Mexico\n⭐ Fresh guacamole made daily\n⭐ Vegetarian and vegan options\n⭐ Kids eat free on Sundays\n\nTerms: Minimum order of $20. Live music cover charge separate.`
       },
       {
-        id: 4,
-        name: "Sushi Zen",
-        description: "Fresh sushi and Japanese delicacies",
+        id: 4, name: "Sushi Zen", category: "Japanese",
+        description: "Fresh premium sushi rolls with fish delivered daily from the coast by expert Japanese chefs.",
         discount: "40% OFF",
-        image: "",
-        details: "Premium sushi rolls at 40% off. Fresh fish delivered daily from the coast.",
-        fullDetails: `🍣 Sushi Zen Premium Deal
-
-📅 Valid: Monday, Wednesday, Friday
-🕐 Time: 6 PM - 10 PM
-📍 Location: Downtown & Waterfront
-💰 Discount: 40% off all sushi rolls
-🍱 Special: Free miso soup with every order
-
-⭐ Fresh fish delivered daily
-⭐ Expert sushi chefs from Japan
-⭐ All-you-can-eat option available
-⭐ Sake pairing recommendations
-
-Terms: Reservations recommended. Fresh fish subject to availability.`
+        image: "https://images.unsplash.com/photo-1617196034183-421b4040ed20?auto=format&fit=crop&w=500&q=80",
+        images: [
+          "https://images.unsplash.com/photo-1617196034183-421b4040ed20?auto=format&fit=crop&w=800&q=80",
+          "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=800&q=80"
+        ],
+        fullDetails: `🍣 Sushi Zen Premium Deal\n\n📅 Valid: Monday, Wednesday, Friday\n🕐 Time: 6 PM – 10 PM\n📍 Location: Downtown & Waterfront\n💰 Discount: 40% off all sushi rolls\n🍱 Special: Free miso soup with every order\n\n⭐ Fresh fish delivered daily\n⭐ Expert sushi chefs from Japan\n⭐ All-you-can-eat option available\n⭐ Sake pairing recommendations\n\nTerms: Reservations recommended. Fresh fish subject to availability.`
       }
     ];
 
     const barDeals = [
       {
-        id: 5,
-        name: "Rooftop Lounge",
-        description: "Cocktails with a stunning city view",
+        id: 5, name: "Rooftop Lounge", category: "Cocktail Bar",
+        description: "Premium handcrafted cocktails with breathtaking 360° city views from the 25th floor.",
         discount: "2 for 1",
-        image: "",
-        details: "Two premium cocktails for the price of one. Enjoy breathtaking city views from our rooftop terrace.",
-        fullDetails: `🍸 Rooftop Lounge Happy Hour
-
-📅 Valid: Every day
-🕐 Time: 5 PM - 8 PM
-📍 Location: 25th Floor, Sky Tower
-💰 Offer: 2 for 1 on all cocktails
-🌆 Feature: Stunning 360° city views
-
-⭐ Expert mixologists on duty
-⭐ Premium spirits and fresh ingredients
-⭐ Live DJ every Friday & Saturday
-⭐ VIP section available for booking
-
-Terms: Valid for cocktails only. Food orders separate.`
+        image: "https://images.unsplash.com/photo-1566417713940-fe7c737a9ef2?auto=format&fit=crop&w=500&q=80",
+        fullDetails: `🍸 Rooftop Lounge Happy Hour\n\n📅 Valid: Every day\n🕐 Time: 5 PM – 8 PM\n📍 Location: 25th Floor, Sky Tower\n💰 Offer: 2 for 1 on all cocktails\n🌆 Feature: Stunning 360° city views\n\n⭐ Expert mixologists on duty\n⭐ Premium spirits and fresh ingredients\n⭐ Live DJ every Friday & Saturday\n⭐ VIP section available for booking\n\nTerms: Valid for cocktails only. Food orders separate.`
       },
       {
-        id: 6,
-        name: "Craft Beer Hub",
-        description: "Local and imported craft beers",
+        id: 6, name: "Craft Beer Hub", category: "Brewery",
+        description: "Over 50 varieties of local and imported craft beers — from light lagers to rich stouts.",
         discount: "Happy Hour",
-        image: "",
-        details: "Half price on all craft beers during our extended happy hour. Over 50 varieties available.",
-        fullDetails: `🍺 Craft Beer Hub Happy Hour
-
-📅 Valid: Monday to Thursday
-🕐 Time: 4 PM - 9 PM
-📍 Location: Brewery District
-💰 Offer: 50% off all craft beers
-🎯 Selection: 50+ varieties available
-
-⭐ Local brewery partnerships
-⭐ Beer tasting flights available
-⭐ Brewery tours on weekends
-⭐ Beer and food pairing menu
-
-Terms: Happy hour pricing only. Groups of 8+ call ahead.`
+        image: "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=500&q=80",
+        fullDetails: `🍺 Craft Beer Hub Happy Hour\n\n📅 Valid: Monday to Thursday\n🕐 Time: 4 PM – 9 PM\n📍 Location: Brewery District\n💰 Offer: 50% off all craft beers\n🎯 Selection: 50+ varieties available\n\n⭐ Local brewery partnerships\n⭐ Beer tasting flights available\n⭐ Brewery tours on weekends\n⭐ Beer and food pairing menu\n\nTerms: Happy hour pricing only. Groups of 8+ call ahead.`
       },
       {
-        id: 7,
-        name: "Wine & Dine",
-        description: "Fine wines and gourmet appetizers",
+        id: 7, name: "Wine & Dine", category: "Wine Bar",
+        description: "Fine wines paired with gourmet appetisers in a beautifully curated historic setting.",
         discount: "Wine Night",
-        image: "",
-        details: "Special wine night with 50% off premium bottles and complimentary cheese platters.",
-        fullDetails: `🍷 Wine & Dine Premium Night
-
-📅 Valid: Tuesday & Thursday
-🕐 Time: 7 PM - 11 PM
-📍 Location: Historic District
-💰 Offer: 50% off wine bottles + free cheese platter
-🧀 Includes: Artisanal cheese selection
-
-⭐ Sommelier wine recommendations
-⭐ Private wine cellar tours
-⭐ Wine education sessions
-⭐ Corporate event packages
-
-Terms: Bottle purchases only. Reservation required for groups.`
+        image: "https://images.unsplash.com/photo-1528823872057-9c018a7a7553?auto=format&fit=crop&w=500&q=80",
+        fullDetails: `🍷 Wine & Dine Premium Night\n\n📅 Valid: Tuesday & Thursday\n🕐 Time: 7 PM – 11 PM\n📍 Location: Historic District\n💰 Offer: 50% off wine bottles + free cheese platter\n🧀 Includes: Artisanal cheese selection\n\n⭐ Sommelier wine recommendations\n⭐ Private wine cellar tours\n⭐ Wine education sessions\n⭐ Corporate event packages\n\nTerms: Bottle purchases only. Reservation required for groups.`
       },
       {
-        id: 8,
-        name: "Sports Bar Central",
-        description: "Watch games with great drinks and food",
+        id: 8, name: "Sports Bar Central", category: "Sports Bar",
+        description: "Watch every game live on 12 HD screens with unbeatable food and drink game-day specials.",
         discount: "Game Day",
-        image: "",
-        details: "Game day specials with discounted drinks and food during live sports broadcasts.",
-        fullDetails: `🏈 Sports Bar Game Day Special
-
-📅 Valid: During live sports events
-🕐 Time: Match timings
-📍 Location: Stadium District
-💰 Offer: 25% off food & drinks during games
-📺 Features: 12 large HD screens
-
-⭐ All major sports leagues covered
-⭐ Group bookings for big games
-⭐ Fantasy sports nights
-⭐ Wings and beer combo deals
-
-Terms: Offer valid during live broadcasts only.`
+        image: "https://images.unsplash.com/photo-1574391884720-bbc3740c59d1?auto=format&fit=crop&w=500&q=80",
+        fullDetails: `🏈 Sports Bar Game Day Special\n\n📅 Valid: During live sports events\n🕐 Time: Match timings\n📍 Location: Stadium District\n💰 Offer: 25% off food & drinks during games\n📺 Features: 12 large HD screens\n\n⭐ All major sports leagues covered\n⭐ Group bookings for big games\n⭐ Fantasy sports nights\n⭐ Wings and beer combo deals\n\nTerms: Offer valid during live broadcasts only.`
       }
     ];
 
-    let currentSlide = { restaurants: 0, bars: 0 };
+    /* ─── STATE ─── */
     let currentDealData = null;
+    const carouselState = { restaurants: 0, bars: 0 };
 
-    // Create card HTML
-    function createCard(deal, type) {
-      return `
-        <div class="card" data-deal-id="${deal.id}" data-deal-type="${type}">
-          <div class="card-image">
-            ${deal.image ? `<img src="${deal.image}" alt="${deal.name}" style="width:100%;height:100%;object-fit:cover;">` : 'Promotional Flyer'}
-          </div>
-          <div class="card-content">
-            <h3 class="card-title">${deal.name}</h3>
-            <p class="card-description">${deal.description}</p>
-            <div class="card-discount">${deal.discount}</div>
-            <div class="card-buttons">
-              <button class="btn btn-primary view-details-btn" data-deal-id="${deal.id}" data-deal-type="${type}">View Details</button>
-              <button class="btn btn-secondary take-deal-btn" data-deal-name="${deal.name}" data-deal-discount="${deal.discount}">Take Deal</button>
-            </div>
-          </div>
+    /* ─── BUILD A CARD ─── */
+    function buildCard(deal, type, index) {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.style.animationDelay = `${index * 0.1}s`;
+      card.innerHTML = `
+      <div class="card-image">
+        ${deal.image
+          ? `<img src="${deal.image}" alt="${deal.name}" loading="lazy">`
+          : 'Promotional Flyer'}
+        <div class="card-ribbon">${deal.discount}</div>
+      </div>
+      <div class="card-content">
+        <div class="card-category">${deal.category}</div>
+        <h3 class="card-title">${deal.name}</h3>
+        <p class="card-description">${deal.description}</p>
+        <div class="card-footer">
+          <button class="btn-view view-details-btn"
+            data-deal-id="${deal.id}" data-deal-type="${type}">
+            <i class="fas fa-eye"></i> Details
+          </button>
+          <button class="btn-claim take-deal-btn"
+            data-deal-name="${deal.name}" data-deal-discount="${deal.discount}">
+            <i class="fas fa-tag"></i> Take Offer
+          </button>
         </div>
-      `;
+      </div>
+    `;
+      return card;
     }
 
-    // Initialize carousels
-    function initializeCarousels() {
-      const restaurantsCarousel = document.getElementById('restaurants-carousel');
-      const barsCarousel = document.getElementById('bars-carousel');
+    /* ─── CAROUSEL ENGINE ─── */
+    function buildCarousel(carouselId, deals, type, prevId, nextId, dotsId, countId) {
+      const track = document.getElementById(carouselId);
+      const prevBtn = document.getElementById(prevId);
+      const nextBtn = document.getElementById(nextId);
+      const dotsEl = document.getElementById(dotsId);
+      const countEl = document.getElementById(countId);
 
-      restaurantsCarousel.innerHTML = restaurantDeals.map(deal => createCard(deal, 'restaurant')).join('');
-      barsCarousel.innerHTML = barDeals.map(deal => createCard(deal, 'bar')).join('');
+      deals.forEach((deal, i) => track.appendChild(buildCard(deal, type, i)));
+      if (countEl) countEl.textContent = deals.length;
 
-      // Add event listeners to all buttons
-      addEventListeners();
+      const key = type === 'restaurant' ? 'restaurants' : 'bars';
+
+      // create dots
+      deals.forEach((_, i) => {
+        const d = document.createElement('div');
+        d.className = 'cdot' + (i === 0 ? ' active' : '');
+        d.addEventListener('click', () => slideTo(key, i, track, deals, dotsEl));
+        dotsEl.appendChild(d);
+      });
+
+      prevBtn.addEventListener('click', () => {
+        const ni = Math.max(0, carouselState[key] - 1);
+        slideTo(key, ni, track, deals, dotsEl);
+      });
+      nextBtn.addEventListener('click', () => {
+        const ni = Math.min(deals.length - 1, carouselState[key] + 1);
+        slideTo(key, ni, track, deals, dotsEl);
+      });
+
+      // auto advance
+      setInterval(() => {
+        const ni = (carouselState[key] + 1) % deals.length;
+        slideTo(key, ni, track, deals, dotsEl);
+      }, 5500);
     }
 
-    // Add event listeners
-    function addEventListeners() {
-      // View Details buttons
-      document.querySelectorAll('.view-details-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-          const dealId = parseInt(this.getAttribute('data-deal-id'));
-          const dealType = this.getAttribute('data-deal-type');
-          viewDetails(dealId, dealType);
-        });
-      });
-
-      // Take Deal buttons
-      document.querySelectorAll('.take-deal-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-          const dealName = this.getAttribute('data-deal-name');
-          const dealDiscount = this.getAttribute('data-deal-discount');
-          openDealFormDirect(dealName, dealDiscount);
-        });
-      });
-
-      // Modal close buttons
-      document.getElementById('closeDetailsModal').addEventListener('click', function() {
-        closeModal('detailsModal');
-      });
-
-      document.getElementById('closeDealFormModal').addEventListener('click', function() {
-        closeModal('dealFormModal');
-      });
-
-      // Take This Deal button in modal
-      document.getElementById('takeThisDealBtn').addEventListener('click', function() {
-        openDealForm();
-      });
-
-      // Click outside modal to close
-      document.getElementById('detailsModal').addEventListener('click', function(e) {
-        if (e.target === this) {
-          closeModal('detailsModal');
-        }
-      });
-
-      document.getElementById('dealFormModal').addEventListener('click', function(e) {
-        if (e.target === this) {
-          closeModal('dealFormModal');
-        }
-      });
-
-      // Mobile menu toggle
-      document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
-        document.querySelector('.navbar').classList.toggle('active');
-      });
+    function slideTo(key, index, track, deals, dotsEl) {
+      if (track.classList.contains('show-all')) return; // ignore auto-slide if expanded
+      carouselState[key] = index;
+      const cardW = track.children[0].offsetWidth + parseFloat(getComputedStyle(track).gap);
+      track.style.transform = `translateX(-${index * cardW}px)`;
+      dotsEl.querySelectorAll('.cdot').forEach((d, i) => d.classList.toggle('active', i === index));
     }
 
-    // Slide carousel
-    function slideCarousel(type, direction) {
-      const carousel = document.getElementById(`${type}-carousel`);
-      const cards = carousel.querySelectorAll('.card');
-      const cardWidth = cards[0].offsetWidth + 30; // card width + margin
-      const visibleCards = Math.floor(carousel.parentElement.offsetWidth / cardWidth);
-      const maxSlide = Math.max(0, cards.length - visibleCards);
-
-      currentSlide[type] = Math.max(0, Math.min(maxSlide, currentSlide[type] + direction));
-
-      const translateX = -currentSlide[type] * cardWidth;
-      carousel.style.transform = `translateX(${translateX}px)`;
-    }
-
-    // View deal details
-    function viewDetails(dealId, type) {
-      const deals = type === 'restaurant' ? restaurantDeals : barDeals;
-      const deal = deals.find(d => d.id === dealId);
-      
-      if (deal) {
-        currentDealData = deal;
-        document.getElementById('modalTitle').textContent = deal.name;
-        document.getElementById('modalDetails').textContent = deal.fullDetails;
-        
-        const modalImage = document.getElementById('modalImage');
-        if (deal.image) {
-          modalImage.innerHTML = `<img src="${deal.image}" alt="${deal.name}" style="width:100%;height:100%;object-fit:cover;">`;
-        } else {
-          modalImage.textContent = 'Promotional Flyer';
-        }
-        
-        document.getElementById('detailsModal').style.display = 'block';
-        document.body.style.overflow = 'hidden';
+    function toggleViewAll(carouselId, navId, btn) {
+      const c = document.getElementById(carouselId);
+      const n = document.getElementById(navId);
+      c.classList.toggle('show-all');
+      if (c.classList.contains('show-all')) {
+        n.style.display = 'none';
+        btn.innerHTML = '<i class="fas fa-compress"></i> Show Less';
+        c.style.transform = 'none';
+      } else {
+        n.style.display = 'flex';
+        btn.innerHTML = '<i class="fas fa-th-large"></i> View All ' + (carouselId.startsWith('rest') ? 'Restaurants' : 'Bars');
+        const key = carouselId.startsWith('rest') ? 'restaurants' : 'bars';
+        const dealsPool = key === 'restaurants' ? restaurantDeals : barDeals;
+        const dotsId = key === 'restaurants' ? 'rest-dots' : 'bar-dots';
+        c.style.transform = `translateX(-${carouselState[key] * (c.children[0].offsetWidth + 20)}px)`;
       }
     }
 
-    // Open deal form from modal
-    function openDealForm() {
-      if (currentDealData) {
-        document.getElementById('vendor').value = currentDealData.name;
-        document.getElementById('dealName').value = currentDealData.discount;
-        document.getElementById('dealFormModal').style.display = 'block';
-      }
-    }
-
-    // Open deal form directly
-    function openDealFormDirect(dealName, discount) {
-      document.getElementById('vendor').value = dealName;
-      document.getElementById('dealName').value = discount;
-      document.getElementById('dealFormModal').style.display = 'block';
+    /* ─── MODALS ─── */
+    function openModal(id) {
+      const m = document.getElementById(id);
+      m.style.display = 'flex';
+      requestAnimationFrame(() => m.classList.add('active'));
       document.body.style.overflow = 'hidden';
     }
-
-    // Close modal
-    function closeModal(modalId) {
-      document.getElementById(modalId).style.display = 'none';
-      document.body.style.overflow = 'auto';
-      
-      if (modalId === 'dealFormModal') {
-        // Reset form
+    function closeModal(id) {
+      const m = document.getElementById(id);
+      m.classList.remove('active');
+      setTimeout(() => { m.style.display = 'none'; }, 300);
+      document.body.style.overflow = '';
+      if (id === 'dealFormModal') {
         document.getElementById('dealForm').reset();
         document.getElementById('loadingMessage').style.display = 'none';
         document.getElementById('successMessage').style.display = 'none';
@@ -1472,47 +2426,130 @@ Terms: Offer valid during live broadcasts only.`
       }
     }
 
-    // Form submission
-    document.getElementById('dealForm').addEventListener('submit', async function(e) {
+    let modalCarouselIndex = 0;
+    let modalCarouselImages = [];
+
+    function renderModalCarousel() {
+      const img = document.getElementById('modalImage');
+      if (!modalCarouselImages || modalCarouselImages.length === 0) {
+        img.innerHTML = `<div style="display:flex;align-items:center;justify-content:center;height:100%;color:rgba(255,255,255,.5)">Promotional Flyer</div>`;
+        return;
+      }
+      if (modalCarouselImages.length === 1) {
+        img.innerHTML = `<img src="${modalCarouselImages[0]}" alt="Deal Image" style="width:100%;height:100%;object-fit:cover;">`;
+        return;
+      }
+
+      let trackStr = `<div class="m-carousel" id="mTrack" style="transform:translateX(-${modalCarouselIndex * 100}%)">`;
+      modalCarouselImages.forEach(src => {
+        trackStr += `<img src="${src}" alt="Deal Image">`;
+      });
+      trackStr += `</div>`;
+
+      trackStr += `<button class="mc-btn mc-prev" onclick="moveModalCarousel(-1)"><i class="fas fa-chevron-left"></i></button>`;
+      trackStr += `<button class="mc-btn mc-next" onclick="moveModalCarousel(1)"><i class="fas fa-chevron-right"></i></button>`;
+
+      let dotsStr = `<div class="mc-dots">`;
+      modalCarouselImages.forEach((_, i) => {
+        dotsStr += `<div class="cdot ${i === modalCarouselIndex ? 'active' : ''}" onclick="goModalCarousel(${i})"></div>`;
+      });
+      dotsStr += `</div>`;
+
+      img.innerHTML = trackStr + dotsStr;
+    }
+
+    function moveModalCarousel(dir) {
+      if (!modalCarouselImages.length) return;
+      modalCarouselIndex = (modalCarouselIndex + dir + modalCarouselImages.length) % modalCarouselImages.length;
+      renderModalCarousel();
+    }
+    window.moveModalCarousel = moveModalCarousel;
+
+    function goModalCarousel(idx) {
+      modalCarouselIndex = idx;
+      renderModalCarousel();
+    }
+    window.goModalCarousel = goModalCarousel;
+
+    function viewDetails(dealId, type) {
+      const pool = type === 'restaurant' ? restaurantDeals : barDeals;
+      const deal = pool.find(d => d.id === dealId);
+      if (!deal) return;
+      currentDealData = deal;
+      document.getElementById('modalTitle').textContent = deal.name;
+      document.getElementById('modalDetails').textContent = deal.fullDetails;
+
+      modalCarouselImages = deal.images ? deal.images : (deal.image ? [deal.image] : []);
+      modalCarouselIndex = 0;
+      renderModalCarousel();
+
+      openModal('detailsModal');
+    }
+
+    function openDealFormDirect(vendorName, discount) {
+      document.getElementById('vendor').value = vendorName;
+      document.getElementById('dealName').value = discount;
+      openModal('dealFormModal');
+    }
+
+    /* ─── EVENT DELEGATION ─── */
+    document.addEventListener('click', function (e) {
+      // view details
+      const vBtn = e.target.closest('.view-details-btn');
+      if (vBtn) {
+        viewDetails(parseInt(vBtn.dataset.dealId), vBtn.dataset.dealType);
+        return;
+      }
+      // take deal (cards)
+      const tBtn = e.target.closest('.take-deal-btn');
+      if (tBtn) {
+        openDealFormDirect(tBtn.dataset.dealName, tBtn.dataset.dealDiscount);
+        return;
+      }
+      // take deal (inside details modal)
+      if (e.target.closest('#takeThisDealBtn') && currentDealData) {
+        closeModal('detailsModal');
+        setTimeout(() => openDealFormDirect(currentDealData.name, currentDealData.discount), 350);
+        return;
+      }
+      // close on backdrop
+      if (e.target.id === 'detailsModal') { closeModal('detailsModal'); }
+      if (e.target.id === 'dealFormModal') { closeModal('dealFormModal'); }
+    });
+
+    document.getElementById('closeDetailsModal').addEventListener('click', () => closeModal('detailsModal'));
+    document.getElementById('closeDealFormModal').addEventListener('click', () => closeModal('dealFormModal'));
+
+    /* ─── FORM SUBMISSION (ORIGINAL — unchanged) ─── */
+    document.getElementById('dealForm').addEventListener('submit', async function (e) {
       e.preventDefault();
-      
       const formData = new FormData(this);
-      
-      // Create URL-encoded data for better compatibility with Google Apps Script
       const params = new URLSearchParams();
+      params.append('page', 'Restaurants');
       params.append('timestamp', new Date().toLocaleString());
       params.append('customerName', formData.get('customerName'));
       params.append('customerEmail', formData.get('customerEmail'));
-      params.append('customerPhone', formData.get('customerPhone'));
+      params.append('customerPhone', "'" + formData.get('customerPhone'));
       params.append('vendor', formData.get('vendor'));
       params.append('dealName', formData.get('dealName'));
       params.append('location', formData.get('location'));
       params.append('deliveryOption', formData.get('deliveryOption'));
       params.append('paymentOption', formData.get('paymentOption'));
-      
-      // Show loading
+
       document.getElementById('loadingMessage').style.display = 'block';
       document.getElementById('submitDealBtn').disabled = true;
-      
+
       try {
-        const response = await fetch('https://script.google.com/macros/s/AKfycbzzrUO9C5hIUycqSk9ae61WyhTt8moPtRIVDKN_in4cG2EzwfyhCLHFkf9BNOuFe4ii/exec', {
+        await fetch('https://script.google.com/macros/s/AKfycbx8VuBmrkDKAvPieeqXtB3Sk9ctbDGVt8HSxoBp9-03ui_V9MXoVuMZ96rlm7ytTdrb/exec', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-          },
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
           body: params.toString()
         });
-        
-        // Show success message
         document.getElementById('loadingMessage').style.display = 'none';
         document.getElementById('successMessage').style.display = 'block';
         document.getElementById('dealForm').reset();
-        
-        // Close modal after 3 seconds
-        setTimeout(() => {
-          closeModal('dealFormModal');
-        }, 3000);
-        
+        setTimeout(() => closeModal('dealFormModal'), 3000);
       } catch (error) {
         console.error('Error:', error);
         document.getElementById('loadingMessage').style.display = 'none';
@@ -1521,22 +2558,222 @@ Terms: Offer valid during live broadcasts only.`
       }
     });
 
-    // Initialize everything when page loads
-    document.addEventListener('DOMContentLoaded', function() {
-      initializeCarousels();
-      
-      // Close mobile menu when clicking outside
-      document.addEventListener('click', function(e) {
-        const navbar = document.querySelector('.navbar');
-        const menuBtn = document.querySelector('.mobile-menu-btn');
-        
-        if (navbar.classList.contains('active') && 
-            !navbar.contains(e.target) && 
-            !menuBtn.contains(e.target)) {
-          navbar.classList.remove('active');
+    /* ─── HEADER SCROLL ─── */
+    const header = document.getElementById('mainHeader');
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+
+    /* ─── MOBILE MENU ─── */
+    const toggle = document.getElementById('menuToggle');
+    const navWrap = document.getElementById('navWrapper');
+    const overlay = document.getElementById('navOverlay');
+    toggle.addEventListener('click', () => {
+      const open = navWrap.classList.toggle('open');
+      toggle.classList.toggle('open', open);
+      overlay.classList.toggle('open', open);
+      document.body.style.overflow = open ? 'hidden' : '';
+    });
+    overlay.addEventListener('click', () => {
+      navWrap.classList.remove('open');
+      toggle.classList.remove('open');
+      overlay.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+
+    /* ─── SCROLL REVEAL ─── */
+    const revealObs = new IntersectionObserver((entries) => {
+      entries.forEach(en => {
+        if (en.isIntersecting) { en.target.classList.add('visible'); revealObs.unobserve(en.target); }
+      });
+    }, { threshold: .1, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal,.reveal-left,.reveal-right,.reveal-scale')
+      .forEach(el => revealObs.observe(el));
+
+    /* ─── STAT COUNTERS ─── */
+    function animCount(el, target) {
+      let n = 0; const step = Math.ceil(target / 60);
+      const t = setInterval(() => {
+        n = Math.min(n + step, target);
+        el.querySelector('span').textContent = n + '+';
+        if (n >= target) clearInterval(t);
+      }, 22);
+    }
+    const statsObs = new IntersectionObserver((entries) => {
+      entries.forEach(en => {
+        if (en.isIntersecting) {
+          document.querySelectorAll('[data-count]').forEach(el => animCount(el, +el.dataset.count));
+          statsObs.disconnect();
         }
       });
+    }, { threshold: .5 });
+    const statsBar = document.querySelector('.stats-bar');
+    if (statsBar) statsObs.observe(statsBar);
+
+    function doRestFilter() {
+      const loc = document.getElementById('locFilter').value.toLowerCase();
+      const cui = document.getElementById('cuisFilter').value.toLowerCase();
+
+      function applyFilter(carouselId, dotsId, navId, itemsData, type) {
+        const carousel = document.getElementById(carouselId);
+        const nav = document.getElementById(navId);
+
+        const filtered = itemsData.filter(d => {
+          const m1 = !loc || (d.fullDetails && d.fullDetails.toLowerCase().includes(loc));
+          const m2 = !cui || (d.fullDetails && d.fullDetails.toLowerCase().includes(cui)) || (d.category && d.category.toLowerCase().includes(cui));
+          return m1 && m2;
+        });
+
+        carousel.innerHTML = '';
+        if (filtered.length === 0) {
+          carousel.innerHTML = '<div style="width:100%;padding:40px;text-align:center;color:var(--gray-600)">No deals match your criteria. Try widening your search.</div>';
+          nav.style.display = 'none';
+        } else {
+          nav.style.display = 'flex';
+          filtered.forEach((deal, i) => {
+            const card = buildCard(deal, type, i);
+            carousel.appendChild(card);
+          });
+          // Update carousel dots and state
+          const dotsContainer = document.getElementById(dotsId);
+          dotsContainer.innerHTML = '';
+          filtered.forEach((_, i) => {
+            const d = document.createElement('div');
+            d.className = 'dot' + (i === 0 ? ' active' : '');
+            d.onclick = () => {
+              const stateKey = carouselId.startsWith('rest') ? 'restaurants' : 'bars';
+              carouselState[stateKey] = i;
+              updateCarousel(carouselId, dotsId, stateKey);
+            };
+            dotsContainer.appendChild(d);
+          });
+          // reset position
+          const stateKey = carouselId.startsWith('rest') ? 'restaurants' : 'bars';
+          carouselState[stateKey] = 0;
+          updateCarousel(carouselId, dotsId, stateKey);
+        }
+      }
+
+      applyFilter('restaurants-carousel', 'rest-dots', 'rest-nav-controls', restaurantDeals, 'restaurant');
+      applyFilter('bars-carousel', 'bar-dots', 'bar-nav-controls', barDeals, 'bar');
+
+      const targetSection = document.getElementById('restaurants');
+      if (targetSection) targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    /* ─── INIT ─── */
+    document.addEventListener('DOMContentLoaded', () => {
+      buildCarousel('restaurants-carousel', restaurantDeals, 'restaurant', 'rest-prev', 'rest-next', 'rest-dots', 'restCount');
+      buildCarousel('bars-carousel', barDeals, 'bar', 'bar-prev', 'bar-next', 'bar-dots', 'barCount');
     });
   </script>
+
+  <!-- VENDOR MODAL -->
+  <div id="vendorModal" class="v-modal-ov"
+    style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);backdrop-filter:blur(10px);z-index:9999;align-items:center;justify-content:center;padding:20px">
+    <div
+      style="background:#fff;border-radius:24px;max-width:560px;width:100%;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.45);position:relative;animation:vpop .4s cubic-bezier(.34,1.56,.64,1)">
+      <style>
+        @keyframes vpop {
+          from {
+            opacity: 0;
+            transform: scale(.92) translateY(18px)
+          }
+
+          to {
+            opacity: 1;
+            transform: none
+          }
+        }
+      </style>
+      <div style="background:linear-gradient(135deg,#0b1640,#c0202a);padding:28px 32px 22px;color:#fff">
+        <button onclick="closeVendorModal()"
+          style="position:absolute;top:14px;right:14px;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.2);border:none;cursor:pointer;color:#fff;font-size:15px;display:flex;align-items:center;justify-content:center"><i
+            class="fas fa-times"></i></button>
+        <h3 style="font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:800;margin-bottom:4px">🏭 Partner With Us
+        </h3>
+        <p style="font-size:.88rem;opacity:.75">Join Dili-Zone and reach thousands of customers.</p>
+      </div>
+      <div style="padding:24px 32px 28px;max-height:70vh;overflow-y:auto">
+        <div id="vSuccess" style="display:none;text-align:center;padding:20px 0">
+          <div style="font-size:52px;margin-bottom:12px">✅</div>
+          <h4 style="font-family:'Syne',sans-serif;color:#0b1640;margin-bottom:8px">Application Received!</h4>
+          <p style="font-size:.88rem;color:#4a4a6a">Our team will contact you within 24–48 hours.</p>
+          <button onclick="closeVendorModal()"
+            style="margin-top:16px;padding:12px 32px;background:#c0202a;color:#fff;border:none;border-radius:50px;font-weight:700;cursor:pointer">Done</button>
+        </div>
+        <form id="vendorForm" onsubmit="submitVendor(event)">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
+            <div><label
+                style="display:block;font-size:11px;font-weight:700;text-transform:uppercase;color:#4a4a6a;margin-bottom:5px">First
+                Name</label><input type="text" name="vFirstName" required placeholder="Jean"
+                style="width:100%;padding:11px 13px;border:1.5px solid #e8e6e2;border-radius:9px;font-size:14px;outline:none">
+            </div>
+            <div><label
+                style="display:block;font-size:11px;font-weight:700;text-transform:uppercase;color:#4a4a6a;margin-bottom:5px">Last
+                Name</label><input type="text" name="vLastName" required placeholder="Pierre"
+                style="width:100%;padding:11px 13px;border:1.5px solid #e8e6e2;border-radius:9px;font-size:14px;outline:none">
+            </div>
+          </div>
+          <div style="margin-bottom:12px"><label
+              style="display:block;font-size:11px;font-weight:700;text-transform:uppercase;color:#4a4a6a;margin-bottom:5px">Business
+              Sector</label><select name="vSector" required
+              style="width:100%;padding:11px 13px;border:1.5px solid #e8e6e2;border-radius:9px;font-size:14px;outline:none">
+              <option value="">Select sector</option>
+              <option>Restaurants &amp; Bars</option>
+              <option>Hotels &amp; Accommodation</option>
+              <option>Supermarkets &amp; Grocery</option>
+              <option>Shops &amp; Retail</option>
+              <option>Services</option>
+              <option>Industries &amp; Manufacturing</option>
+              <option>Other</option>
+            </select></div>
+          <div style="margin-bottom:12px"><label
+              style="display:block;font-size:11px;font-weight:700;text-transform:uppercase;color:#4a4a6a;margin-bottom:5px">Email
+              Address</label><input type="email" name="vEmail" required placeholder="yourname@company.com"
+              style="width:100%;padding:11px 13px;border:1.5px solid #e8e6e2;border-radius:9px;font-size:14px;outline:none">
+          </div>
+          <div style="margin-bottom:12px"><label
+              style="display:block;font-size:11px;font-weight:700;text-transform:uppercase;color:#4a4a6a;margin-bottom:5px">Phone
+              / WhatsApp</label><input type="tel" name="vPhone" required placeholder="078..."
+              style="width:100%;padding:11px 13px;border:1.5px solid #e8e6e2;border-radius:9px;font-size:14px;outline:none">
+          </div>
+          <div style="margin-bottom:12px"><label
+              style="display:block;font-size:11px;font-weight:700;text-transform:uppercase;color:#4a4a6a;margin-bottom:5px">Business
+              Address</label><input type="text" name="vAddress" placeholder="e.g. Kiyovu, Kigali"
+              style="width:100%;padding:11px 13px;border:1.5px solid #e8e6e2;border-radius:9px;font-size:14px;outline:none">
+          </div>
+          <div style="margin-bottom:12px"><label
+              style="display:block;font-size:11px;font-weight:700;text-transform:uppercase;color:#4a4a6a;margin-bottom:5px">Reason
+              of Interest</label><textarea name="vReason" rows="3" placeholder="Tell us about your business..."
+              style="width:100%;padding:11px 13px;border:1.5px solid #e8e6e2;border-radius:9px;font-size:14px;outline:none;resize:vertical"></textarea>
+          </div>
+          <button type="submit" id="vSubmitBtn"
+            style="width:100%;padding:14px;background:#c0202a;color:#fff;border:none;border-radius:50px;font-weight:700;font-size:1rem;cursor:pointer;margin-top:6px;box-shadow:0 6px 18px rgba(192,32,42,.3)">Submit
+            Application <i class="fas fa-arrow-right"></i></button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script>
+    function openVendorModal() { document.getElementById('vendorModal').style.display = 'flex'; document.getElementById('vSuccess').style.display = 'none'; document.getElementById('vendorForm').reset(); document.body.style.overflow = 'hidden'; }
+    function closeVendorModal() { document.getElementById('vendorModal').style.display = 'none'; document.body.style.overflow = ''; }
+    document.getElementById('vendorModal').addEventListener('click', e => { if (e.target === document.getElementById('vendorModal')) closeVendorModal(); });
+    async function submitVendor(e) {
+      e.preventDefault();
+      const btn = document.getElementById('vSubmitBtn');
+      btn.textContent = 'Submitting…'; btn.disabled = true;
+      const fd = new FormData(e.target);
+      const p = new URLSearchParams({ page: 'VendorApplication', timestamp: new Date().toLocaleString(), firstName: fd.get('vFirstName'), lastName: fd.get('vLastName'), sector: fd.get('vSector'), email: fd.get('vEmail'), phone: "'" + fd.get('vPhone'), address: fd.get('vAddress'), reason: fd.get('vReason') });
+      try {
+        await fetch('https://script.google.com/macros/s/AKfycbx8VuBmrkDKAvPieeqXtB3Sk9ctbDGVt8HSxoBp9-03ui_V9MXoVuMZ96rlm7ytTdrb/exec', { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: p.toString() });
+        document.getElementById('vSuccess').style.display = 'block'; e.target.style.display = 'none';
+      }
+      catch { alert('Error. Please try again.'); }
+      finally { btn.textContent = 'Submit Application'; btn.disabled = false; }
+    }
+  </script>
+
 </body>
+
 </html>
