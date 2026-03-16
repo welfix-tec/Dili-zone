@@ -1,872 +1,3081 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dili-Zone | Discover Citywide Deals</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Dili-Zone Industries – Discover the best manufacturing, wholesale, and B2B deals in the city.">
+  <title>Industries – Dili-Zone | Citywide Deals &amp; Partners</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-    /* Base styles */
-    * {
-      margin: 0;
-      padding: 0;
+    /* ======================================================
+   DESIGN TOKENS – Dili-Zone Brand System
+====================================================== */
+    :root {
+      --navy: #1a2a6c;
+      --navy-dk: #0f1a4a;
+      --navy-lt: #2d3f8a;
+      --red: #b21f1f;
+      --red-lt: #cc3333;
+      --gold: #ffcc00;
+      --gold-dk: #e6b800;
+      --white: #ffffff;
+      --off-white: #f8f9fc;
+      --surface: #f0f2f8;
+      --gray-100: #f5f7fa;
+      --gray-200: #e8eaf0;
+      --gray-300: #d0d4e2;
+      --gray-400: #9ba3b8;
+      --gray-500: #7a829a;
+      --gray-600: #5a6282;
+      --gray-800: #2c3350;
+      --text: #1e2240;
+      --green: #10b981;
+      --orange: #f59e0b;
+      --shadow-sm: 0 2px 12px rgba(26, 42, 108, 0.08);
+      --shadow-md: 0 6px 28px rgba(26, 42, 108, 0.13);
+      --shadow-lg: 0 16px 52px rgba(26, 42, 108, 0.18);
+      --radius: 10px;
+      --radius-lg: 16px;
+      --radius-xl: 24px;
+      --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+      --font-d: 'Playfair Display', serif;
+      --font-b: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    /* ======================================================
+   RESET & BASE
+====================================================== */
+    *,
+    *::before,
+    *::after {
       box-sizing: border-box;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0
     }
-    
+
+    html {
+      scroll-behavior: smooth
+    }
+
     body {
-      background-color: #f8f9fa;
-      color: #333;
-      line-height: 1.6;
+      font-family: var(--font-b);
+      color: var(--text);
+      background: var(--white);
+      overflow-x: hidden;
+      line-height: 1.6
     }
-    
-    /* Header styles */
-    header {
-      background: linear-gradient(135deg, #1a2a6c, #b21f1f);
-      color: white;
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      position: sticky;
+
+    img {
+      display: block;
+      max-width: 100%;
+      object-fit: cover
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer
+    }
+
+    ul {
+      list-style: none
+    }
+
+    ::selection {
+      background: rgba(255, 204, 0, 0.3)
+    }
+
+    ::-webkit-scrollbar {
+      width: 5px
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--gray-100)
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--navy);
+      border-radius: 3px
+    }
+
+    /* ======================================================
+   HEADER
+====================================================== */
+    #header {
+      position: fixed;
       top: 0;
-      z-index: 100;
+      left: 0;
+      right: 0;
+      z-index: 900;
+      transition: all .35s var(--ease)
     }
-    
-    .logo-container {
+
+    .header-top {
+      background: linear-gradient(135deg, var(--navy-dk), var(--navy) 60%, #1a3a8c);
+      padding: 9px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07)
+    }
+
+    .ht-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.65)
+    }
+
+    .ht-inner .left {
+      display: flex;
+      align-items: center;
+      gap: 20px
+    }
+
+    .ht-inner .left span {
+      display: flex;
+      align-items: center;
+      gap: 6px
+    }
+
+    .ht-inner .left i {
+      color: var(--gold);
+      font-size: 11px
+    }
+
+    .ht-inner .right {
+      display: flex;
+      gap: 14px
+    }
+
+    .ht-inner .right a {
+      color: rgba(255, 255, 255, 0.55);
+      transition: color .2s
+    }
+
+    .ht-inner .right a:hover,
+    .ht-inner .right a.active {
+      color: var(--gold)
+    }
+
+    .header-main {
+      background: rgba(15, 26, 74, 0.97);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07)
+    }
+
+    .hm-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 20px;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px
+    }
+
+    .logo {
       display: flex;
       align-items: center;
       gap: 10px;
+      flex-shrink: 0
     }
-    
-    .logo img {
-      height: 40px;
-      transition: transform 0.3s ease;
-    }
-    
-    .logo:hover img {
-      transform: scale(1.1);
-    }
-    
-    .site-title {
-      font-size: 1.8rem;
-      font-weight: bold;
-      letter-spacing: 1px;
-    }
-    
-    .highlight {
-      color: #ffcc00;
-    }
-    
-    .navbar {
+
+    .logo-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--red), #e83030);
       display: flex;
-      gap: 1.5rem;
-    }
-    
-    .navbar a {
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 900;
       color: white;
-      text-decoration: none;
+      font-family: var(--font-d);
+      box-shadow: 0 4px 14px rgba(178, 31, 31, 0.4);
+      letter-spacing: -1px
+    }
+
+    .logo-text .main {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: white;
+      letter-spacing: -.3px
+    }
+
+    .logo-text .sub {
+      font-size: 9px;
       font-weight: 500;
-      padding: 0.5rem 0.8rem;
-      border-radius: 4px;
-      transition: all 0.3s ease;
+      color: var(--gold);
+      letter-spacing: 3px;
+      text-transform: uppercase
+    }
+
+    nav.main-nav {
+      display: flex;
+      align-items: center;
+      gap: 2px
+    }
+
+    nav.main-nav a {
+      padding: 8px 13px;
+      border-radius: 7px;
+      font-size: 13px;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.7);
+      transition: all .25s var(--ease);
+      white-space: nowrap
+    }
+
+    nav.main-nav a:hover {
+      color: white;
+      background: rgba(255, 255, 255, 0.08)
+    }
+
+    nav.main-nav a.active {
+      color: white;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--red), var(--red-lt));
+      box-shadow: 0 4px 14px rgba(178, 31, 31, 0.4)
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0
+    }
+
+    .btn-hdr-cta {
+      background: var(--gold);
+      color: var(--navy-dk);
+      padding: 9px 18px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      border: none;
+      transition: all .3s var(--ease);
+      white-space: nowrap
+    }
+
+    .btn-hdr-cta:hover {
+      background: var(--gold-dk);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(255, 204, 0, 0.4)
+    }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      padding: 5px;
+      cursor: pointer
+    }
+
+    .hamburger span {
+      width: 22px;
+      height: 2px;
+      background: white;
+      border-radius: 1px;
+      transition: all .3s;
+      display: block
+    }
+
+    .hamburger.open span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px)
+    }
+
+    .hamburger.open span:nth-child(2) {
+      opacity: 0
+    }
+
+    .hamburger.open span:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -5px)
+    }
+
+    /* ======================================================
+   MOBILE MENU  (FIX: was missing from HTML entirely)
+====================================================== */
+    .mob-menu {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: min(320px, 85vw);
+      height: 100vh;
+      background: var(--navy-dk);
+      z-index: 800;
+      padding: 90px 24px 40px;
+      transition: right .4s var(--ease);
+      overflow-y: auto;
+      border-left: 1px solid rgba(255, 255, 255, 0.07)
+    }
+
+    .mob-menu.open {
+      right: 0
+    }
+
+    .mob-menu a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 13px 14px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.75);
+      transition: all .2s;
+      margin-bottom: 3px
+    }
+
+    .mob-menu a:hover,
+    .mob-menu a.active {
+      background: rgba(255, 255, 255, 0.08);
+      color: white
+    }
+
+    .mob-menu a.active {
+      background: var(--red)
+    }
+
+    .mob-ov {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 799;
+      backdrop-filter: blur(2px)
+    }
+
+    .mob-ov.open {
+      display: block
+    }
+
+    /* Breadcrumb */
+    .breadcrumb-bar {
+      background: var(--gray-100);
+      padding: 11px 20px;
+      border-bottom: 1px solid var(--gray-200);
+      margin-top: 108px
+    }
+
+    .breadcrumb {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--gray-400)
+    }
+
+    .breadcrumb a {
+      color: var(--gray-600);
+      transition: color .2s
+    }
+
+    .breadcrumb a:hover {
+      color: var(--navy)
+    }
+
+    .breadcrumb i {
+      font-size: 10px
+    }
+
+    .breadcrumb .current {
+      color: var(--navy);
+      font-weight: 600
+    }
+
+    /* ======================================================
+   HERO
+====================================================== */
+    .hero {
+      min-height: 560px;
+      padding: 80px 20px;
       position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden
     }
-    
-    .navbar a:hover {
-      background-color: rgba(255, 255, 255, 0.1);
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center
     }
-    
-    .navbar a::after {
+
+    .hero-bg::after {
       content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(15, 26, 74, 0.95) 0%, rgba(26, 42, 108, 0.85) 45%, rgba(178, 31, 31, 0.72) 100%)
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      max-width: 760px;
+      width: 100%
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 204, 0, 0.15);
+      border: 1px solid rgba(255, 204, 0, 0.3);
+      color: var(--gold);
+      padding: 6px 18px;
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .5px;
+      margin-bottom: 22px;
+      animation: fup .7s var(--ease) both
+    }
+
+    .hero h1 {
+      font-family: var(--font-d);
+      font-size: clamp(2rem, 5.5vw, 3.8rem);
+      font-weight: 800;
+      color: white;
+      line-height: 1.1;
+      letter-spacing: -.5px;
+      margin-bottom: 16px;
+      animation: fup .7s .1s var(--ease) both
+    }
+
+    .hero h1 span {
+      color: var(--gold)
+    }
+
+    .hero p {
+      font-size: clamp(.95rem, 2.5vw, 1.15rem);
+      color: rgba(255, 255, 255, 0.76);
+      font-weight: 300;
+      margin-bottom: 36px;
+      animation: fup .7s .2s var(--ease) both
+    }
+
+    .hero-search {
+      display: flex;
+      background: white;
+      border-radius: 14px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+      overflow: hidden;
+      animation: fup .7s .3s var(--ease) both;
+      max-width: 680px;
+      margin: 0 auto 28px
+    }
+
+    .hs-cat {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 0 16px;
+      border-right: 1px solid var(--gray-200);
+      flex-shrink: 0;
+      min-width: 155px
+    }
+
+    .hs-cat i {
+      color: var(--gray-400);
+      font-size: 12px
+    }
+
+    .hs-cat select {
+      border: none;
+      outline: none;
+      font-family: var(--font-b);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text);
+      background: transparent;
+      cursor: pointer;
+      padding: 18px 6px 18px 0;
+      width: 100%
+    }
+
+    .hs-input {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      padding: 0 14px;
+      gap: 8px
+    }
+
+    .hs-input i {
+      color: var(--gray-400);
+      flex-shrink: 0
+    }
+
+    .hs-input input {
+      flex: 1;
+      border: none;
+      outline: none;
+      font-family: var(--font-b);
+      font-size: 14px;
+      color: var(--text);
+      background: transparent;
+      padding: 18px 0;
+      min-width: 0
+    }
+
+    .hs-input input::placeholder {
+      color: var(--gray-400)
+    }
+
+    .hs-btn {
+      background: linear-gradient(135deg, var(--red), var(--red-lt));
+      color: white;
+      border: none;
+      padding: 0 28px;
+      font-size: 14px;
+      font-weight: 700;
+      transition: all .3s var(--ease);
+      flex-shrink: 0;
+      cursor: pointer
+    }
+
+    .hs-btn:hover {
+      background: linear-gradient(135deg, var(--red-lt), #dd4444)
+    }
+
+    .search-wrap {
+      position: relative;
+      max-width: 680px;
+      margin: 0 auto
+    }
+
+    .autocomplete {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: white;
+      border-radius: 12px;
+      margin-top: 5px;
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      z-index: 100;
+      display: none
+    }
+
+    .autocomplete.open {
+      display: block
+    }
+
+    .ac-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 18px;
+      font-size: 14px;
+      color: var(--text);
+      cursor: pointer;
+      transition: background .2s
+    }
+
+    .ac-item:hover {
+      background: var(--gray-100)
+    }
+
+    .ac-item i {
+      color: var(--navy);
+      font-size: 13px;
+      width: 16px
+    }
+
+    .hero-stats {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 28px;
+      animation: fup .7s .4s var(--ease) both;
+      flex-wrap: wrap
+    }
+
+    .hs-stat {
+      text-align: center
+    }
+
+    .hs-stat strong {
+      display: block;
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--gold)
+    }
+
+    .hs-stat span {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.55);
+      text-transform: uppercase;
+      letter-spacing: .8px
+    }
+
+    .hdiv {
+      width: 1px;
+      height: 34px;
+      background: rgba(255, 255, 255, 0.15)
+    }
+
+    @keyframes fup {
+      from {
+        opacity: 0;
+        transform: translateY(24px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0)
+      }
+    }
+
+    /* ======================================================
+   COMMON SECTION
+====================================================== */
+    .sec {
+      padding: 72px 20px
+    }
+
+    .sec-alt {
+      background: var(--gray-100)
+    }
+
+    .sec-white {
+      background: white
+    }
+
+    .con {
+      max-width: 1200px;
+      margin: 0 auto
+    }
+
+    .con-wide {
+      max-width: 1360px;
+      margin: 0 auto
+    }
+
+    .sec-hd {
+      text-align: center;
+      margin-bottom: 48px
+    }
+
+    .sec-lbl {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 12px
+    }
+
+    .sec-lbl::before,
+    .sec-lbl::after {
+      content: '';
+      width: 26px;
+      height: 2px;
+      background: currentColor;
+      border-radius: 1px;
+      display: block
+    }
+
+    .sec-ttl {
+      font-family: var(--font-d);
+      font-size: clamp(1.6rem, 3.5vw, 2.8rem);
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1.2;
+      letter-spacing: -.3px;
+      margin-bottom: 12px
+    }
+
+    .sec-ttl span {
+      color: var(--red)
+    }
+
+    .sec-sub {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--gray-600);
+      max-width: 520px;
+      margin: 0 auto
+    }
+
+    /* Scroll anim */
+    .fu {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .7s var(--ease), transform .7s var(--ease)
+    }
+
+    .fu.on {
+      opacity: 1;
+      transform: none
+    }
+
+    .fu.d1 {
+      transition-delay: .1s
+    }
+
+    .fu.d2 {
+      transition-delay: .2s
+    }
+
+    .fu.d3 {
+      transition-delay: .3s
+    }
+
+    .fu.d4 {
+      transition-delay: .4s
+    }
+
+    .fu.d5 {
+      transition-delay: .5s
+    }
+
+    .fu.d6 {
+      transition-delay: .6s
+    }
+
+    /* ======================================================
+   HOW IT WORKS – 4-column grid with responsive breakpoints
+====================================================== */
+    .how-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px
+    }
+
+    /* ======================================================
+   CATEGORY GALLERY
+====================================================== */
+    .cat-gallery {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px
+    }
+
+    .cat-card {
+      position: relative;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      cursor: pointer;
+      aspect-ratio: 3/2;
+      transition: transform .4s var(--spring), box-shadow .4s var(--ease)
+    }
+
+    .cat-card:hover {
+      transform: translateY(-6px) scale(1.01);
+      box-shadow: var(--shadow-lg)
+    }
+
+    .cat-card img {
+      width: 100%;
+      height: 100%;
+      transition: transform .6s var(--ease)
+    }
+
+    .cat-card:hover img {
+      transform: scale(1.07)
+    }
+
+    .cat-ov {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(15, 26, 74, 0.85) 0%, rgba(26, 42, 108, 0.3) 60%, rgba(0, 0, 0, 0.1) 100%);
+      transition: background .4s
+    }
+
+    .cat-card:hover .cat-ov {
+      background: linear-gradient(to top, rgba(15, 26, 74, 0.95) 0%, rgba(26, 42, 108, 0.55) 60%, rgba(0, 0, 0, 0.2) 100%)
+    }
+
+    .cat-info {
       position: absolute;
       bottom: 0;
-      left: 50%;
-      width: 0;
-      height: 2px;
-      background-color: #ffcc00;
-      transition: all 0.3s ease;
-      transform: translateX(-50%);
-    }
-    
-    .navbar a:hover::after {
-      width: 80%;
-    }
-    
-    /* Hero section */
-    .hero {
-      background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
-                  url('https://images.unsplash.com/photo-1512453979798-5ea266f8880c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80') center/cover no-repeat;
-      color: white;
-      text-align: center;
-      padding: 6rem 2rem;
-      animation: heroFadeIn 1.5s ease-out;
-    }
-    
-    @keyframes heroFadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    
-    .hero h1 {
-      font-size: 3rem;
-      margin-bottom: 1rem;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    }
-    
-    .hero p {
-      font-size: 1.2rem;
-      max-width: 600px;
-      margin: 0 auto 2rem;
-    }
-    
-    .hero button {
-      background-color: #ffcc00;
-      color: #1a2a6c;
-      border: none;
-      padding: 0.8rem 2rem;
-      font-size: 1.1rem;
-      font-weight: bold;
-      border-radius: 50px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    }
-    
-    .hero button:hover {
-      background-color: #ffd633;
-      transform: translateY(-3px);
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-    }
-    
-    /* Sectors section */
-    .sectors {
-      padding: 4rem 2rem;
-      text-align: center;
-    }
-    
-    .sectors h2 {
-      font-size: 2.5rem;
-      margin-bottom: 2rem;
-      color: #1a2a6c;
-      position: relative;
-      display: inline-block;
-    }
-    
-    .sectors h2::after {
-      content: '';
-      position: absolute;
-      bottom: -10px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 80px;
-      height: 4px;
-      background-color: #b21f1f;
-      border-radius: 2px;
-    }
-    
-    .sector-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 2rem;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    
-    .sector-card {
-      background: white;
-      border-radius: 10px;
-      padding: 2rem 1rem;
-      text-decoration: none;
-      color: #333;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-      transition: all 0.3s ease;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .sector-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
       left: 0;
-      width: 100%;
-      height: 5px;
-      background: linear-gradient(to right, #1a2a6c, #b21f1f);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.3s ease;
+      right: 0;
+      padding: 18px 16px
     }
-    
-    .sector-card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
-    }
-    
-    .sector-card:hover::before {
-      transform: scaleX(1);
-    }
-    
-    .sector-card img {
-      width: 80px;
-      height: 80px;
-      object-fit: contain;
-      margin-bottom: 1rem;
-      transition: transform 0.3s ease;
-    }
-    
-    .sector-card:hover img {
-      transform: scale(1.1);
-    }
-    
-    .sector-card span {
-      font-weight: 600;
-      font-size: 1.1rem;
-    }
-    
-    /* Text Ticker Section */
-    .text-ticker-section {
-      padding: 2rem 0;
-      background: linear-gradient(135deg, #1a2a6c, #b21f1f);
+
+    .cat-name {
+      font-size: 1rem;
+      font-weight: 800;
       color: white;
-      overflow: hidden;
+      letter-spacing: .2px;
+      margin-bottom: 3px
     }
-    
-    .text-ticker-section h2 {
-      text-align: center;
-      margin-bottom: 1.5rem;
-      font-size: 2rem;
+
+    .cat-cnt {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.7);
+      font-weight: 500
     }
-    
-    .ticker-container {
-      overflow: hidden;
-      border: 3px solid #880808;
-      border-radius: 12px;
-      width: 100%;
-      margin: 0 auto;
-      background: #ffffff;
-      position: relative;
+
+    .cat-card.wide {
+      grid-column: span 2
     }
-    
-    .ticker-label {
-      position: absolute;
-      left: 0;
-      top: 0;
-      height: 100%;
-      background: #ffcc00;
-      color: #1a2a6c;
-      padding: 0 15px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      z-index: 2;
-      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+
+    /* ======================================================
+   FEATURED STORES CAROUSEL
+====================================================== */
+    .carousel-outer {
+      overflow: hidden
     }
-    
-    .ticker-track {
-      display: flex;
-      gap: 16px;
-      padding: 16px;
-      animation: scroll 30s linear infinite;
-      padding-left: 120px;
-    }
-    
-    .ticker-container:hover .ticker-track {
-      animation-play-state: paused;
-    }
-    
-    .deal-card {
-      min-width: 250px;
-      background-color: #003a96;
-      color: white;
-      padding: 20px;
-      border-radius: 10px;
-      flex-shrink: 0;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    }
-    
-    .deal-card:hover {
-      background-color: #0052cc;
-      transform: translateY(-5px);
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-    }
-    
-    @keyframes scroll {
-      0% {
-        transform: translateX(0);
-      }
-      100% {
-        transform: translateX(-50%);
-      }
-    }
-    
-    /* Image Carousel Section */
-    .recently-uploaded {
-      padding: 4rem 2rem;
-      background-color: #f1f3f5;
-      text-align: center;
-    }
-    
-    .recently-uploaded h2 {
-      font-size: 2.5rem;
-      margin-bottom: 2rem;
-      color: #1a2a6c;
-      position: relative;
-      display: inline-block;
-    }
-    
-    .recently-uploaded h2::after {
-      content: '';
-      position: absolute;
-      bottom: -10px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 80px;
-      height: 4px;
-      background-color: #b21f1f;
-      border-radius: 2px;
-    }
-    
-    .carousel-frame {
-      position: relative;
-      max-width: 1200px;
-      margin: 0 auto;
-      overflow: hidden;
-      border-radius: 10px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-    }
-    
+
     .carousel-track {
       display: flex;
-      transition: transform 0.5s ease;
+      gap: 20px;
+      transition: transform .5s var(--ease)
     }
-    
-    .carousel-card {
-      flex: 0 0 calc(33.333% - 2rem);
-      margin: 1rem;
+
+    .store-card {
+      flex: 0 0 calc(25% - 15px);
       background: white;
-      border-radius: 10px;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
       overflow: hidden;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-      transition: all 0.3s ease;
-      animation: fadeIn 0.5s ease-out;
+      border: 1px solid var(--gray-200);
+      transition: all .35s var(--spring);
+      position: relative
     }
-    
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+
+    .store-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-lg)
     }
-    
-    .carousel-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+
+    .store-img {
+      height: 170px;
+      position: relative;
+      overflow: hidden
     }
-    
-    .carousel-img {
-      height: 200px;
-      overflow: hidden;
-    }
-    
-    .carousel-img img {
+
+    .store-img img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
-      transition: transform 0.5s ease;
+      transition: transform .6s var(--ease)
     }
-    
-    .carousel-card:hover .carousel-img img {
-      transform: scale(1.05);
+
+    .store-card:hover .store-img img {
+      transform: scale(1.06)
     }
-    
-    .carousel-content {
-      padding: 1.5rem;
-    }
-    
-    .carousel-content h3 {
-      font-size: 1.3rem;
-      margin-bottom: 0.5rem;
-      color: #1a2a6c;
-    }
-    
-    .carousel-content p {
-      color: #666;
-      margin-bottom: 1rem;
-    }
-    
-    .carousel-content .price {
-      font-weight: bold;
-      color: #b21f1f;
-      font-size: 1.2rem;
-    }
-    
-    .carousel-nav {
+
+    .store-logo {
       position: absolute;
-      top: 50%;
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      transform: translateY(-50%);
-      padding: 0 1rem;
-      z-index: 10;
+      bottom: -22px;
+      left: 16px;
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 2.5px solid white;
+      box-shadow: var(--shadow-sm);
+      background: white
     }
-    
-    .carousel-btn {
-      background: rgba(255, 255, 255, 0.8);
+
+    .store-logo img {
+      width: 100%;
+      height: 100%
+    }
+
+    .open-dot {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(0, 0, 0, 0.55);
+      backdrop-filter: blur(8px);
+      padding: 4px 10px;
+      border-radius: 100px;
+      font-size: 11px;
+      color: white;
+      font-weight: 600
+    }
+
+    .open-dot .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%
+    }
+
+    .open-dot .dot.open {
+      background: var(--green)
+    }
+
+    .open-dot .dot.closed {
+      background: #ef4444
+    }
+
+    .store-body {
+      padding: 28px 16px 18px
+    }
+
+    .store-cat {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--red);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 4px
+    }
+
+    .store-name {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 7px
+    }
+
+    .store-stars {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-bottom: 12px
+    }
+
+    .store-stars .stars {
+      display: flex;
+      gap: 2px
+    }
+
+    .store-stars .stars i {
+      font-size: 10px;
+      color: var(--gold)
+    }
+
+    .store-stars .cnt {
+      font-size: 11px;
+      color: var(--gray-400)
+    }
+
+    .store-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 12px;
+      border-top: 1px solid var(--gray-200)
+    }
+
+    .store-dist {
+      font-size: 11px;
+      color: var(--gray-400);
+      display: flex;
+      align-items: center;
+      gap: 4px
+    }
+
+    .store-dist i {
+      color: var(--navy);
+      font-size: 10px
+    }
+
+    .btn-visit {
+      background: transparent;
+      border: 1.5px solid var(--navy);
+      color: var(--navy);
+      padding: 7px 15px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      transition: all .3s var(--ease)
+    }
+
+    .btn-visit:hover {
+      background: var(--navy);
+      color: white
+    }
+
+    .car-nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      margin-top: 28px
+    }
+
+    .car-arrow {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: white;
+      border: 1.5px solid var(--gray-200);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      color: var(--text);
+      cursor: pointer;
+      transition: all .3s var(--ease);
+      box-shadow: var(--shadow-sm)
+    }
+
+    .car-arrow:hover {
+      background: var(--navy);
+      border-color: var(--navy);
+      color: white;
+      box-shadow: var(--shadow-md)
+    }
+
+    .car-dots {
+      display: flex;
+      gap: 7px
+    }
+
+    .cdot {
+      width: 8px;
+      height: 8px;
+      border-radius: 4px;
+      background: var(--gray-200);
+      cursor: pointer;
+      transition: all .3s
+    }
+
+    .cdot.on {
+      width: 22px;
+      background: var(--navy)
+    }
+
+    /* ======================================================
+   TODAY'S DEALS
+====================================================== */
+    .deals-hdr {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+      gap: 12px
+    }
+
+    .deals-hdr h2 {
+      font-family: var(--font-d);
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--text)
+    }
+
+    .view-all {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--navy);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: gap .2s
+    }
+
+    .view-all:hover {
+      gap: 9px
+    }
+
+    .deals-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px
+    }
+
+    .deal-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--gray-200);
+      transition: all .35s var(--spring)
+    }
+
+    .deal-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg)
+    }
+
+    .deal-img {
+      position: relative;
+      height: 180px;
+      overflow: hidden
+    }
+
+    .deal-img img {
+      width: 100%;
+      height: 100%;
+      transition: transform .6s var(--ease)
+    }
+
+    .deal-card:hover .deal-img img {
+      transform: scale(1.06)
+    }
+
+    .disc-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: var(--red);
+      color: white;
+      padding: 5px 10px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: .3px
+    }
+
+    .deal-timer {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(6px);
+      color: white;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 10px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 5px
+    }
+
+    .deal-timer i {
+      color: var(--gold);
+      font-size: 9px
+    }
+
+    .deal-body {
+      padding: 16px
+    }
+
+    .deal-store {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: .8px;
+      text-transform: uppercase;
+      margin-bottom: 4px
+    }
+
+    .deal-name {
+      font-size: .95rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden
+    }
+
+    .deal-price {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      margin-bottom: 12px
+    }
+
+    .price-new {
+      font-size: 1.2rem;
+      font-weight: 900;
+      color: var(--red);
+      font-family: var(--font-d)
+    }
+
+    .price-old {
+      font-size: .85rem;
+      color: var(--gray-400);
+      text-decoration: line-through
+    }
+
+    .btn-deal {
+      width: 100%;
+      background: var(--navy);
+      color: white;
       border: none;
-      width: 40px;
-      height: 40px;
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      transition: all .3s var(--ease)
+    }
+
+    .btn-deal:hover {
+      background: var(--red)
+    }
+
+    /* ======================================================
+   POPULAR / PARTNER CARDS
+====================================================== */
+    .pop-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px
+    }
+
+    .pop-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      border: 1.5px solid var(--gray-200);
+      transition: all .35s var(--spring)
+    }
+
+    .pop-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
+      border-color: rgba(26, 42, 108, 0.15)
+    }
+
+    .pop-banner {
+      height: 130px;
+      position: relative;
+      overflow: hidden
+    }
+
+    .pop-banner img {
+      width: 100%;
+      height: 100%;
+      transition: transform .6s var(--ease)
+    }
+
+    .pop-card:hover .pop-banner img {
+      transform: scale(1.05)
+    }
+
+    .pop-body {
+      padding: 26px 16px 16px
+    }
+
+    /* ======================================================
+   PRICE RANGE
+====================================================== */
+    .price-sec {
+      background: linear-gradient(135deg, var(--navy-dk), var(--navy));
+      padding: 56px 20px
+    }
+
+    .price-btns {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin: 32px 0;
+      flex-wrap: wrap
+    }
+
+    .price-btn {
+      padding: 13px 32px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.06);
+      color: rgba(255, 255, 255, 0.75);
+      transition: all .3s var(--spring)
+    }
+
+    .price-btn:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.4);
+      color: white;
+      transform: translateY(-3px)
+    }
+
+    .price-btn.on {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: var(--navy-dk);
+      box-shadow: 0 8px 24px rgba(255, 204, 0, 0.4);
+      transform: translateY(-3px)
+    }
+
+    .price-results {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-top: 32px
+    }
+
+    .price-store-card {
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: var(--radius);
+      padding: 18px;
+      text-align: center;
+      backdrop-filter: blur(8px);
+      transition: all .35s var(--ease)
+    }
+
+    .price-store-card:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 204, 0, 0.3);
+      transform: translateY(-4px)
+    }
+
+    .ps-icon {
+      font-size: 1.8rem;
+      margin-bottom: 10px
+    }
+
+    .ps-name {
+      font-size: .9rem;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 4px
+    }
+
+    .ps-range {
+      font-size: 12px;
+      color: var(--gold);
+      font-weight: 600
+    }
+
+    /* ======================================================
+   NEW ARRIVALS / TENDERS
+====================================================== */
+    .new-scroll {
+      overflow-x: auto;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+      padding-bottom: 8px
+    }
+
+    .new-scroll::-webkit-scrollbar {
+      display: none
+    }
+
+    .new-track {
+      display: flex;
+      gap: 14px;
+      padding: 4px 2px
+    }
+
+    .new-card {
+      flex: 0 0 200px;
+      background: white;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--gray-200);
+      box-shadow: var(--shadow-sm);
+      transition: all .3s var(--spring);
+      cursor: pointer
+    }
+
+    .new-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-md)
+    }
+
+    .new-img {
+      height: 140px;
+      position: relative;
+      overflow: hidden
+    }
+
+    .new-img img {
+      width: 100%;
+      height: 100%;
+      transition: transform .5s var(--ease)
+    }
+
+    .new-card:hover .new-img img {
+      transform: scale(1.07)
+    }
+
+    .new-badge {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      background: var(--gold);
+      color: var(--navy-dk);
+      padding: 3px 8px;
+      border-radius: 5px;
+      font-size: 9px;
+      font-weight: 900;
+      letter-spacing: .5px
+    }
+
+    .new-body {
+      padding: 10px
+    }
+
+    .new-store {
+      font-size: 9px;
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: .8px;
+      text-transform: uppercase
+    }
+
+    .new-name {
+      font-size: .78rem;
+      font-weight: 600;
+      color: var(--text);
+      margin: 2px 0;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden
+    }
+
+    .new-price {
+      font-size: .85rem;
+      font-weight: 800;
+      color: var(--red)
+    }
+
+    /* ======================================================
+   GUIDE CARDS
+====================================================== */
+    .guide-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 32px 28px;
+      text-align: center;
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--gray-200);
+      transition: all .35s var(--spring)
+    }
+
+    .guide-card:hover {
+      transform: translateY(-7px);
+      box-shadow: var(--shadow-lg)
+    }
+
+    .guide-ico {
+      width: 60px;
+      height: 60px;
+      border-radius: 16px;
+      margin: 0 auto 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem
+    }
+
+    .guide-h {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 8px
+    }
+
+    .guide-p {
+      font-size: .85rem;
+      color: var(--gray-600);
+      line-height: 1.65
+    }
+
+    /* ======================================================
+   SHOP LOCAL BANNER
+====================================================== */
+    .local-banner {
+      background: linear-gradient(135deg, var(--navy-dk), var(--navy) 55%, #1a3a8c);
+      padding: 72px 20px;
+      position: relative;
+      overflow: hidden;
+      text-align: center
+    }
+
+    .lb-circles {
+      position: absolute;
+      inset: 0;
+      overflow: hidden
+    }
+
+    .lb-c {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.04)
+    }
+
+    .lb-c.a {
+      width: 400px;
+      height: 400px;
+      top: -150px;
+      right: -80px
+    }
+
+    .lb-c.b {
+      width: 250px;
+      height: 250px;
+      bottom: -80px;
+      left: 5%
+    }
+
+    .lb-c.c {
+      width: 120px;
+      height: 120px;
+      top: 25%;
+      left: 12%;
+      background: rgba(255, 204, 0, 0.05)
+    }
+
+    .lb-content {
+      position: relative;
+      z-index: 1;
+      max-width: 680px;
+      margin: 0 auto
+    }
+
+    .lb-counter {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255, 204, 0, 0.15);
+      border: 1px solid rgba(255, 204, 0, 0.3);
+      color: var(--gold);
+      padding: 8px 20px;
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 22px
+    }
+
+    .lb-counter i {
+      animation: pulse-dot 2s infinite
+    }
+
+    .lb-h {
+      font-family: var(--font-d);
+      font-size: clamp(1.6rem, 4vw, 3rem);
+      font-weight: 800;
+      color: white;
+      margin-bottom: 12px
+    }
+
+    .lb-p {
+      font-size: 1.05rem;
+      color: rgba(255, 255, 255, 0.68);
+      font-weight: 300;
+      margin-bottom: 32px
+    }
+
+    .lb-actions {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap
+    }
+
+    .btn-lb-p {
+      background: var(--gold);
+      color: var(--navy-dk);
+      padding: 14px 34px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 800;
+      border: none;
+      transition: all .3s var(--ease);
+      box-shadow: 0 6px 20px rgba(255, 204, 0, 0.4)
+    }
+
+    .btn-lb-p:hover {
+      background: white;
+      transform: translateY(-3px)
+    }
+
+    .btn-lb-s {
+      background: transparent;
+      color: white;
+      padding: 13px 34px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      transition: all .3s var(--ease)
+    }
+
+    .btn-lb-s:hover {
+      border-color: white;
+      background: rgba(255, 255, 255, 0.08)
+    }
+
+    .lb-trust {
+      display: flex;
+      gap: 22px;
+      justify-content: center;
+      margin-top: 28px;
+      flex-wrap: wrap
+    }
+
+    .lb-t {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 13px
+    }
+
+    .lb-t i {
+      color: var(--gold);
+      font-size: 13px
+    }
+
+    @keyframes pulse-dot {
+
+      0%,
+      100% {
+        opacity: 1
+      }
+
+      50% {
+        opacity: .4
+      }
+    }
+
+    /* ======================================================
+   FOOTER
+====================================================== */
+    footer {
+      background: var(--navy-dk);
+      padding: 60px 20px 0;
+      color: rgba(255, 255, 255, 0.65)
+    }
+
+    .ft-inner {
+      max-width: 1200px;
+      margin: 0 auto
+    }
+
+    .ft-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 44px;
+      margin-bottom: 48px
+    }
+
+    .ft-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px
+    }
+
+    .ft-desc {
+      font-size: 14px;
+      line-height: 1.72;
+      margin-bottom: 20px;
+      max-width: 255px
+    }
+
+    .soc-links {
+      display: flex;
+      gap: 8px
+    }
+
+    .soc-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 9px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255, 255, 255, 0.55);
+      font-size: 13px;
+      transition: all .3s var(--ease)
+    }
+
+    .soc-btn:hover {
+      background: var(--red);
+      border-color: var(--red);
+      color: white;
+      transform: translateY(-2px)
+    }
+
+    .ft-col h4 {
+      font-size: 13px;
+      font-weight: 800;
+      color: white;
+      letter-spacing: .8px;
+      text-transform: uppercase;
+      margin-bottom: 16px
+    }
+
+    .ft-col ul li {
+      margin-bottom: 10px
+    }
+
+    .ft-col a {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.5);
+      transition: color .2s
+    }
+
+    .ft-col a:hover {
+      color: var(--gold)
+    }
+
+    .ft-contact {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      margin-bottom: 12px;
+      font-size: 13px
+    }
+
+    .ft-contact i {
+      color: var(--gold);
+      font-size: 12px;
+      margin-top: 2px;
+      flex-shrink: 0
+    }
+
+    .ft-bot {
+      border-top: 1px solid rgba(255, 255, 255, 0.07);
+      padding: 20px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 13px
+    }
+
+    .ft-bot a {
+      color: rgba(255, 255, 255, 0.35);
+      transition: color .2s
+    }
+
+    .ft-bot a:hover {
+      color: var(--gold)
+    }
+
+    /* ======================================================
+   FLOATING BUTTONS
+====================================================== */
+    #btt {
+      position: fixed;
+      bottom: 26px;
+      right: 22px;
+      z-index: 600;
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: var(--navy);
+      color: white;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      box-shadow: var(--shadow-lg);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition: all .35s var(--ease);
+      cursor: pointer
+    }
+
+    #btt.on {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0)
+    }
+
+    #btt:hover {
+      background: var(--red);
+      transform: translateY(-3px)
+    }
+
+    /* ======================================================
+   MODALS
+====================================================== */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(6px);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: all .35s var(--ease);
+      padding: 20px
+    }
+
+    .modal-overlay.open {
+      opacity: 1;
+      visibility: visible
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: var(--radius-lg);
+      width: 100%;
+      max-width: 500px;
+      max-height: 90vh;
+      overflow-y: auto;
+      transform: translateY(30px) scale(0.95);
+      transition: all .45s var(--spring);
+      position: relative;
+      box-shadow: 0 24px 50px rgba(0, 0, 0, 0.3)
+    }
+
+    .modal-overlay.open .modal-content {
+      transform: translateY(0) scale(1)
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(0, 0, 0, 0.06);
+      border: none;
+      width: 34px;
+      height: 34px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      color: var(--text);
+      transition: all .2s
     }
-    
-    .carousel-btn:hover {
-      background: white;
-      transform: scale(1.1);
+
+    .modal-close:hover {
+      background: var(--red);
+      color: white;
+      transform: scale(1.1)
     }
-    
-    .carousel-dots {
+
+    .modal-header {
+      padding: 30px 30px 20px;
+      border-bottom: 1px solid var(--gray-200)
+    }
+
+    .modal-body {
+      padding: 30px
+    }
+
+    .modal-title {
+      font-family: var(--font-d);
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 6px
+    }
+
+    .modal-desc {
+      font-size: 13px;
+      color: var(--gray-500);
+      line-height: 1.5
+    }
+
+    .vendor-list {
       display: flex;
-      justify-content: center;
-      margin-top: 2rem;
-      gap: 0.5rem;
+      flex-direction: column;
+      gap: 12px
     }
-    
-    .dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: #ccc;
+
+    .vendor-item {
+      display: flex;
+      gap: 15px;
+      padding: 15px;
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius);
+      align-items: center;
+      transition: all 0.2s
+    }
+
+    .vendor-item:hover {
+      border-color: var(--navy);
+      background: rgba(26, 42, 108, 0.03)
+    }
+
+    .vendor-item img {
+      width: 55px;
+      height: 55px;
+      border-radius: 10px;
+      object-fit: cover;
+      border: 1px solid var(--gray-200)
+    }
+
+    .vendor-info {
+      flex: 1
+    }
+
+    .vendor-name {
+      font-weight: 800;
+      color: var(--text);
+      font-size: 1rem;
+      margin-bottom: 2px
+    }
+
+    .vendor-cat {
+      font-size: 10px;
+      color: var(--red);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px
+    }
+
+    .form-group {
+      margin-bottom: 16px
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--navy)
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 13px 16px;
+      border: 1.5px solid var(--gray-200);
+      border-radius: 8px;
+      font-family: var(--font-b);
+      font-size: 14px;
+      transition: border 0.3s
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--red);
+      box-shadow: 0 0 0 3px rgba(178, 31, 31, 0.1)
+    }
+
+    .btn-submit {
+      width: 100%;
+      background: var(--navy);
+      color: white;
+      border: none;
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 700;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: all .3s;
+      margin-top: 10px
     }
-    
-    .dot.active {
-      background: #b21f1f;
-      transform: scale(1.2);
+
+    .btn-submit:hover {
+      background: var(--red);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(178, 31, 31, 0.3)
     }
-    
-    /* Footer */
-    .footer {
-      background: linear-gradient(135deg, #1a2a6c, #0d1b4d);
-      color: white;
-      padding: 3rem 2rem;
-    }
-    
-    .footer-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 2rem;
-    }
-    
-    .footer-brand h2 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-    }
-    
-    .footer-brand p {
-      color: #ccc;
-    }
-    
-    .footer-links h4,
-    .footer-contact h4 {
-      font-size: 1.2rem;
-      margin-bottom: 1rem;
-      position: relative;
-      display: inline-block;
-    }
-    
-    .footer-links h4::after,
-    .footer-contact h4::after {
-      content: '';
-      position: absolute;
-      bottom: -5px;
-      left: 0;
-      width: 40px;
-      height: 3px;
-      background-color: #ffcc00;
-    }
-    
-    .footer-links ul {
-      list-style: none;
-    }
-    
-    .footer-links li {
-      margin-bottom: 0.5rem;
-    }
-    
-    .footer-links a {
-      color: #ccc;
-      text-decoration: none;
-      transition: color 0.3s ease;
-    }
-    
-    .footer-links a:hover {
-      color: white;
-    }
-    
-    .footer-contact p {
-      color: #ccc;
-      margin-bottom: 0.5rem;
-    }
-    
-    /* Responsive design */
-    @media (max-width: 900px) {
-      .carousel-card {
-        flex: 0 0 calc(50% - 2rem);
+
+    /* Vendor application modal */
+    @keyframes vpop {
+      from {
+        opacity: 0;
+        transform: scale(.92) translateY(18px)
+      }
+
+      to {
+        opacity: 1;
+        transform: none
       }
     }
-    
-    @media (max-width: 768px) {
-      header {
+
+    .v-modal-ov {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .88);
+      backdrop-filter: blur(10px);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      padding: 20px
+    }
+
+    /* ======================================================
+   RESPONSIVE BREAKPOINTS
+====================================================== */
+
+    /* ─── 1100px ─── */
+    @media(max-width: 1100px) {
+      nav.main-nav {
+        display: none
+      }
+
+      .hamburger {
+        display: flex
+      }
+
+      .cat-gallery {
+        grid-template-columns: repeat(3, 1fr)
+      }
+
+      .store-card {
+        flex: 0 0 calc(33.333% - 14px)
+      }
+
+      .price-results {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+      .how-grid {
+        grid-template-columns: repeat(2, 1fr)
+      }
+    }
+
+    /* ─── 860px ─── */
+    @media(max-width: 860px) {
+      .deals-grid {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+      .pop-grid {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+      .ft-grid {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .cat-gallery {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+      .cat-card.wide {
+        grid-column: span 2
+      }
+
+      .store-card {
+        flex: 0 0 calc(50% - 10px)
+      }
+
+      .how-grid {
+        grid-template-columns: repeat(2, 1fr)
+      }
+    }
+
+    /* ─── 600px ─── */
+    @media(max-width: 600px) {
+      .sec {
+        padding: 44px 14px
+      }
+
+      .breadcrumb-bar {
+        margin-top: 90px
+      }
+
+      .header-top {
+        display: none
+      }
+
+      /* Hero search stacks vertically */
+      .hero-search {
         flex-direction: column;
-        gap: 1rem;
+        border-radius: 12px
       }
-      
-      .hero h1 {
-        font-size: 2.2rem;
+
+      .hs-cat {
+        border-right: none;
+        border-bottom: 1px solid var(--gray-200);
+        min-width: unset;
+        width: 100%;
+        padding: 12px 16px
       }
-      
-      .navbar {
-        flex-wrap: wrap;
-        justify-content: center;
+
+      .hs-cat select {
+        padding: 4px 0
       }
-      
-      .sector-grid {
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+
+      .hs-input {
+        padding: 12px 16px
       }
-      
-      .ticker-label {
-        padding: 0 10px;
-        font-size: 0.9rem;
+
+      .hs-input input {
+        padding: 4px 0
       }
-      
-      .ticker-track {
-        padding-left: 90px;
+
+      .hs-btn {
+        padding: 14px;
+        border-radius: 0 0 12px 12px;
+        width: 100%
       }
-      
-      .deal-card {
-        min-width: 220px;
-        padding: 15px;
+
+      .hero-stats {
+        gap: 16px
+      }
+
+      .hdiv {
+        display: none
+      }
+
+      .cat-gallery {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+      .cat-card.wide {
+        grid-column: span 1
+      }
+
+      .deals-grid {
+        grid-template-columns: 1fr
+      }
+
+      .pop-grid {
+        grid-template-columns: 1fr
+      }
+
+      .ft-grid {
+        grid-template-columns: 1fr;
+        gap: 28px
+      }
+
+      .price-results {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+      .store-card {
+        flex: 0 0 85%
+      }
+
+      .how-grid {
+        grid-template-columns: 1fr
+      }
+
+      /* Modal full-width on mobile */
+      .modal-content {
+        max-width: 100%;
+        margin: 0
+      }
+
+      .modal-header,
+      .modal-body {
+        padding: 20px
+      }
+
+      .new-card {
+        flex: 0 0 160px
       }
     }
-    
-    @media (max-width: 600px) {
-      .carousel-card {
-        flex: 0 0 calc(100% - 2rem);
+
+    /* ─── 400px ─── */
+    @media(max-width: 400px) {
+      .price-results {
+        grid-template-columns: 1fr
       }
-      
-      .hero {
-        padding: 4rem 1rem;
+
+      .lb-actions {
+        flex-direction: column;
+        align-items: center
       }
-      
-      .hero h1 {
-        font-size: 1.8rem;
-      }
-      
-      .deal-card {
-        min-width: 200px;
-        padding: 12px;
+
+      .btn-lb-p,
+      .btn-lb-s {
+        width: 100%;
+        text-align: center
       }
     }
   </style>
 </head>
+
 <body>
 
-  <header>
-    <div class="logo-container">
-      <div class="logo">
-        <img src="images/logo.png" alt="Dili-Zone Logo" height="40" />
-      </div>
-      <div class="logo">
-        <span class="site-title">Dili<span class="highlight">-Zone</span></span>
+  <!-- ═══════════════════════════ HEADER ═══════════════════════════ -->
+  <div id="header">
+    <div class="header-top">
+      <div class="ht-inner">
+        <div class="left">
+          <span><i class="fas fa-phone"></i>+250780491406</span>
+          <span><i class="fas fa-envelope"></i>info@dilizone.com</span>
+          <span><i class="fas fa-truck"></i>Citywide Freight &amp; Logistics available</span>
+        </div>
+        <div class="right">
+          <a href="#" class="active">EN</a><a href="#">KIN</a><a href="#">FR</a>
+        </div>
       </div>
     </div>
+    <div class="header-main">
+      <div class="hm-inner">
+        <a href="/" class="logo">
+          <div class="logo-mark">D</div>
+          <div class="logo-text">
+            <div class="main">Dili-Zone</div>
+            <div class="sub">Your City Guide</div>
+          </div>
+        </a>
+        <nav class="main-nav">
+          <a href="index.html">Home</a>
+          <a href="restaurants.html">Restaurants</a>
+          <a href="Accomodation.html">Hotels</a>
+          <a href="supermarkets.html">Supermarkets</a>
+          <a href="services.html">Services</a>
+          <a href="industries.html" class="active">Industries</a>
+          <a href="Shops.html">Shops</a>
+        </nav>
+        <div class="header-right">
+          <button class="btn-hdr-cta" onclick="openVendorModal()">
+            <i class="fas fa-industry" style="margin-right:7px;font-size:11px"></i>Partner With Us
+          </button>
+          <button class="hamburger" id="hbg" aria-label="Menu">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 
-    <nav class="navbar">
+  <!-- FIX: Mobile menu elements were missing from HTML entirely -->
+  <nav class="mob-menu" id="mobMenu" aria-label="Mobile navigation">
+    <a href="index.html"><i class="fas fa-home"></i>Home</a>
+    <a href="restaurants.html"><i class="fas fa-utensils"></i>Restaurants</a>
+    <a href="Accomodation.html"><i class="fas fa-bed"></i>Hotels</a>
+    <a href="supermarkets.html"><i class="fas fa-shopping-cart"></i>Supermarkets</a>
+    <a href="services.html"><i class="fas fa-concierge-bell"></i>Services</a>
+    <a href="industries.html" class="active"><i class="fas fa-industry"></i>Industries</a>
+    <a href="Shops.html"><i class="fas fa-store"></i>Shops</a>
+    <a href="#" onclick="openVendorModal(); return false;" style="margin-top:16px; background:var(--red); color:white;">
+      <i class="fas fa-plus-circle"></i>Partner With Us
+    </a>
+  </nav>
+  <div class="mob-ov" id="mobOv"></div>
+
+  <!-- Breadcrumb -->
+  <div class="breadcrumb-bar">
+    <div class="breadcrumb">
       <a href="index.html">Home</a>
-      <a href="restaurants.html">Restaurants</a>
-      <a href="Accomodation.html">Hotels</a>
-      <a href="supermarket.html">Supermarkets</a>
-      <a href="services.html">Services</a>
-      <a href="industries.html">Industries</a>
-      <a href="shops.html">Shops</a>
-    </nav>
-  </header>
-
-  <section class="hero">
-    <h1>Discover the Best Deals in the City</h1>
-    <p>Explore promos from top businesses around – all in one place.</p>
-    <button onclick="alert('Vendor Dashboard Coming Soon')">Become a Vendor</button>
-  </section>
-
-  <section class="sectors">
-    <h2>Explore Sectors</h2>
-    <div class="sector-grid">
-      <a href="restaurants.html" class="sector-card">
-        <img src="https://cdn-icons-png.flaticon.com/512/3448/3448632.png" alt="Restaurants & Bars" />
-        <span>Restaurants & Bars</span>
-      </a>
-
-      <a href="hotels.html" class="sector-card">
-        <img src="https://cdn-icons-png.flaticon.com/512/2580/2580765.png" alt="Hotels" />
-        <span>Hotels</span>
-      </a>
-
-      <a href="supermarket.html" class="sector-card">
-        <img src="https://cdn-icons-png.flaticon.com/512/751/751463.png" alt="Supermarket" />
-        <span>Supermarkets</span>
-      </a>
-
-      <a href="services.html" class="sector-card">
-        <img src="https://cdn-icons-png.flaticon.com/512/3062/3062512.png" alt="Services" />
-        <span>Service Companies</span>
-      </a>
-
-      <a href="industries.html" class="sector-card">
-        <img src="https://cdn-icons-png.flaticon.com/512/3276/3276873.png" alt="Industries" />
-        <span>Industries</span>
-      </a>
-
-      <a href="shops.html" class="sector-card">
-        <img src="https://cdn-icons-png.flaticon.com/512/1170/1170678.png" alt="Shops" />
-        <span>Shops</span>
-      </a>
+      <i class="fas fa-chevron-right"></i>
+      <span class="current">Industries</span>
     </div>
-  </section>
+  </div>
 
-  <!-- Text Ticker Section -->
-  <section class="text-ticker-section">
-    <h2>Hot Deals</h2>
-    <div class="ticker-container">
-      <div class="ticker-label">BREAKING</div>
-      <div class="ticker-track" id="textTickerTrack">
-        <!-- Text deal cards will be added here -->
+  <!-- ═══════════════════════════ HERO ═══════════════════════════ -->
+  <section class="hero" style="min-height:600px;">
+    <div class="hero-bg"
+      style="background-image:url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=1800&q=85');"></div>
+    <div class="hero-content">
+      <div class="hero-badge">
+        <i class="fas fa-cogs"></i> The City's Industrial Hub
+      </div>
+      <h1>Connect with <span>Local Industries</span></h1>
+      <p>Discover citywide deals on manufacturing, wholesale, and bulk B2B operations.</p>
+      <div class="search-wrap">
+        <div class="hero-search">
+          <div class="hs-cat">
+            <i class="fas fa-industry"></i>
+            <select id="catSel">
+              <option>All Sectors</option>
+              <option>Manufacturing</option>
+              <option>Construction</option>
+              <option>Technology</option>
+              <option>Agriculture</option>
+              <option>Logistics</option>
+            </select>
+          </div>
+          <div class="hs-input">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Search suppliers, manufacturers, bulk deals…" id="heroSrc"
+              autocomplete="off">
+          </div>
+          <button class="hs-btn" onclick="doSearch()">Search</button>
+        </div>
+        <div class="autocomplete" id="acDrop"></div>
+      </div>
+      <div class="hero-stats">
+        <div class="hs-stat"><strong>120+</strong><span>Manufacturers</span></div>
+        <div class="hdiv"></div>
+        <div class="hs-stat"><strong>500+</strong><span>B2B Deals</span></div>
+        <div class="hdiv"></div>
+        <div class="hs-stat"><strong>Bulk</strong><span>Discounts</span></div>
+        <div class="hdiv"></div>
+        <div class="hs-stat"><strong>4.8 &#9733;</strong><span>Avg Rating</span></div>
       </div>
     </div>
   </section>
 
-  <!-- Image Carousel Section -->
-  <section class="recently-uploaded">
-    <h2>Recently Uploaded</h2>
-    <div class="carousel-frame">
-      <div class="carousel-track" id="carouselTrack">
-        <!-- Image cards will be added here -->
+  <!-- ═══════════════════════════ HOW IT WORKS ═══════════════════════════ -->
+  <section class="sec sec-white">
+    <div class="con">
+      <div class="sec-hd fu">
+        <div class="sec-lbl">The System</div>
+        <h2 class="sec-ttl">How <span>Dili-Zone Industries</span> Works</h2>
+        <p class="sec-sub">We make it simple to understand the city's industrial landscape and secure the best B2B
+          partnerships.</p>
       </div>
-      <div class="carousel-nav">
-        <button class="carousel-btn" id="prevBtn">
-          <i class="fas fa-chevron-left"></i>
-        </button>
-        <button class="carousel-btn" id="nextBtn">
-          <i class="fas fa-chevron-right"></i>
-        </button>
+      <!-- FIX: was inline style with no responsive override; now uses .how-grid class -->
+      <div class="how-grid">
+        <div class="guide-card fu d1" style="padding:20px 15px;">
+          <div class="guide-ico" style="background:rgba(26,42,108,0.1);color:var(--navy);"><i class="fas fa-search"></i>
+          </div>
+          <div class="guide-h">1. Discover Suppliers</div>
+          <p class="guide-p" style="font-size:12px;">Browse verified local manufacturers and wholesale distributors
+            operating in the city.</p>
+        </div>
+        <div class="guide-card fu d2" style="padding:20px 15px;">
+          <div class="guide-ico" style="background:rgba(245,158,11,0.1);color:var(--orange)"><i
+              class="fas fa-handshake"></i></div>
+          <div class="guide-h">2. Negotiate Deals</div>
+          <p class="guide-p" style="font-size:12px;">Unlock direct contact with factory managers to secure bulk pricing
+            and exclusive B2B deals.</p>
+        </div>
+        <div class="guide-card fu d3" style="padding:20px 15px;">
+          <div class="guide-ico" style="background:rgba(16,185,129,0.1);color:var(--green)"><i
+              class="fas fa-truck-loading"></i></div>
+          <div class="guide-h">3. Arrange Logistics</div>
+          <p class="guide-p" style="font-size:12px;">Easily integrate with our citywide freight partners for seamless
+            transport to your location.</p>
+        </div>
+        <div class="guide-card fu d4" style="padding:20px 15px;">
+          <div class="guide-ico" style="background:rgba(178,31,31,0.1);color:var(--red);"><i
+              class="fas fa-chart-line"></i></div>
+          <div class="guide-h">4. Scale Growth</div>
+          <p class="guide-p" style="font-size:12px;">Build lasting supply chains that allow your local business or
+            project to scale effectively.</p>
+        </div>
       </div>
-    </div>
-    <div class="carousel-dots" id="carouselDots">
-      <!-- Dots will be added here -->
     </div>
   </section>
 
-  <footer class="footer">
-    <div class="footer-container">
-      <div class="footer-brand">
-        <h2>Dili-Zone</h2>
-        <p>Find the best local deals in one place</p>
+  <!-- ═══════════════════════════ INDUSTRY DEALS ═══════════════════════════ -->
+  <section class="sec sec-alt" id="deals">
+    <div class="con">
+      <div class="deals-hdr fu">
+        <div style="display:flex; flex-direction:column;">
+          <div class="sec-lbl" style="justify-content:flex-start">Wholesale &amp; Bulk</div>
+          <h2 style="font-family:var(--font-d);font-size:1.8rem;font-weight:800;color:var(--text);margin-bottom:5px;">
+            Citywide <span style="color:var(--red)">Industry Deals</span>
+          </h2>
+          <p style="color:var(--gray-600);font-size:14px;">Special bulk rates available round the city right now.</p>
+        </div>
+        <a href="#" class="view-all">View all deals <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="deals-grid" id="dealsGrid"></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ EXPLORE SECTORS ═══════════════════════════ -->
+  <section class="sec sec-white" id="categories">
+    <div class="con">
+      <div class="sec-hd fu">
+        <div class="sec-lbl">Sectors</div>
+        <h2 class="sec-ttl">Explore <span>Industrial Sectors</span></h2>
+        <p class="sec-sub">Find specific suppliers across key areas of manufacturing and production</p>
+      </div>
+      <div class="cat-gallery fu" id="catGallery"></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ FEATURED MANUFACTURERS ═══════════════════════════ -->
+  <section class="sec sec-alt" id="featured">
+    <div class="con-wide">
+      <div class="sec-hd fu">
+        <div class="sec-lbl">Verified</div>
+        <h2 class="sec-ttl">Featured <span>Manufacturers</span></h2>
+        <p class="sec-sub">Top-rated industrial partners ensuring quality and scale in the city</p>
+      </div>
+      <div style="position:relative" class="fu">
+        <div class="carousel-outer">
+          <div class="carousel-track" id="carTrack"></div>
+        </div>
+        <div class="car-nav">
+          <button class="car-arrow" id="carPrev"><i class="fas fa-chevron-left"></i></button>
+          <div class="car-dots" id="carDots"></div>
+          <button class="car-arrow" id="carNext"><i class="fas fa-chevron-right"></i></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ CITY PROJECTS / TENDERS ═══════════════════════════ -->
+  <section class="sec sec-white" id="new-arrivals">
+    <div class="con">
+      <div
+        style="display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;flex-wrap:wrap;gap:12px"
+        class="fu">
+        <div>
+          <div class="sec-lbl" style="justify-content:flex-start">Opportunities</div>
+          <h2 class="sec-ttl" style="text-align:left;margin-bottom:0">Latest <span>City Projects</span> &amp; Tenders
+          </h2>
+        </div>
+        <a href="#" class="view-all">View all <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="new-scroll fu">
+        <div class="new-track" id="newTrack"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ BANNER ═══════════════════════════ -->
+  <section class="local-banner">
+    <div class="lb-circles">
+      <div class="lb-c a"></div>
+      <div class="lb-c b"></div>
+      <div class="lb-c c"></div>
+    </div>
+    <div class="lb-content fu">
+      <div class="lb-counter">
+        <i class="fas fa-circle" style="font-size:8px"></i>
+        <span id="purchaseCount">850+</span> B2B Contracts this year
+      </div>
+      <h2 class="lb-h">Powering the City's Business Ecosystem</h2>
+      <p class="lb-p">Partner with local factories to reduce logistics costs, improve quality control, and support the
+        community's economic growth.</p>
+      <div class="lb-actions">
+        <button class="btn-lb-p"><i class="fas fa-industry" style="margin-right:8px"></i>Explore B2B Deals</button>
+        <button class="btn-lb-s"><li><a href="#" onclick="openVendorModal(); return false;">List Your Store
+  </button>
+
+
       </div>
 
-      <div class="footer-links">
-        <h4>Quick Links</h4>
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="restaurants.html">Restaurants</a></li>
-          <li><a href="supermarkets.html">Supermarkets</a></li>
-          <li><a href="contact.html">Contact Us</a></li>
-        </ul>
+      <div class="lb-trust">
+        <div class="lb-t"><i class="fas fa-check-circle"></i>Verified Factories</div>
+        <div class="lb-t"><i class="fas fa-check-circle"></i>Bulk Pricing</div>
+        <div class="lb-t"><i class="fas fa-check-circle"></i>Secure Contracts</div>
+        <div class="lb-t"><i class="fas fa-check-circle"></i>ISO Certified</div>
       </div>
+    </div>
+  </section>
 
-      <div class="footer-contact">
-        <h4>Contact</h4>
-        <p>📞 WhatsApp: <a href="https://wa.me/2507XXXXXXX" target="_blank" style="color: #ffcc00;">+250 7XXXXXXX</a></p>
-        <p>✉️ Email: <a href="mailto:info@dili-zone.com" style="color: #ffcc00;">info@dili-zone.com</a></p>
+  <!-- ═══════════════════════════ FOOTER ═══════════════════════════ -->
+  <footer>
+    <div class="ft-inner">
+      <div class="ft-grid">
+        <div>
+          <div class="ft-logo">
+            <div class="logo-mark">D</div>
+            <div class="logo-text">
+              <div class="main">Dili-Zone</div>
+              <div class="sub">Your City Guide</div>
+            </div>
+          </div>
+          <p class="ft-desc">Dili's premier business and shopping directory. Connecting locals with the best stores and
+            services since 2025.</p>
+          <div class="soc-links">
+            <a href="#" class="soc-btn"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="soc-btn"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="soc-btn"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="soc-btn"><i class="fab fa-whatsapp"></i></a>
+          </div>
+        </div>
+        <div class="ft-col">
+          <h4>Shop Categories</h4>
+          <ul>
+            <li><a href="#">Fashion &amp; Clothing</a></li>
+            <li><a href="#">Electronics</a></li>
+            <li><a href="#">Home &amp; Decor</a></li>
+            <li><a href="#">Beauty &amp; Cosmetics</a></li>
+            <li><a href="#">Groceries</a></li>
+            <li><a href="#">Jewelry</a></li>
+            <li><a href="#">Sports</a></li>
+          </ul>
+        </div>
+        <div class="ft-col">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="restaurants.html">Restaurants</a></li>
+            <li><a href="Accomodation.html">Hotels</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="industries.html">Industries</a></li>
+            <li><a href="#" onclick="openVendorModal(); return false;">List Your Store</a></li>
+            <li><a href="#">About Dili-Zone</a></li>
+          </ul>
+        </div>
+        <div class="ft-col">
+          <h4>Contact Us</h4>
+          <div class="ft-contact"><i class="fas fa-map-marker-alt"></i><span>Kigali-Gasabo-Rwanda</span></div>
+          <div class="ft-contact"><i class="fas fa-phone"></i><span>+250780491405</span></div>
+          <div class="ft-contact"><i class="fas fa-envelope"></i><span>info@dilizone.com</span></div>
+          <div class="ft-contact"><i class="fas fa-clock"></i><span>Mon–Fri: 8am–6pm</span></div>
+          <div style="margin-top:16px">
+            <h4 style="margin-bottom:10px">Newsletter</h4>
+            <div style="display:flex;border:1px solid rgba(255,255,255,0.15);border-radius:8px;overflow:hidden">
+              <input type="email" placeholder="Your email"
+                style="flex:1;background:transparent;border:none;outline:none;padding:10px 12px;font-family:var(--font-b);font-size:12px;color:white">
+              <button
+                style="background:var(--red);border:none;padding:0 14px;color:white;font-size:12px;font-weight:700;cursor:pointer">Go</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="ft-bot">
+        <p>&copy; <span id="yr"></span> Dili-Zone. All rights reserved. Made with &#10084;&#65039; by Wilfix.</p>
+        <div style="display:flex;gap:18px">
+          <a href="#">Privacy</a><a href="#">Terms</a><a href="#">Sitemap</a>
+        </div>
       </div>
     </div>
   </footer>
 
+  <button id="btt" aria-label="Back to top"><i class="fas fa-chevron-up"></i></button>
+
+  <!-- ═══════════════════════════ COMMON MODAL ═══════════════════════════ -->
+  <!-- FIX: closeModal logic corrected – overlay click now works properly -->
+  <div class="modal-overlay" id="commonModal">
+    <div class="modal-content" id="modalInner">
+      <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+      <div class="modal-header">
+        <h3 class="modal-title" id="modalTitle">Modal Title</h3>
+        <p class="modal-desc" id="modalDesc">Modal Description</p>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════ VENDOR MODAL ═══════════════════════════ -->
+  <div id="vendorModal" class="v-modal-ov">
+    <div
+      style="background:#fff;border-radius:24px;max-width:560px;width:100%;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.45);position:relative;animation:vpop .4s cubic-bezier(.34,1.56,.64,1)">
+      <div style="background:linear-gradient(135deg,#0b1640,#c0202a);padding:28px 32px 22px;color:#fff">
+        <button onclick="closeVendorModal()"
+          style="position:absolute;top:14px;right:14px;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.2);border:none;cursor:pointer;color:#fff;font-size:15px;display:flex;align-items:center;justify-content:center"><i
+            class="fas fa-times"></i></button>
+        <h3 style="font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:800;margin-bottom:4px">&#127981;
+          Partner With Us</h3>
+        <p style="font-size:.88rem;opacity:.75">Join Dili-Zone and reach thousands of customers.</p>
+      </div>
+      <div style="padding:24px 32px 28px;max-height:70vh;overflow-y:auto">
+        <div id="vSuccess" style="display:none;text-align:center;padding:20px 0">
+          <div style="font-size:52px;margin-bottom:12px">&#9989;</div>
+          <h4 style="font-family:'Playfair Display',serif;color:#0b1640;margin-bottom:8px">Application Received!</h4>
+          <p style="font-size:.88rem;color:#4a4a6a">Our team will contact you within 24–48 hours.</p>
+          <button onclick="closeVendorModal()"
+            style="margin-top:16px;padding:12px 32px;background:#c0202a;color:#fff;border:none;border-radius:50px;font-weight:700;cursor:pointer">Done</button>
+        </div>
+        <form id="vendorForm" onsubmit="submitVendor(event)">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
+            <div>
+              <label
+                style="display:block;font-size:11px;font-weight:700;text-transform:uppercase;color:#4a4a6a;margin-bottom:5px">First
+                Name</label>
+              <input type="text" name="vFirstName" required placeholder="Jean"
+                style="width:100%;padding:11px 13px;border:1.5px solid #e8e6e2;border-radius:9px;font-size:14px;outline:none">
+            </div>
+            <div>
+              <label
+                style="display:block;font-size:11px;font-weight:700;text-transform:uppercase;color:#4a4a6a;margin-bottom:5px">Last
+                Name</label>
+              <input type="text" name="vLastName" required placeholder="Pierre"
+                style="width:100%;padding:11px 13px;border:1.5px solid #e8e6e2;border-radius:9px;font-size:14px;outline:none">
+            </div>
+          </div>
+          <div style="margin-bottom:12px">
+            <label
+              style="display:block;font-size:11px;font-weight:700;text-transform:uppercase;color:#4a4a6a;margin-bottom:5px">Business
+              Sector</label>
+            <select name="vSector" required
+              style="width:100%;padding:11px 13px;border:1.5px solid #e8e6e2;border-radius:9px;font-size:14px;outline:none">
+              <option value="">Select sector</option>
+              <option>Restaurants &amp; Bars</option>
+              <option>Hotels &amp; Accommodation</option>
+              <option>Supermarkets &amp; Grocery</option>
+              <option>Shops &amp; Retail</option>
+              <option>Services</option>
+              <option>Industries &amp; Manufacturing</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div style="margin-bottom:12px">
+            <label
+              style="display:block;font-size:11px;font-weight:700;text-transform:uppercase;color:#4a4a6a;margin-bottom:5px">Email
+              Address</label>
+            <input type="email" name="vEmail" required placeholder="yourname@company.com"
+              style="width:100%;padding:11px 13px;border:1.5px solid #e8e6e2;border-radius:9px;font-size:14px;outline:none">
+          </div>
+          <div style="margin-bottom:12px">
+            <label
+              style="display:block;font-size:11px;font-weight:700;text-transform:uppercase;color:#4a4a6a;margin-bottom:5px">Phone
+              / WhatsApp</label>
+            <input type="tel" name="vPhone" required placeholder="078..."
+              style="width:100%;padding:11px 13px;border:1.5px solid #e8e6e2;border-radius:9px;font-size:14px;outline:none">
+          </div>
+          <div style="margin-bottom:12px">
+            <label
+              style="display:block;font-size:11px;font-weight:700;text-transform:uppercase;color:#4a4a6a;margin-bottom:5px">Business
+              Address</label>
+            <input type="text" name="vAddress" placeholder="e.g. Kiyovu, Kigali"
+              style="width:100%;padding:11px 13px;border:1.5px solid #e8e6e2;border-radius:9px;font-size:14px;outline:none">
+          </div>
+          <div style="margin-bottom:12px">
+            <label
+              style="display:block;font-size:11px;font-weight:700;text-transform:uppercase;color:#4a4a6a;margin-bottom:5px">Reason
+              of Interest</label>
+            <textarea name="vReason" rows="3" placeholder="Tell us about your business..."
+              style="width:100%;padding:11px 13px;border:1.5px solid #e8e6e2;border-radius:9px;font-size:14px;outline:none;resize:vertical"></textarea>
+          </div>
+          <button type="submit" id="vSubmitBtn"
+            style="width:100%;padding:14px;background:#c0202a;color:#fff;border:none;border-radius:50px;font-weight:700;font-size:1rem;cursor:pointer;margin-top:6px;box-shadow:0 6px 18px rgba(192,32,42,.3)">
+            Submit Application <i class="fas fa-arrow-right"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════ JAVASCRIPT ═══════════════════════════ -->
   <script>
-    // Text Ticker Data
-    const recentDeals = [
-      "🍔 Rooms with offered Burgers – Grill Hub",
-      "💳 MasterCard 10% off – Tech World",
-      "🏨 30% off Deluxe Rooms – Royal Hotel",
-      "🛒 Buy 1 Get 1 Free – City Supermarket",
-      "🛠️ Free Installation – SmartFix",
-      "🧼 15% off Services – CleanPro",
-      "👗 Flash Sale – Fashion Street",
-      "📱 20% off Phones – Mobile City",
-      "🥘 Family Meal Combo – Tasty Dishes",
-      "🎁 Special Gift with Purchase – Beauty Shop"
+    /* ── DATA ──────────────────────────────────────────────────── */
+    const CATEGORIES = [
+      { img: 'https://images.unsplash.com/photo-1565514020179-026b92b84bb8?w=600&q=80', name: 'Manufacturing', count: 45, wide: false },
+      { img: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800&q=80', name: 'Construction', count: 32, wide: true },
+      { img: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&q=80', name: 'Technology & IT', count: 58, wide: false },
+      { img: 'https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=600&q=80', name: 'Agriculture & Food', count: 76, wide: false },
+      { img: 'https://images.unsplash.com/photo-1586528116311-ad8ed745d140?w=600&q=80', name: 'Logistics', count: 24, wide: false },
+      { img: 'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=800&q=80', name: 'Energy & Solar', count: 19, wide: true },
     ];
 
-    // Image Carousel Data
-    const carouselItems = [
-      {
-        title: "Gourmet Pizza",
-        description: "Delicious pizza with fresh ingredients",
-        price: "$12.99",
-        image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
-      },
-      {
-        title: "Luxury Hotel Suite",
-        description: "Spacious room with ocean view",
-        price: "$199/night",
-        image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
-      },
-      {
-        title: "Fresh Groceries",
-        description: "Organic fruits and vegetables",
-        price: "From $2.99",
-        image: "https://images.unsplash.com/photo-1542838132-92c53300491e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
-      },
-      {
-        title: "Car Wash Service",
-        description: "Premium car cleaning package",
-        price: "$29.99",
-        image: "https://images.unsplash.com/photo-1506929562872-bb421503ef21?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
-      },
-      {
-        title: "Fashion Sale",
-        description: "Summer collection up to 50% off",
-        price: "From $19.99",
-        image: "https://images.unsplash.com/photo-1520006403909-838d6b92c22e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
-      },
-      {
-        title: "Tech Repair",
-        description: "Fast phone and laptop repairs",
-        price: "From $49.99",
-        image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
-      }
+    const FEATURED_STORES = [
+      { banner: 'https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=500&q=80', logo: 'https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=100&q=80', name: 'Kigali Cement Corp', cat: 'Construction', rating: 4.9, reviews: 214, dist: '1.2 km', open: true },
+      { banner: 'https://images.unsplash.com/photo-1521661642954-20a22cfaebaf?w=500&q=80', logo: 'https://images.unsplash.com/photo-1521661642954-20a22cfaebaf?w=100&q=80', name: 'AgriPro Processors', cat: 'Agriculture', rating: 4.7, reviews: 167, dist: '8.5 km', open: true },
+      { banner: 'https://images.unsplash.com/photo-1542621334-a254cf47733d?w=500&q=80', logo: 'https://images.unsplash.com/photo-1542621334-a254cf47733d?w=100&q=80', name: 'SolarTech Rwanda', cat: 'Energy', rating: 4.8, reviews: 189, dist: '3.7 km', open: false },
+      { banner: 'https://images.unsplash.com/photo-1580983218765-f663ca850938?w=500&q=80', logo: 'https://images.unsplash.com/photo-1580983218765-f663ca850938?w=100&q=80', name: 'Swift Logistics Hub', cat: 'Logistics', rating: 4.6, reviews: 98, dist: '12.1 km', open: true },
+      { banner: 'https://images.unsplash.com/photo-1533090161767-e6ffed986c88?w=500&q=80', logo: 'https://images.unsplash.com/photo-1533090161767-e6ffed986c88?w=100&q=80', name: 'TechHub Manufacturing', cat: 'Technology', rating: 4.9, reviews: 73, dist: '5.9 km', open: true }
     ];
 
-    // Initialize both carousels when DOM is loaded
-    document.addEventListener('DOMContentLoaded', function() {
-      // Initialize Text Ticker
-      const textTickerTrack = document.getElementById('textTickerTrack');
-      
-      // Duplicate deals for smoother infinite scroll
-      const allDeals = [...recentDeals, ...recentDeals];
-      
-      allDeals.forEach(deal => {
-        const card = document.createElement('div');
-        card.className = 'deal-card';
-        card.textContent = deal;
-        textTickerTrack.appendChild(card);
-      });
+    const DEALS = [
+      { img: 'https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=500&q=80', disc: '-15%', store: 'Kigali Cement Corp', name: 'Bulk Cement Discount: 50% Off Transport on Orders Over 500 Bags', newP: 'Contact', oldP: 'Regular', hours: 48 },
+      { img: 'https://images.unsplash.com/photo-1542621334-a254cf47733d?w=500&q=80', disc: '-20%', store: 'SolarTech Rwanda', name: 'Wholesale Solar Panels: Special Rate For Real Estate Developers', newP: '-20%', oldP: 'Retail', hours: 72 },
+      { img: 'https://images.unsplash.com/photo-1580983218765-f663ca850938?w=500&q=80', disc: 'Flat', store: 'Swift Logistics Hub', name: 'Citywide Freight Promo: Flat Delivery Fee for B2B Transport', newP: 'RWF 50K', oldP: 'RWF 80K', hours: 24 }
+    ];
 
-      // Initialize Image Carousel
-      const track = document.getElementById('carouselTrack');
-      const dotsContainer = document.getElementById('carouselDots');
-      const prevBtn = document.getElementById('prevBtn');
-      const nextBtn = document.getElementById('nextBtn');
-      
-      let currentIndex = 0;
-      let cardsPerView = calculateCardsPerView();
-      
-      // Create carousel cards
-      carouselItems.forEach((item, index) => {
-        const card = document.createElement('div');
-        card.className = 'carousel-card';
-        card.innerHTML = `
-          <div class="carousel-img">
-            <img src="${item.image}" alt="${item.title}">
-          </div>
-          <div class="carousel-content">
-            <h3>${item.title}</h3>
-            <p>${item.description}</p>
-            <div class="price">${item.price}</div>
-          </div>
-        `;
-        track.appendChild(card);
-        
-        // Create dots
-        const dot = document.createElement('div');
-        dot.className = 'dot';
-        if (index === 0) dot.classList.add('active');
-        dot.addEventListener('click', () => {
-          goToSlide(index);
-        });
-        dotsContainer.appendChild(dot);
-      });
-      
-      // Calculate how many cards to show based on screen width
-      function calculateCardsPerView() {
-        if (window.innerWidth < 600) return 1;
-        if (window.innerWidth < 900) return 2;
-        return 3;
+    const NEW_PRODUCTS = [
+      { img: 'https://images.unsplash.com/photo-1416879598555-d1fcbc92383c?w=300&q=80', store: 'Kigali Transport', name: 'New Fleet Expansion Tender', price: 'Open' },
+      { img: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=300&q=80', store: 'OfficeFurn', name: 'Ergonomic Corporate Package', price: 'Bulk Quote' },
+      { img: 'https://images.unsplash.com/photo-1587293852726-70cdb56c2866?w=300&q=80', store: 'AgriPack', name: 'Eco-friendly Factory Supply', price: '-10%' },
+      { img: 'https://images.unsplash.com/photo-1615810220468-fa15f5a8b71d?w=300&q=80', store: 'SteelWorks Inc', name: 'High-Grade Rebar Distribution', price: 'Contract' },
+      { img: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=300&q=80', store: 'TechHub Mfg', name: 'Smart Factory Integration Project', price: 'RFP Open' },
+      { img: 'https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=300&q=80', store: 'BuildRight', name: 'Residential Complex Supply Tender', price: 'Bid Now' },
+    ];
+
+    /* ── STATE ─────────────────────────────────────────────────── */
+    let carIdx = 0;
+    let autoScrollT;
+
+    /* ── UTILS ─────────────────────────────────────────────────── */
+    function stars(r) {
+      let s = '';
+      for (let i = 1; i <= 5; i++) {
+        s += i <= Math.floor(r) ? '<i class="fas fa-star"></i>'
+          : (i - r) < 1 ? '<i class="fas fa-star-half-alt"></i>'
+            : '<i class="far fa-star"></i>';
       }
-      
-      // Update carousel on resize
-      window.addEventListener('resize', () => {
-        cardsPerView = calculateCardsPerView();
-        goToSlide(currentIndex);
+      return s;
+    }
+    function dealTimerStr(h) {
+      const m = Math.floor(Math.random() * 60);
+      return `${h}h ${m}m left`;
+    }
+    function esc(s) { return s.replace(/'/g, "\\'"); }
+
+    /* ── RENDER CATEGORIES ──────────────────────────────────────── */
+    function renderCategories() {
+      const g = document.getElementById('catGallery');
+      g.innerHTML = CATEGORIES.map((c, i) => `
+        <div class="cat-card fu d${(i % 6) + 1} ${c.wide ? 'wide' : ''}" onclick="openSectorModal('${esc(c.name)}')" title="View Vendors in ${c.name}">
+          <img src="${c.img}" alt="${c.name}" loading="lazy">
+          <div class="cat-ov"></div>
+          <div class="cat-info">
+            <div class="cat-name">${c.name}</div>
+            <div class="cat-cnt">${c.count} suppliers</div>
+          </div>
+        </div>
+      `).join('');
+      observe();
+    }
+
+    /* ── CAROUSEL ───────────────────────────────────────────────── */
+    function getVisible() {
+      if (window.innerWidth <= 600) return 1;
+      if (window.innerWidth <= 860) return 2;
+      if (window.innerWidth <= 1100) return 3;
+      return 4;
+    }
+
+    function renderCarousel() {
+      const track = document.getElementById('carTrack');
+      const dots = document.getElementById('carDots');
+      track.innerHTML = FEATURED_STORES.map(s => `
+        <div class="store-card">
+          <div class="store-img">
+            <img src="${s.banner}" alt="${s.name}" loading="lazy">
+            <div class="store-logo"><img src="${s.logo}" alt="${s.name}"></div>
+            <div class="open-dot">
+              <div class="dot ${s.open ? 'open' : 'closed'}"></div>
+              ${s.open ? 'Operating' : 'Closed'}
+            </div>
+          </div>
+          <div class="store-body">
+            <div class="store-cat">${s.cat}</div>
+            <div class="store-name">${s.name}</div>
+            <div class="store-stars"><div class="stars">${stars(s.rating)}</div><span class="cnt">${s.rating} (${s.reviews})</span></div>
+            <div class="store-foot">
+              <span class="store-dist"><i class="fas fa-location-dot"></i>${s.dist}</span>
+              <button class="btn-visit" onclick="openPartnerModal('${esc(s.name)}')">Partner Details</button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+
+      const pages = Math.ceil(FEATURED_STORES.length / getVisible());
+      dots.innerHTML = Array.from({ length: pages }, (_, i) =>
+        `<div class="cdot ${i === 0 ? 'on' : ''}" onclick="goSlide(${i})"></div>`
+      ).join('');
+      startAuto();
+    }
+
+    /* FIX: updateCar now uses requestAnimationFrame to ensure card widths are painted */
+    function updateCar() {
+      requestAnimationFrame(() => {
+        const track = document.getElementById('carTrack');
+        const v = getVisible();
+        const max = Math.max(0, FEATURED_STORES.length - v);
+        if (carIdx > max) carIdx = 0;
+        if (carIdx < 0) carIdx = max;
+        const card = track.querySelector('.store-card');
+        if (!card) return;
+        const w = card.offsetWidth + 20;
+        track.style.transform = `translateX(-${carIdx * w}px)`;
+        document.querySelectorAll('.cdot').forEach((d, i) =>
+          d.classList.toggle('on', i === Math.floor(carIdx / v))
+        );
       });
-      
-      // Go to specific slide
-      function goToSlide(index) {
-        // Ensure index is within bounds
-        if (index < 0) {
-          index = carouselItems.length - cardsPerView;
-        } else if (index > carouselItems.length - cardsPerView) {
-          index = 0;
+    }
+
+    function goSlide(i) { carIdx = i * getVisible(); updateCar(); resetAuto(); }
+    function startAuto() {
+      clearInterval(autoScrollT);
+      autoScrollT = setInterval(() => { carIdx++; updateCar(); }, 4500);
+      const track = document.getElementById('carTrack');
+      track.addEventListener('mouseenter', () => clearInterval(autoScrollT), { once: false });
+      track.addEventListener('mouseleave', startAuto, { once: false });
+    }
+    function resetAuto() { clearInterval(autoScrollT); startAuto(); }
+
+    document.getElementById('carPrev').addEventListener('click', () => { carIdx--; updateCar(); resetAuto(); });
+    document.getElementById('carNext').addEventListener('click', () => { carIdx++; updateCar(); resetAuto(); });
+
+    /* FIX: debounced resize so carousel recalculates correctly */
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => { carIdx = 0; updateCar(); }, 150);
+    });
+
+    /* ── RENDER DEALS ───────────────────────────────────────────── */
+    function renderDeals() {
+      const g = document.getElementById('dealsGrid');
+      g.innerHTML = DEALS.map(d => `
+        <div class="deal-card fu">
+          <div class="deal-img" style="height:200px;">
+            <img src="${d.img}" alt="${d.name}" loading="lazy">
+            <div class="disc-badge" style="background:var(--navy);color:var(--gold);font-size:12px;">${d.disc}</div>
+            <div class="deal-timer"><i class="fas fa-clock" style="color:var(--gold)"></i> ${dealTimerStr(d.hours)}</div>
+          </div>
+          <div class="deal-body">
+            <div class="deal-store" style="color:var(--red);font-size:11px;">${d.store}</div>
+            <div class="deal-name" style="font-size:1rem;line-height:1.4;margin-bottom:12px;">${d.name}</div>
+            <div class="deal-price"><span class="price-new" style="font-size:1.1rem;">${d.newP}</span> <span class="price-old">${d.oldP}</span></div>
+            <div style="display:flex;gap:8px;margin-top:12px">
+              <button class="btn-deal" style="flex:1;background:var(--navy);font-size:12px;padding:10px" onclick="openDealDetails('${esc(d.name)}')"><i class="fas fa-eye"></i> Details</button>
+              <button class="btn-deal" style="flex:1;background:var(--red);font-size:12px;padding:10px" onclick="openDealModal('${esc(d.name)}')"><i class="fas fa-tag"></i> Take Offer</button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+      observe();
+    }
+
+    /* ── RENDER NEW / TENDERS ───────────────────────────────────── */
+    function renderNew() {
+      const t = document.getElementById('newTrack');
+      t.innerHTML = NEW_PRODUCTS.map(p => `
+        <div class="new-card">
+          <div class="new-img">
+            <img src="${p.img}" alt="${p.name}" loading="lazy">
+            <div class="new-badge" style="background:var(--navy);color:white;">OPEN</div>
+          </div>
+          <div class="new-body">
+            <div class="new-store">${p.store}</div>
+            <div class="new-name">${p.name}</div>
+            <div class="new-price">${p.price}</div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    /* ── AUTOCOMPLETE ───────────────────────────────────────────── */
+    const suggestions = ['Kigali Cement Corp', 'TechHub Manufacturing', 'AgriPro Processors', 'SolarTech Rwanda', 'Swift Logistics Hub', 'SteelWorks Inc'];
+    const heroSrc = document.getElementById('heroSrc');
+    const acDrop = document.getElementById('acDrop');
+
+    heroSrc.addEventListener('input', function () {
+      const v = this.value.toLowerCase();
+      if (!v) { acDrop.classList.remove('open'); return; }
+      const f = suggestions.filter(s => s.toLowerCase().includes(v));
+      acDrop.innerHTML = f.map(s => `<div class="ac-item" onclick="setSrc('${esc(s)}')"><i class="fas fa-industry"></i>${s}</div>`).join('');
+      acDrop.classList.toggle('open', f.length > 0);
+    });
+    heroSrc.addEventListener('focus', function () {
+      if (!this.value) {
+        acDrop.innerHTML = suggestions.slice(0, 5).map(s => `<div class="ac-item" onclick="setSrc('${esc(s)}')"><i class="fas fa-industry"></i>${s}</div>`).join('');
+        acDrop.classList.add('open');
+      }
+    });
+    document.addEventListener('click', e => {
+      if (!e.target.closest('.search-wrap')) acDrop.classList.remove('open');
+    });
+    function setSrc(v) { heroSrc.value = v; acDrop.classList.remove('open'); }
+    function doSearch() { acDrop.classList.remove('open'); document.getElementById('categories').scrollIntoView({ behavior: 'smooth' }); }
+
+    /* ── SCROLL OBSERVE ─────────────────────────────────────────── */
+    function observe() {
+      const ob = new IntersectionObserver(es => {
+        es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('on'); ob.unobserve(e.target); } });
+      }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+      document.querySelectorAll('.fu:not(.on)').forEach(el => ob.observe(el));
+    }
+
+    /* ── HAMBURGER ──────────────────────────────────────────────── */
+    const hbg = document.getElementById('hbg');
+    const mm = document.getElementById('mobMenu');
+    const mo = document.getElementById('mobOv');
+    hbg.addEventListener('click', () => {
+      hbg.classList.toggle('open');
+      mm.classList.toggle('open');
+      mo.classList.toggle('open');
+    });
+    mo.addEventListener('click', () => {
+      hbg.classList.remove('open');
+      mm.classList.remove('open');
+      mo.classList.remove('open');
+    });
+    mm.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      hbg.classList.remove('open');
+      mm.classList.remove('open');
+      mo.classList.remove('open');
+    }));
+
+    /* ── BACK TO TOP ────────────────────────────────────────────── */
+    const btt = document.getElementById('btt');
+    window.addEventListener('scroll', () => btt.classList.toggle('on', window.scrollY > 400), { passive: true });
+    btt.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    /* ── PURCHASE COUNTER ───────────────────────────────────────── */
+    function animatePurchases() {
+      const el = document.getElementById('purchaseCount');
+      if (!el) return;
+      const target = 850;
+      const obs = new IntersectionObserver(([entry]) => {
+        if (entry.isIntersecting) {
+          const d = 2000, st = performance.now();
+          (function u(now) {
+            const p = Math.min((now - st) / d, 1);
+            el.textContent = Math.round(p * target).toLocaleString() + '+';
+            if (p < 1) requestAnimationFrame(u);
+          })(st);
+          obs.disconnect();
         }
-        
-        currentIndex = index;
-        const translateValue = -currentIndex * (100 / cardsPerView);
-        track.style.transform = `translateX(${translateValue}%)`;
-        
-        // Update active dot
-        document.querySelectorAll('.dot').forEach((dot, i) => {
-          dot.classList.toggle('active', i === currentIndex);
-        });
+      }, { threshold: 0.5 });
+      obs.observe(el);
+    }
+
+    /* ── STICKY HEADER SHADOW ───────────────────────────────────── */
+    window.addEventListener('scroll', () => {
+      document.getElementById('header').style.boxShadow = window.scrollY > 10 ? '0 4px 20px rgba(0,0,0,0.28)' : 'none';
+    }, { passive: true });
+
+    /* ── YEAR ───────────────────────────────────────────────────── */
+    document.getElementById('yr').textContent = new Date().getFullYear();
+
+    /* ── MODAL FUNCTIONS ─────────────────────────────────────────
+       FIX: closeModal no longer relies on e.target.id check which
+       was broken. Overlay click handled via separate listener.    */
+    const overlay = document.getElementById('commonModal');
+    overlay.addEventListener('click', function (e) {
+      if (e.target === overlay) closeModal();
+    });
+
+    function closeModal() {
+      document.getElementById('commonModal').classList.remove('open');
+    }
+
+    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx8VuBmrkDKAvPieeqXtB3Sk9ctbDGVt8HSxoBp9-03ui_V9MXoVuMZ96rlm7ytTdrb/exec';
+
+    async function submitDealForm(e, dealName) {
+      e.preventDefault();
+      const form = e.target;
+      const btn = form.querySelector('button[type="submit"]');
+      const ogText = btn.innerHTML;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin" style="margin-right:8px"></i> Sending...';
+      btn.disabled = true;
+      const params = new URLSearchParams({
+        page: 'Industries', timestamp: new Date().toLocaleString(),
+        customerName: form.querySelector('[name="name"]').value,
+        companyName: form.querySelector('[name="company"]').value,
+        customerEmail: form.querySelector('[name="email"]').value,
+        customerPhone: "'" + form.querySelector('[name="phone"]').value,
+        dealName, requestDetails: form.querySelector('[name="details"]').value
+      });
+      try {
+        await fetch(GOOGLE_SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: params.toString() });
+        alert('Request sent successfully! Our team will contact you shortly.');
+        closeModal();
+      } catch (err) {
+        alert('There was an error submitting your request. Please try again.');
+      } finally {
+        btn.innerHTML = ogText;
+        btn.disabled = false;
       }
-      
-      // Navigation handlers
-      prevBtn.addEventListener('click', () => {
-        goToSlide(currentIndex - 1);
+    }
+
+    function openSectorModal(sectorName) {
+      document.getElementById('modalTitle').innerText = sectorName + ' Partners';
+      document.getElementById('modalDesc').innerText = 'Explore top verified vendors and manufacturers in ' + sectorName + '.';
+      const vendors = FEATURED_STORES.filter(s => s.cat.includes(sectorName.split(' ')[0]) || sectorName.includes(s.cat));
+      const list = vendors.length > 0 ? vendors : FEATURED_STORES.slice(0, 3);
+      document.getElementById('modalBody').innerHTML = `<div class="vendor-list">${list.map(v => `
+        <div class="vendor-item">
+          <img src="${v.logo}" alt="${v.name}">
+          <div class="vendor-info">
+            <div class="vendor-cat">${v.cat}</div>
+            <div class="vendor-name">${v.name}</div>
+            <div style="font-size:12px;color:var(--gray-600);margin-top:2px;">
+              <i class="fas fa-star" style="color:var(--gold)"></i> ${v.rating} &bull; ${v.dist}
+            </div>
+          </div>
+          <button class="btn-visit" onclick="closeModal();setTimeout(()=>openPartnerModal('${esc(v.name)}'),300)">Details</button>
+        </div>
+      `).join('')}</div>`;
+      document.getElementById('commonModal').classList.add('open');
+    }
+
+    function openDealDetails(dealName) {
+      const deal = DEALS.find(d => d.name === dealName);
+      if (!deal) return;
+      document.getElementById('modalTitle').innerText = deal.store;
+      document.getElementById('modalDesc').innerText = 'Deal Details';
+      document.getElementById('modalBody').innerHTML = `
+        <img src="${deal.img}" style="width:100%;height:220px;object-fit:cover;border-radius:12px;margin-bottom:16px">
+        <h4 style="font-size:1.1rem;margin-bottom:8px">${deal.name}</h4>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+          <div><span style="font-weight:800;font-size:1.2rem;color:var(--red)">${deal.newP}</span> <span style="text-decoration:line-through;color:var(--gray-400)">${deal.oldP}</span></div>
+          <div style="background:var(--navy);color:var(--gold);padding:4px 10px;border-radius:20px;font-size:12px;font-weight:700">${deal.disc} OFF</div>
+        </div>
+        <button class="btn-submit" onclick="closeModal();setTimeout(()=>openDealModal('${esc(dealName)}'),300)"><i class="fas fa-tag"></i> Take Offer</button>
+      `;
+      document.getElementById('commonModal').classList.add('open');
+    }
+
+    function openDealModal(dealName) {
+      document.getElementById('modalTitle').innerText = 'Request Quote / Secure Deal';
+      document.getElementById('modalDesc').innerText = `Requesting a quote for: ${dealName}`;
+      document.getElementById('modalBody').innerHTML = `
+        <form onsubmit="submitDealForm(event,'${esc(dealName)}')">
+          <div class="form-group"><label>Your Name</label><input type="text" name="name" class="form-control" placeholder="John Doe" required></div>
+          <div class="form-group"><label>Company Name</label><input type="text" name="company" class="form-control" placeholder="ABC Corp" required></div>
+          <div class="form-group" style="display:flex;gap:15px">
+            <div style="flex:1"><label>Email</label><input type="email" name="email" class="form-control" placeholder="john@example.com" required></div>
+            <div style="flex:1"><label>Phone</label><input type="tel" name="phone" class="form-control" placeholder="+250..." required></div>
+          </div>
+          <div class="form-group"><label>Quantity / Request Details</label><textarea name="details" class="form-control" rows="3" placeholder="I am looking to order..." required></textarea></div>
+          <button type="submit" class="btn-submit"><i class="fas fa-paper-plane" style="margin-right:8px"></i>Send Inquiry</button>
+        </form>
+      `;
+      document.getElementById('commonModal').classList.add('open');
+    }
+
+    function openPartnerModal(partnerName) {
+      document.getElementById('modalTitle').innerText = partnerName;
+      document.getElementById('modalDesc').innerText = 'Verified Industrial Partner Profile';
+      document.getElementById('modalBody').innerHTML = `
+        <div style="text-align:center;margin-bottom:24px;">
+          <div style="width:80px;height:80px;border-radius:14px;background:rgba(26,42,108,0.05);border:1px solid rgba(26,42,108,0.1);margin:0 auto 16px;display:flex;align-items:center;justify-content:center;font-size:32px;color:var(--navy);"><i class="fas fa-industry"></i></div>
+          <h4 style="font-size:1.3rem;font-weight:800;margin-bottom:6px;">${partnerName}</h4>
+          <span style="display:inline-block;padding:5px 12px;background:rgba(16,185,129,0.1);color:var(--green);border-radius:100px;font-size:11px;font-weight:800;"><i class="fas fa-check-circle" style="margin-right:3px"></i> VERIFIED &amp; CERTIFIED</span>
+        </div>
+        <p style="font-size:14px;color:var(--gray-600);line-height:1.7;margin-bottom:24px;text-align:center;">
+          ${partnerName} is one of the leading manufacturers in the region, providing scalable B2B solutions and wholesale distribution with integrated logistics support.
+        </p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;">
+          <button class="btn-submit" style="flex:1;min-width:140px" onclick="alert('Redirecting to full partner profile...')">View Full Profile</button>
+          <button class="btn-submit" style="flex:1;min-width:140px;background:transparent;border:1.5px solid var(--navy);color:var(--navy)" onclick="closeModal();setTimeout(()=>openDealModal('General Inquiry: ${esc(partnerName)}'),300)">Message Direct</button>
+        </div>
+      `;
+      document.getElementById('commonModal').classList.add('open');
+    }
+
+    /* ── VENDOR MODAL (single definition – FIX: was duplicated) ── */
+    function openVendorModal() {
+      document.getElementById('vSuccess').style.display = 'none';
+      document.getElementById('vendorForm').style.display = '';
+      document.getElementById('vendorForm').reset();
+      document.getElementById('vendorModal').style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+    function closeVendorModal() {
+      document.getElementById('vendorModal').style.display = 'none';
+      document.body.style.overflow = '';
+    }
+    document.getElementById('vendorModal').addEventListener('click', e => {
+      if (e.target === document.getElementById('vendorModal')) closeVendorModal();
+    });
+
+    async function submitVendor(e) {
+      e.preventDefault();
+      const btn = document.getElementById('vSubmitBtn');
+      btn.textContent = 'Submitting…'; btn.disabled = true;
+      const fd = new FormData(e.target);
+      const p = new URLSearchParams({
+        page: 'VendorApplication', timestamp: new Date().toLocaleString(),
+        firstName: fd.get('vFirstName'), lastName: fd.get('vLastName'),
+        sector: fd.get('vSector'), email: fd.get('vEmail'),
+        phone: "'" + fd.get('vPhone'), address: fd.get('vAddress'), reason: fd.get('vReason')
       });
-      
-      nextBtn.addEventListener('click', () => {
-        goToSlide(currentIndex + 1);
-      });
-      
-      // Auto-advance carousel
-      setInterval(() => {
-        goToSlide(currentIndex + 1);
-      }, 5000);
+      try {
+        await fetch(GOOGLE_SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: p.toString() });
+        document.getElementById('vSuccess').style.display = 'block';
+        e.target.style.display = 'none';
+      } catch {
+        alert('Error. Please try again.');
+      } finally {
+        btn.textContent = 'Submit Application'; btn.disabled = false;
+      }
+    }
+
+    /* ── INIT ───────────────────────────────────────────────────── */
+    document.addEventListener('DOMContentLoaded', () => {
+      renderCategories();
+      renderCarousel();
+      renderDeals();
+      renderNew();
+      animatePurchases();
+      observe();
     });
   </script>
 </body>
+
 </html>
